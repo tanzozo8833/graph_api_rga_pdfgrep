@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(pip install msal requests 2>&1)"
+    ]
+  }
+}

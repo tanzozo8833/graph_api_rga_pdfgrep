@@ -1,0 +1,228 @@
+============================================================
+Search API Debug Probe
+Time: 2026-05-20T23:53:02.803536+00:00
+============================================================
+
+[1] JWT TOKEN CLAIMS
+  scp:  Mail.Read openid profile User.Read email Files.Read Team.ReadBasic.All
+  upn:  ManhLuc@FPTJapan225.onmicrosoft.com
+  tid:  c9d7a627-62c3-4d01-a52c-a6d8271cf42e
+  exp:  1779325227
+
+  OK: Files scope present: ['Files.Read']
+
+[2] BASELINE — GET /me/drive (requires Files.Read)
+
+────────────────────────────────────────────────────────────
+PROBE: /me/drive
+  Status: 200
+  Body:   {
+    "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#drives/$entity",
+    "createdDateTime": "2026-05-16T12:10:48Z",
+    "description": "",
+    "id": "b!qT6Y1KA8fkW29egZSqvT2h8dgMtkT6pMkOL8Klcd3G_NCVDX_otXQ7rMDv0gIbZY",
+    "lastModifiedDateTime": "2026-05-20T23:42:50Z",
+    "name": "OneDrive",
+    "webUrl": "https://fptjapan225-my.sharepoint.com/personal/manhluc_fptjapan225_onmicrosoft_com/Documents",
+    "driveType": "business",
+    "createdBy": {
+        "user": {
+            "displayName": "System Account"
+        }
+    },
+    "lastModifiedBy": {
+        "user": {
+            "email": "ManhLuc@FPTJapan225.onmicrosoft.com",
+            "id": "02e0d2d8-be99-471b-bb2c-50b9a8f5f450",
+            "displayName": "Manh Luc"
+        }
+    },
+    "owner": {
+        "user": {
+            "email": "ManhLuc@FPTJapan225.onmicrosoft.com",
+            "id": "02e0d2d8-be99-471b-bb2c-50b9a8f5f450",
+            "displayName": "Manh Luc"
+        }
+    },
+    "quota": {
+        "deleted": 0,
+        "remaining": 1099499150346,
+        "state": "normal",
+        "total": 1099511627776,
+        "used": 12477430
+    }
+}
+  >>> Drive accessible — Files.Read IS working in practice
+
+[3] SEARCH — POST /search/query (entityTypes: driveItem)
+
+────────────────────────────────────────────────────────────
+PROBE: POST /search/query driveItem
+  Status: 403
+  Body:   {
+    "error": {
+        "code": "Forbidden",
+        "message": "Access to OneDriveFile in Graph API requires the following permissions: Files.Read.All or Sites.Read.All or Files.ReadWrite.All or Sites.ReadWrite.All or Sites.Selected. However, the application only has the following permissions granted: Mail.Read, User.Read, Files.Read",
+        "target": "",
+        "httpCode": 403
+    },
+    "Instrumentation": {
+        "TraceId": "22e682ac-b996-f3a6-7de2-2b5988ab80d4"
+    }
+}
+
+[4] SEARCH — POST /search/query (entityTypes: message) — sanity check
+
+────────────────────────────────────────────────────────────
+PROBE: POST /search/query message
+  Status: 200
+  Body:   {
+    "value": [
+        {
+            "searchTerms": [
+                "test"
+            ],
+            "hitsContainers": [
+                {
+                    "hits": [
+                        {
+                            "hitId": "AAMkAGY5MzA5Y2FhLTIzMDctNDk4ZS1iZGFiLWRmZTJhZDU3NWJlYgBGAAAAAAC_FCtB_K-USp3AlJF0nNx-BwDo_QQjk5NxRYXu498kvcdVAAAAAAEMAADo_QQjk5NxRYXu498kvcdVAAAAAAVYAAA=",
+                            "rank": 1,
+                            "summary": "...com \u304b\u3089\u30e1\u30fc\u30eb\u3092\u53d7\u3051\u53d6\u308b\u983b\u5ea6\u306f\u9ad8\u304f\u3042\u308a\u307e\u305b\u3093\u3002\u3053\u308c\u304c\u91cd\u8981\u3067\u3042\u308b\u7406\u7531   This <c0>test</c0> mail *********************************************************************** IMPORTANT NOTICE This email may contain confidential ...",
+                            "resource": {
+                                "@odata.type": "#microsoft.graph.message",
+                                "createdDateTime": "2026-05-20T06:30:01Z",
+                                "lastModifiedDateTime": "2026-05-20T08:56:38Z",
+                                "receivedDateTime": "2026-05-20T06:30:01Z",
+                                "sentDateTime": "2026-05-20T06:29:55Z",
+                                "hasAttachments": false,
+                                "internetMessageId": "<TYZPR06MB78981375D0FCA180C0F2CA07AE012@TYZPR06MB7898.apcprd06.prod.outlook.com>",
+                                "subject": "Re: T\u00e9t Emsail ",
+                                "bodyPreview": "...com \u304b\u3089\u30e1\u30fc\u30eb\u3092\u53d7\u3051\u53d6\u308b\u983b\u5ea6\u306f\u9ad8\u304f\u3042\u308a\u307e\u305b\u3093\u3002\u3053\u308c\u304c\u91cd\u8981\u3067\u3042\u308b\u7406\u7531   This test mail *********************************************************************** IMPORTANT NOTICE This email may contain confidential ...",
+                                "importance": "normal",
+                                "parentFolderId": "AAMkAGY5MzA5Y2FhLTIzMDctNDk4ZS1iZGFiLWRmZTJhZDU3NWJlYgAuAAAAAAC_FCtB_K-USp3AlJF0nNx-AQDo_QQjk5NxRYXu498kvcdVAAAAAAEMAAA=",
+                                "conversationId": "AAQkAGY5MzA5Y2FhLTIzMDctNDk4ZS1iZGFiLWRmZTJhZDU3NWJlYgAQAG59yIpuwnNAtjqu/SD8TE8=",
+                                "isRead": false,
+                                "isDraft": false,
+                                "webLink": "https://outlook.office365.com/owa/?ItemID=AAMkAGY5MzA5Y2FhLTIzMDctNDk4ZS1iZGFiLWRmZTJhZDU3NWJlYgBGAAAAAAC%2BFCtB%2BK%2FUSp3AlJF0nNx%2FBwDo%2BQQjk5NxRYXu498kvcdVAAAAAAEMAADo%2BQQjk5NxRYXu498kvcdVAAAAAAVYAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+                                "inferenceClassification": "focused",
+                                "replyTo": [
+                                    {
+                                        "emailAddress": {
+                                            "name": "Manh Luc"
+                                        }
+                                    }
+                                ],
+                                "sender": {
+                                    "emailAddress": {
+                                        "name": "Luc Nguyen Manh",
+                                        "address": "LucNM@fpt.com"
+                                    }
+                                },
+                                "from": {
+                                    "emailAddress": {
+                                        "name": "Luc Nguyen Manh",
+                                        "address": "LucNM@fpt.com"
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "hitId": "AAMkAGY5MzA5Y2FhLTIzMDctNDk4ZS1iZGFiLWRmZTJhZDU3NWJlYgBGAAAAAAC_FCtB_K-USp3AlJF0nNx-BwDo_QQjk5NxRYXu498kvcdVAAAAAAEJAADo_QQjk5NxRYXu498kvcdVAAAAAH3BAAA=",
+                            "rank": 2,
+                            "summary": "This <c0>test</c0> mail ...",
+                            "resource": {
+                                "@odata.type": "#microsoft.graph.message",
+                                "createdDateTime": "2026-05-20T06:07:57Z",
+                                "lastModifiedDateTime": "2026-05-20T06:08:48Z",
+                                "receivedDateTime": "2026-05-20T06:08:00Z",
+                                "sentDateTime": "2026-05-20T06:07:57Z",
+                                "hasAttachments": false,
+                                "internetMessageId": "<TY3PR01MB10078581FB3812F159DDD7B10BD012@TY3PR01MB10078.jpnprd01.prod.outlook.com>",
+                                "subject": "T\u00e9t Emsail ",
+                                "bodyPreview": "This test mail ...",
+                                "importance": "normal",
+                                "parentFolderId": "AAMkAGY5MzA5Y2FhLTIzMDctNDk4ZS1iZGFiLWRmZTJhZDU3NWJlYgAuAAAAAAC_FCtB_K-USp3AlJF0nNx-AQDo_QQjk5NxRYXu498kvcdVAAAAAAEJAAA=",
+                                "conversationId": "AAQkAGY5MzA5Y2FhLTIzMDctNDk4ZS1iZGFiLWRmZTJhZDU3NWJlYgAQAG59yIpuwnNAtjqu/SD8TE8=",
+                                "isRead": true,
+                                "isDraft": false,
+                                "webLink": "https://outlook.office365.com/owa/?ItemID=AAMkAGY5MzA5Y2FhLTIzMDctNDk4ZS1iZGFiLWRmZTJhZDU3NWJlYgBGAAAAAAC%2BFCtB%2BK%2FUSp3AlJF0nNx%2FBwDo%2BQQjk5NxRYXu498kvcdVAAAAAAEJAADo%2BQQjk5NxRYXu498kvcdVAAAAAH3BAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+                                "inferenceClassification": "focused",
+                                "replyTo": [
+                                    {
+                                        "emailAddress": {
+                                            "name": "lucnm@fpt.com"
+                                        }
+                                    }
+                                ],
+                                "sender": {
+                                    "emailAddress": {
+                                        "name": "Manh Luc",
+                                        "address": "/O=EXCHANGELABS/OU=EXCHANGE ADMINISTRATIVE GROUP (FYDIBOHF23SPDLT)/CN=RECIPIENTS/CN=28CBD24EDFA74CC18CCF383484240CFF-MAILBOX1"
+                                    }
+                                },
+                                "from": {
+                                    "emailAddress": {
+                                        "name": "Manh Luc",
+                                        "address": "/O=EXCHANGELABS/OU=EXCHANGE ADMINISTRATIVE GROUP (FYDIBOHF23SPDLT)/CN=RECIPIENTS/CN=28CBD24EDFA74CC18CCF383484240CFF-MAILBOX1"
+                                    }
+                                }
+                            }
+                        }
+                    ],
+                    "total": 2,
+                    "moreResultsAvailable": false
+                }
+            ]
+        }
+    ],
+    "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#Collection(microsoft.graph.searchResponse)"
+}
+  >>> Search API endpoint is reachable and works for messages
+
+[5] LISTING — GET /me/drive/root/children
+
+────────────────────────────────────────────────────────────
+PROBE: /me/drive/root/children
+  Status: 200
+  Body:   {
+    "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#Collection(driveItem)",
+    "value": [
+        {
+            "@odata.etag": "\"{EF10375C-9443-44CA-BB13-ADD094CF58A8},1\"",
+            "id": "01JZN5UZS4G4IO6Q4UZJCLWE5N2CKM6WFI",
+            "name": "Attachments"
+        },
+        {
+            "@odata.etag": "\"{1699DD9A-903A-446A-BDF4-033EAA61F391},2\"",
+            "id": "01JZN5UZU23WMRMOUQNJCL35ADH2VGD44R",
+            "name": "ChatGPT Image May 19, 2026, 11_57_18 AM.png"
+        },
+        {
+            "@odata.etag": "\"{C0ED5E3C-C067-4774-9C8B-3E91492EE1D8},1\"",
+            "id": "01JZN5UZR4L3W4AZ6AORDZZCZ6SFES5YOY",
+            "name": "current_process_workflow_as_is.pptx"
+        },
+        {
+            "@odata.etag": "\"{8CFD6020-11A6-40FD-BED1-6CB5AC98B9B4},1\"",
+            "id": "01JZN5UZRAMD6YZJQR7VAL5ULMWWWJRONU",
+            "name": "Ragas_\u57fa\u672c\u77e5\u8b58_\u5b66\u7fd2\u8cc7\u6599 (1).pdf"
+        },
+        {
+            "@odata.etag": "\"{AF32183C-C61A-4DDC-AF80-A6CFBDB22F70},1\"",
+            "id": "01JZN5UZR4DAZK6GWG3RG27AFGZ663EL3Q",
+            "name": "Ragas_\u57fa\u672c\u77e5\u8b58_\u5b66\u7fd2\u8cc7\u6599.pptx"
+        }
+    ]
+}
+
+============================================================
+SUMMARY
+  If probe [2] returns 404 and token has no Files.Read scope:
+  → Go to /logout, then /login to get a fresh token.
+  If probe [2] returns 200 but probe [3] returns 403:
+  → The search API needs Files.Read.All or admin consent.
+  If probe [4] returns 200 but probe [3] does not:
+  → Search API works but driveItem specifically needs higher permission.
+
+Log saved to: C:\tmp\06_Research\14_Microsoft_GraphAPI\debug\search.log

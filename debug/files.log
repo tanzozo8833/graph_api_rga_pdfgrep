@@ -1,0 +1,95 @@
+============================================================
+OneDrive Debug Probe
+Time: 2026-05-20T23:41:06.902658+00:00
+============================================================
+
+[1] JWT TOKEN CLAIMS
+  aud:  00000003-0000-0000-c000-000000000000
+  scp:  Mail.Read openid profile User.Read email
+  upn:  ManhLuc@FPTJapan225.onmicrosoft.com
+  tid:  c9d7a627-62c3-4d01-a52c-a6d8271cf42e
+  exp:  1779324125
+
+  *** WARNING: Files.Read not found in token scopes! ***
+  The token may lack OneDrive permission. Re-login may be needed.
+
+────────────────────────────────────────────────────────────
+PROBE: /me — identity check
+  URL:    https://graph.microsoft.com/v1.0/me
+  Params: {'$select': 'displayName,mail,userPrincipalName'}
+  Status: 200
+  Body:   {
+    "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users(displayName,mail,userPrincipalName)/$entity",
+    "displayName": "Manh Luc",
+    "mail": "ManhLuc@FPTJapan225.onmicrosoft.com",
+    "userPrincipalName": "ManhLuc@FPTJapan225.onmicrosoft.com"
+}
+
+────────────────────────────────────────────────────────────
+PROBE: /me/drive — check drive exists
+  URL:    https://graph.microsoft.com/v1.0/me/drive
+  Status: 404
+  Body:   {
+    "error": {
+        "code": "itemNotFound",
+        "message": "Item not found",
+        "innerError": {
+            "date": "2026-05-20T23:41:07",
+            "request-id": "724fda7f-1ce5-4ba0-a9aa-45ba1c33ee91",
+            "client-request-id": "724fda7f-1ce5-4ba0-a9aa-45ba1c33ee91"
+        }
+    }
+}
+
+────────────────────────────────────────────────────────────
+PROBE: /me/drive/root — resolve root item
+  URL:    https://graph.microsoft.com/v1.0/me/drive/root
+  Status: 404
+  Body:   {
+    "error": {
+        "code": "itemNotFound",
+        "message": "Item not found"
+    }
+}
+
+────────────────────────────────────────────────────────────
+PROBE: /me/drive/root/children — full params
+  URL:    https://graph.microsoft.com/v1.0/me/drive/root/children
+  Params: {'$top': 10, '$select': 'name,size,lastModifiedDateTime,folder,file,webUrl', '$orderby': 'lastModifiedDateTime desc'}
+  Status: 404
+  Body:   {
+    "error": {
+        "code": "itemNotFound",
+        "message": "Item not found"
+    }
+}
+
+────────────────────────────────────────────────────────────
+PROBE: /me/drive/items/root/children — alternate path
+  URL:    https://graph.microsoft.com/v1.0/me/drive/items/root/children
+  Params: {'$top': 10, '$select': 'name,size,lastModifiedDateTime,folder,file,webUrl', '$orderby': 'lastModifiedDateTime desc'}
+  Status: 404
+  Body:   {
+    "error": {
+        "code": "itemNotFound",
+        "message": "Item not found"
+    }
+}
+
+SKIPPED probe 7 — could not get drive ID from probe 3
+
+────────────────────────────────────────────────────────────
+PROBE: /me/drive/root/children — stripped params (no orderby/select)
+  URL:    https://graph.microsoft.com/v1.0/me/drive/root/children
+  Params: {'$top': 10}
+  Status: 404
+  Body:   {
+    "error": {
+        "code": "itemNotFound",
+        "message": "Item not found"
+    }
+}
+
+============================================================
+Debug complete. Check each probe status above.
+Log saved to: C:\tmp\06_Research\14_Microsoft_GraphAPI\debug\files.log
