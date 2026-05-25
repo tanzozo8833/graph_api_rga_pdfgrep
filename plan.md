@@ -763,3 +763,235 @@
   2. Deployment phải là model hỗ trợ function/tool calling (gpt-4o, gpt-4.1,
   gpt-4-turbo)
   3. Chạy venv\Scripts\python.exe app.py → test
+
+
+
+  🌐 Tầng 1 — Browser (JS)
+
+  1. form.addEventListener('submit', ...) — app.py:962
+  - Listener gắn vào form chat khi page load. Chặn submit mặc định
+  (e.preventDefault()) để không reload page.
+
+  2. appendUser(text) — app.py:843
+  - Tạo bubble màu xanh hiển thị câu hỏi user ngay khi gửi.
+
+  3. createAgentContainer() — app.py:851
+  - Tạo bubble agent rỗng có 3 vùng: status line (đang typing), khu
+  chứa steps, vùng answer cuối.
+
+  4. fetch('/ask', { method:'POST', body:{query} }) — app.py:973
+  - Gửi HTTP POST kèm query JSON, Accept: text/event-stream để mở
+  kênh SSE.
+
+  5. consumeStream(resp, container) — app.py:913
+  - Đọc từng chunk từ response body. Tách theo \n\n. Parse mỗi data:
+  {...} thành object event. Gọi handleEvent.
+
+  ---
+  🔥 Tầng 2 — Flask backend (Python)
+
+  6. ask() — app.py:643 (route /ask)
+  - Lấy access_token từ session Flask (đã có từ MSAL OAuth).
+  - Validate query không rỗng.
+  - Mở generator SSE, mỗi event yield ra dưới dạng data: {...}\n\n.
+
+  7. run_agent_stream(query, token) — agent/agent.py:53
+  - Generator gốc. yield user_query event. Khởi tạo agent rồi loop
+  qua các update từ langgraph.
+
+  8. _build_agent(token) — agent/agent.py:18
+  - Tạo AzureChatOpenAI (LLM), wrap 3 tools với closure giữ token,
+  gọi create_agent (langgraph) với SYSTEM_PROMPT.
+
+  9. make_llm() — agent/llm.py:6
+  - Đọc 4 biến AZURE_OPENAI_* từ env, trả về AzureChatOpenAI đã
+  config.
+
+  10. make_graph_search_tool(token) / make_file_fetch_tool(token) /
+  make_grep_context_tool() — agent/tools/*.py
+  - Factory pattern: tạo 3 tool LangChain với access_token đã đóng
+  băng trong closure.
+
+  11. agent_graph.stream({"messages": [...]}, stream_mode="updates")
+  — agent/agent.py:79
+  - Langgraph chạy agent loop. yield mỗi delta state. Mỗi vòng có 2
+  node:
+    - agent node — gọi LLM, sinh AIMessage (có thể có tool_calls)
+    - tools node — chạy tool được LLM yêu cầu, trả ToolMessage
+
+  ---
+  🔁 Tầng 3 — Vòng lặp ReAct (lặp nhiều lần)
+
+  Mỗi vòng đi qua các bước:
+
+  12. LLM sinh tool_call (chạy bên trong langgraph, không thấy code
+  Python)
+  - Đọc SYSTEM_PROMPT (agent/prompts.py:1) + history messages
+  - Quyết định gọi tool nào với args nào (vd:
+  graph_search(query="metric OR ..."))
+
+  13. _parse_search_result(observation) — agent/agent.py:43
+  - Khi tool_result trả về từ graph_search, parse text observation để
+   extract [{item_id, name}, ...] — dùng cho summary cuối.
+
+  ---
+  Iteration A — gọi graph_search
+
+  14. graph_search(query) — agent/tools/graph_search.py:11 (closure
+  trong factory)
+  - POST https://graph.microsoft.com/v1.0/search/query với:
+    - entityTypes: ["driveItem"]
+    - queryString: <LLM's OR-joined keywords>
+    - size: 15, fields: id, name, webUrl, lastModifiedDateTime, size,
+   parentReference
+  - Parse data.value[0].hitsContainers[0].hits
+  - Mỗi hit có resource.parentReference.driveId →
+  drive_index.put(item_id, drive_id) (agent/drive_index.py:13) lưu
+  mapping để fetch sau biết drive nào
+  - Trả về string format: - item_id=... | name=... | snippet="..." |
+  webUrl=...
+
+  ---
+  Iteration B — gọi fetch_file_text (nếu LLM muốn đọc sâu)
+
+  15. fetch_file_text(item_id) — agent/tools/file_fetch.py:30
+  - cache.get(item_id) (agent/cache.py:8) — check đã download chưa
+  - _base_endpoint(item_id) — agent/tools/file_fetch.py:14
+    - Tra drive_index.get(item_id) → có driveId thì dùng
+  /drives/{driveId}/items/{id} (file shared/SharePoint/Teams), không
+  thì fallback /me/drive/items/{id}
+  - GET metadata ($select=name,size,file) → check size ≤ 25MB + ext ∈
+   SUPPORTED
+  - GET /content → binary bytes
+
+  16. extract_text(name, bytes) — agent/extractors/__init__.py:14
+  - Dispatcher theo extension:
+    - .pdf → extract_pdf (pdf.py:5) — pdfplumber, prepend [PAGE N]
+    - .docx → extract_docx (docx.py:6) — python-docx, paragraphs +
+  tables
+    - .xlsx → extract_xlsx (xlsx.py:6) — openpyxl, [SHEET name] +
+  cells
+    - .pptx → extract_pptx (pptx.py:6) — python-pptx, [SLIDE N] +
+  notes
+    - text formats → decode UTF-8
+
+  17. cache.put(item_id, name, text) — agent/cache.py:12
+  - Lưu text vào dict in-memory keyed by item_id, để các grep sau
+  khỏi fetch lại.
+
+  ---
+  Iteration C — gọi grep_context (sau khi đã có text)
+
+  18. grep_context(item_id, patterns, context_lines) —
+  agent/tools/grep_context.py:43
+  - Lấy text từ cache.get(item_id) (không re-fetch!)
+  - re.compile(patterns, IGNORECASE) — compile regex
+  (metric|BLEU|ROUGE|...)
+  - Loop qua từng dòng → regex.search(line) → thu thập match_indices
+  - Merge overlapping windows ±N lines (algorithm trong code: nếu
+  start ≤ last_end thì extend, không thì tạo window mới)
+  - _write_debug_log(...) — agent/tools/grep_context.py:18
+    - Append vào debug/grep.log toàn bộ context đã extract — phục vụ
+  debug
+  - Format output: >> L42: hit line và    L41: context line
+
+  ---
+  🎯 Tầng 4 — Kết thúc
+
+  19. LLM sinh Final Answer (sau khi đủ thông tin)
+  - AIMessage không có tool_calls nữa → là answer cuối kèm citation
+  [filename, line N]
+
+  20. Summary — agent/agent.py:177
+  - yield event summary chứa: queries đã search, files trả về, files
+  đã fetch, files đã grep.
+  - In ra console log [SUMMARY] block.
+
+  21. yield done — app.py:653
+  - Trong generate() của Flask, sau khi stream xong yield {"event":
+  "done"} để JS biết kết thúc.
+
+  ---
+  🖼️  Tầng 5 — Browser nhận và render
+
+  22. handleEvent(container, ev) — app.py:990
+  - Switch theo ev.event:
+    - user_query → setStatus "Đang tìm kiếm..."
+    - tool_call → addStep (app.py:868) — tạo step card mới
+    - tool_result → fillStepResult (app.py:885) — điền observation
+  vào step card
+    - summary → renderSummary (app.py:935) — render box màu vàng tổng
+   kết
+    - final_answer → setAnswer (app.py:902) — render câu trả lời cuối
+    - error → setError (app.py:907)
+    - done → ẩn typing indicator
+
+  ---
+  Sơ đồ tóm tắt
+
+  [Browser]
+    form.submit → fetch /ask
+         │
+         ▼
+  [Flask]
+    ask() → run_agent_stream()
+                │
+                ├─→ _build_agent(token)
+                │       ├─→ make_llm()
+  (AzureChatOpenAI)
+                │       ├─→ make_graph_search_tool(token)
+                │       ├─→ make_file_fetch_tool(token)
+                │       ├─→ make_grep_context_tool()
+                │       └─→ create_agent(llm, tools, SYSTEM_PROMPT)
+                │
+                ▼
+           agent_graph.stream(query)   ──────────────┐
+                │                                    │
+                │   ┌────────────────────────────────┘
+                │   │ Loop (langgraph nội bộ):
+                │   │
+                │   ▼
+                │  LLM agent node sinh tool_call
+                │   │
+                │   ▼
+                │  Tools node chạy 1 trong 3:
+                │   ├─ graph_search()  → POST /search/query →
+  drive_index.put()
+                │   ├─ fetch_file_text() → drive_index.get()
+                │   │                  → cache.get() (kiểm) → GET
+  content
+                │   │                  → extract_text() → cache.put()
+                │   └─ grep_context() → cache.get() → re.compile()
+                │                     → merge windows →
+  _write_debug_log()
+                │   │
+                │   ▼
+                │  yield event qua SSE (tool_call, tool_result)
+                │   │
+                │   ▼ (LLM thấy đủ → no tool_calls)
+                │  yield final_answer
+                │
+                ▼
+           yield summary + done
+                │
+                ▼
+  [Flask] data: {...}\n\n
+                │
+                ▼
+  [Browser] consumeStream() → handleEvent() → render UI live
+
+  Cache + index — giữa các vòng
+
+  Lưu trữ: cache._TEXT_CACHE
+  File: agent/cache.py
+  Mục đích: item_id → {filename, text} để grep nhiều lần không phải
+    fetch lại
+  ────────────────────────────────────────
+  Lưu trữ: drive_index._INDEX
+  File: agent/drive_index.py
+  Mục đích: item_id → drive_id để fetch dùng đúng
+    /drives/{driveId}/...
+  ────────────────────────────────────────
+  Lưu trữ: debug/grep.log
+  File: (file disk)
+  Mục đích: Append-only log mỗi lần grep, debug ngoài tiến trình

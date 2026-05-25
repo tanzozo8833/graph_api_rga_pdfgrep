@@ -1,0 +1,866 @@
+
+======================================================================
+TIME       : 2026-05-25T10:32:48
+FILE       : Real-Time Sign Language Classification and Translation Using Advanced AI Models.pdf
+PATTERNS   : hearing loss|hearing impairment|prevalence|number of people|global
+TOTAL LINES: 787
+MATCHES    : 12 hit(s) at lines [13, 25, 26, 29, 34, 40, 46, 74, 582, 588, 613, 615]
+CHUNKS     : 5 (after merging overlap)
+
+--- EXTRACTED CHUNKS (exactly what the LLM saw) ---
+
+Chunk 1: lines 9-19
+   L9: thu.hb226003@sis, phuong.ntm5992@sis}.hust.edu.vn
+   L10: *Corresponding author: haipv@soict.hust.edu.vn
+   L11: Abstract. Our research focuses on developing an advanced gestural
+   L12: communication tool that translates sign language into text or speech in
+   L13: real-time, specifically designed to overcome communication barriers for
+>> L14: individuals with hearing impairments. By utilizing the Random Forest
+   L15: Classifier alongside MediaPipe Hands for precise hand gesture detection
+   L16: and sign language interpretation, the system achieves a high level of
+   L17: accuracy, estimated between 90% and 95%. This study demonstrates
+   L18: the effectiveness of the RFC algorithm in improving the accuracy and
+   L19: reliability of sign language translation. Furthermore, the tool’s intuitive
+
+Chunk 2: lines 21-52
+   L21: empowering users by providing equal access to effective communication
+   L22: solutions and opportunities for societal engagement.
+   L23: Keywords: Sign Language Recognition, Real-Time Translation, AI Models,
+   L24: Random Forest Classifier, MediaPipe Hands
+   L25: 1 Introduction
+>> L26: According to the World Health Organization (WHO), over 5% of the global
+>> L27: population(approximately 466 million people), experience disabling hearing loss
+   L28: [1]. Many of these individuals lack proficiency in sign language, leading to several
+   L29: key challenges:
+>> L30: Communication Barriers: Individuals with hearing impairments who are not
+   L31: proficient in sign language often face significant communication challenges, lead-
+   L32: ing to feelings of isolation and frustration in both personal and professional
+   L33: environments. [?].
+   L34: Educational Disparities: In the absence of sign language support or appropri-
+>> L35: ate accommodations, students with hearing impairments encounter significant
+   L36: challenges in comprehending lectures, engaging in classroom discussions, and ac-
+   L37: cessinginstructionalmaterials.Theseobstaclescanadverselyaffecttheiracademic
+   L38: performance and limit future educational and career opportunities. [2].
+   L39: [PAGE 2]
+   L40: 2 Lam et al.
+>> L41: Employment Discrimination: Individuals with hearing impairments often face
+   L42: discrimination and employment barriers in the workplace, primarily due to
+   L43: communication difficulties and the requirement for specific accommodations.
+   L44: These challenges can significantly restrict their access to job opportunities and
+   L45: hinder career progression. [2].
+   L46: Addressing these challenges requires the promotion of accessibility, inclusion,
+>> L47: and equal opportunities for individuals with hearing impairments. Key strategies
+   L48: include implementing supportive policies, providing necessary accommodations
+   L49: in educational and workplace settings, raising public awareness, and fostering a
+   L50: culture of inclusivity that supports the needs of this population. [3].
+   L51: With the aim of researching and executing the problem of sign language
+   L52: detection and classification, our study have developed a real-time gestural com-
+
+Chunk 3: lines 70-80
+   L70: standard for precision in sign language translation. Our approach emphasizes
+   L71: intuitive design principles, prioritizing usability and accessibility to foster
+   L72: inclusivity and empowerment in communication.
+   L73: 3. Comprehensive experiments and detailed analyses of the system’s perfor-
+   L74: mance, validating the effectiveness of our approach in enhancing communica-
+>> L75: tion for individuals with hearing impairments [5].
+   L76: The remainder of this paper is organized as follows: Section 3 describes the
+   L77: design and implementation of our gestural communication tool. In Section 4,
+   L78: we present the results of our experiments and evaluate the performance of our
+   L79: system. Finally, Section 5 concludes the paper with a summary of our findings
+   L80: and future directions for research.
+
+Chunk 4: lines 578-594
+   L578: ticularly attractive for deployment on mobile and embedded devices, where
+   L579: computational resources are often limited.
+   L580: In summary, the findingsindicatethat our system not onlymeetsbut exceeds
+   L581: current benchmarks in sign language recognition, providing a practical, scalable
+   L582: solution that can be deployed in real-world settings to facilitate communication
+>> L583: for individuals with hearing impairments. Future work could focus on expanding
+   L584: the system’s capabilities to handle additional sign languages and more complex
+   L585: gestures, further enhancing its applicability and impact.
+   L586: 5 Conclusion
+   L587: In this paper, we introduced an advanced gestural communication tool that
+   L588: translates sign language into text or speech in real-time, aiming to bridge com-
+>> L589: munication gaps for individuals with hearing impairments. Utilizing advanced
+   L590: AI models such as the Random Forest Classifier and MediaPipe Hands, our
+   L591: tool achieves a high accuracy rate up to 97%, ensuring reliable and precise sign
+   L592: language translation.
+   L593: [PAGE 15]
+   L594: CompIE 15
+
+Chunk 5: lines 609-621
+   L609: accessible and easy to use. This combination of cutting-edge technology and
+   L610: intuitivedesignfostersinclusivityandempowersuserstocommunicateeffectively.
+   L611: Future work will focus on further to handle a wider range of sign language
+   L612: motions and variations in lighting, camera angles, and backgrounds. We invite
+   L613: collaboration from stakeholders to help make effective communication tools
+>> L614: accessible to all individuals with hearing impairments.
+   L615: References
+>> L616: 1. WHO. World health organization (who) - deafness and hearing loss. World Health
+   L617: Organization, 2020.
+   L618: 2. H Alsolai, L Alsolai, FN Al-Wesabi, M Othman, M Rizwanullah, and AA Abdel-
+   L619: mageed. Automated sign language detection and classification using reptile search
+   L620: algorithm with hybrid deep learning. Heliyon, 10(1):e23252, 2024.
+   L621: 3. Leo Breiman. Random forests. Machine Learning, 45(1):5–32, Oct 2001.
+
+======================================================================
+TIME       : 2026-05-25T14:19:52
+FILE       : Real-Time Sign Language Classification and Translation Using Advanced AI Models.pdf
+PATTERNS   : hearing loss|hearing impairment|deafness|hearing difficulty
+TOTAL LINES: 787
+MATCHES    : 11 hit(s) at lines [13, 26, 29, 34, 40, 46, 74, 582, 588, 613, 615]
+CHUNKS     : 5 (after merging overlap)
+
+--- EXTRACTED CHUNKS (exactly what the LLM saw) ---
+
+Chunk 1: lines 9-19
+   L9: thu.hb226003@sis, phuong.ntm5992@sis}.hust.edu.vn
+   L10: *Corresponding author: haipv@soict.hust.edu.vn
+   L11: Abstract. Our research focuses on developing an advanced gestural
+   L12: communication tool that translates sign language into text or speech in
+   L13: real-time, specifically designed to overcome communication barriers for
+>> L14: individuals with hearing impairments. By utilizing the Random Forest
+   L15: Classifier alongside MediaPipe Hands for precise hand gesture detection
+   L16: and sign language interpretation, the system achieves a high level of
+   L17: accuracy, estimated between 90% and 95%. This study demonstrates
+   L18: the effectiveness of the RFC algorithm in improving the accuracy and
+   L19: reliability of sign language translation. Furthermore, the tool’s intuitive
+
+Chunk 2: lines 22-52
+   L22: solutions and opportunities for societal engagement.
+   L23: Keywords: Sign Language Recognition, Real-Time Translation, AI Models,
+   L24: Random Forest Classifier, MediaPipe Hands
+   L25: 1 Introduction
+   L26: According to the World Health Organization (WHO), over 5% of the global
+>> L27: population(approximately 466 million people), experience disabling hearing loss
+   L28: [1]. Many of these individuals lack proficiency in sign language, leading to several
+   L29: key challenges:
+>> L30: Communication Barriers: Individuals with hearing impairments who are not
+   L31: proficient in sign language often face significant communication challenges, lead-
+   L32: ing to feelings of isolation and frustration in both personal and professional
+   L33: environments. [?].
+   L34: Educational Disparities: In the absence of sign language support or appropri-
+>> L35: ate accommodations, students with hearing impairments encounter significant
+   L36: challenges in comprehending lectures, engaging in classroom discussions, and ac-
+   L37: cessinginstructionalmaterials.Theseobstaclescanadverselyaffecttheiracademic
+   L38: performance and limit future educational and career opportunities. [2].
+   L39: [PAGE 2]
+   L40: 2 Lam et al.
+>> L41: Employment Discrimination: Individuals with hearing impairments often face
+   L42: discrimination and employment barriers in the workplace, primarily due to
+   L43: communication difficulties and the requirement for specific accommodations.
+   L44: These challenges can significantly restrict their access to job opportunities and
+   L45: hinder career progression. [2].
+   L46: Addressing these challenges requires the promotion of accessibility, inclusion,
+>> L47: and equal opportunities for individuals with hearing impairments. Key strategies
+   L48: include implementing supportive policies, providing necessary accommodations
+   L49: in educational and workplace settings, raising public awareness, and fostering a
+   L50: culture of inclusivity that supports the needs of this population. [3].
+   L51: With the aim of researching and executing the problem of sign language
+   L52: detection and classification, our study have developed a real-time gestural com-
+
+Chunk 3: lines 70-80
+   L70: standard for precision in sign language translation. Our approach emphasizes
+   L71: intuitive design principles, prioritizing usability and accessibility to foster
+   L72: inclusivity and empowerment in communication.
+   L73: 3. Comprehensive experiments and detailed analyses of the system’s perfor-
+   L74: mance, validating the effectiveness of our approach in enhancing communica-
+>> L75: tion for individuals with hearing impairments [5].
+   L76: The remainder of this paper is organized as follows: Section 3 describes the
+   L77: design and implementation of our gestural communication tool. In Section 4,
+   L78: we present the results of our experiments and evaluate the performance of our
+   L79: system. Finally, Section 5 concludes the paper with a summary of our findings
+   L80: and future directions for research.
+
+Chunk 4: lines 578-594
+   L578: ticularly attractive for deployment on mobile and embedded devices, where
+   L579: computational resources are often limited.
+   L580: In summary, the findingsindicatethat our system not onlymeetsbut exceeds
+   L581: current benchmarks in sign language recognition, providing a practical, scalable
+   L582: solution that can be deployed in real-world settings to facilitate communication
+>> L583: for individuals with hearing impairments. Future work could focus on expanding
+   L584: the system’s capabilities to handle additional sign languages and more complex
+   L585: gestures, further enhancing its applicability and impact.
+   L586: 5 Conclusion
+   L587: In this paper, we introduced an advanced gestural communication tool that
+   L588: translates sign language into text or speech in real-time, aiming to bridge com-
+>> L589: munication gaps for individuals with hearing impairments. Utilizing advanced
+   L590: AI models such as the Random Forest Classifier and MediaPipe Hands, our
+   L591: tool achieves a high accuracy rate up to 97%, ensuring reliable and precise sign
+   L592: language translation.
+   L593: [PAGE 15]
+   L594: CompIE 15
+
+Chunk 5: lines 609-621
+   L609: accessible and easy to use. This combination of cutting-edge technology and
+   L610: intuitivedesignfostersinclusivityandempowersuserstocommunicateeffectively.
+   L611: Future work will focus on further to handle a wider range of sign language
+   L612: motions and variations in lighting, camera angles, and backgrounds. We invite
+   L613: collaboration from stakeholders to help make effective communication tools
+>> L614: accessible to all individuals with hearing impairments.
+   L615: References
+>> L616: 1. WHO. World health organization (who) - deafness and hearing loss. World Health
+   L617: Organization, 2020.
+   L618: 2. H Alsolai, L Alsolai, FN Al-Wesabi, M Othman, M Rizwanullah, and AA Abdel-
+   L619: mageed. Automated sign language detection and classification using reptile search
+   L620: algorithm with hybrid deep learning. Heliyon, 10(1):e23252, 2024.
+   L621: 3. Leo Breiman. Random forests. Machine Learning, 45(1):5–32, Oct 2001.
+
+======================================================================
+TIME       : 2026-05-25T14:30:57
+FILE       : 2602.23368v1.pdf
+PATTERNS   : metric|metrics|evaluation|score|benchmark|performance
+TOTAL LINES: 624
+MATCHES    : 48 hit(s) at lines [1, 33, 36, 51, 77, 81, 87, 88, 89, 140, 141, 158, 177, 194, 197, 199, 200, 202, 205, 206, 209, 211, 221, 226, 230, 232, 238, 241, 242, 243]...
+CHUNKS     : 10 (after merging overlap)
+
+--- EXTRACTED CHUNKS (exactly what the LLM saw) ---
+
+Chunk 1: lines 1-12
+   L1: [PAGE 1]
+>> L2: Keyword search is all you need: Achieving RAG-Level Performance without
+   L3: vector databases using agentic tool use
+   L4: ShreyasSubramanian*,AdewaleAkinfaderin*,YanyanZhang*,IshanSingh*,ManiKhanuja,
+   L5: SandeepSingh,MairaLadeiraTanke
+   L6: AmazonWebServices
+   L7: 410TerryAvenueNorth,
+   L8: Seattle,WA98109
+   L9: Abstract from standalone LLM responses to hybrid systems that in-
+   L10: tegrate external knowledge sources, aiming to improve the
+   L11: While Retrieval-Augmented Generation (RAG) has proven factualaccuracyandrelevanceofgeneratedcontent(Esetal.
+   L12: effective for generating accurate, context-based responses
+
+Chunk 2: lines 24-62
+   L24: conductedasystematiccomparisonbetweenRAG-basedsys- effective,theyfacechallengesinintegratingretrievalmech-
+   L25: tems and tool-augmented LLM agents, specifically evaluat-
+   L26: anismsandmaintainingknowledgebases.Inresponse,tool-
+   L27: ingtheirretrievalmechanismsandresponsequalitywhenthe
+   L28: augmentedLLMagentshavebeendeveloped,usingsearch
+   L29: agentonlyhasaccesstobasickeywordsearchtools.Ourem-
+   L30: engines and APIs to retrieve information dynamically, of-
+   L31: piricalanalysisdemonstratesthattool-basedkeywordsearch
+   L32: fering greater flexibility, particularly when knowledge re-
+   L33: implementationswithinanagenticframeworkcanattainover
+>> L34: 90%oftheperformancemetricscomparedtotraditionalRAG quires frequent updates (Qu et al. 2024). Despite these
+   L35: systems without using a standing vector database. Our ap- advancements, systematic comparisons between RAG and
+   L36: proachissimpletoimplement,costeffective,andisparticu- tool-augmentedapproachesremainlimited.Comprehensive
+>> L37: larlyusefulinscenariosrequiringfrequentupdatestoknowl- benchmarkingmetricsassessingretrievalaccuracy,response
+   L38: edgebases. quality,latency,andmaintenanceoverheadareessentialfor
+   L39: understandingtheirrelativetrade-offsandguidingthedevel-
+   L40: opmentofefficient,reliableLLM-basedsystemstailoredto
+   L41: Introduction
+   L42: specificapplications(Gaoetal.2023b;Esetal.2023).
+   L43: TherapidadvancementofLargeLanguageModels(LLMs) This study aims to address this gap by conducting a
+   L44: has significantly transformed various industries and ap- comparisonoftraditionalRAGsystemsvs.tool-augmented
+   L45: plications (Hadi et al. 2023), revolutionizing tasks such LLM agents. By systematically comparing their retrieval
+   L46: as text generation, summarization, question-answering sys- mechanisms and response quality, we seek to provide in-
+   L47: tems, and chatbots (Dam et al. 2024; Kumar et al. 2023). sights into their respective strengths and limitations. First,
+   L48: These sophisticated models have demonstrated remark- we cover a review of related work in the field of LLM-
+   L49: able proficiency in understanding and generating human- basedretrievalsystemsandtheirapplications.Wethendetail
+   L50: like text, leading to widespread adoption in multiple sec- our methodology, which encompasses the implementation
+   L51: tors(Hadietal.2023).Recentdevelopmentsinneuralarchi- ofRAGsystems,tool-augmentedLLMagenticframeworks,
+>> L52: tectures and training methodologies (Vaswani et al. 2017; and our approach to evaluation using LLM-as-a-Judge. We
+   L53: Brown et al. 2020; Liu et al. 2019; Raffel et al. 2020; thendescribethedatasetsusedinthisstudyandourexperi-
+   L54: Xu et al. 2022) have enabled these models to process and mentalsetup.Finallyweshowhowagenticsystemswithout
+   L55: generateincreasinglycomplexandcontextuallyrelevantre- a standing vector database can perform competitively with
+   L56: sponses. However, as LLMs become integral to critical ap- traditionalRAGapproaches.
+   L57: plications, the need for accurate information retrieval and
+   L58: responsegenerationhasintensified(Benderetal.2021;van RelatedWork
+   L59: SchaikandPugh2024).Thisevolutionhaspromptedashift
+   L60: Retrieval-Augmented Generation (RAG) has emerged as a
+   L61: crucial approach for improving the accuracy and reliabil-
+   L62: *Theseauthorscontributedequally.
+
+Chunk 3: lines 68-100
+   L68: ]RI.sc[
+   L69: 1v86332.2062:viXra
+   L70: [PAGE 2]
+   L71: 2020; Yu, Xu, and Akkiraju 2024; Lewis et al. 2020). By ingdirectionfordevelopingmoreversatileandmaintainable
+   L72: grounding responses in retrieved documents from external AIsystems(Chenetal.2024b).
+   L73: knowledgebases,RAGsignificantlyreduceshallucinations The comparative analysis of RAG and tool-augmented
+   L74: andimprovesfactualconsistencyinLLMoutputs(Huetal. LLMapproachesrevealssignificantgapsinsystematiceval-
+   L75: 2024b; Xu et al. 2024; Zhao et al. 2024c). Studies have uation methodologies, particularly in standardized bench-
+   L76: demonstrated that hybrid retrieval methods, incorporating marking datasets that reflect real-world document formats
+   L77: both dense and sparse retrieval techniques, achieve supe- andretrievalscenarios.Whilebothapproachesdemonstrate
+>> L78: rior performance in document retrieval quality (Hambarde distinct advantages, the absence of comprehensive datasets
+   L79: and Proenca 2023; Zhao et al. 2024b). Research by Rakin that include varied document formats (PDFs, web pages,
+   L80: et al. (2024) shows that RAG systems utilizing dense pas- structured databases) hampers robust comparison (Joshi
+   L81: sageretrievalcanreducemodelhallucinationssignificantly et al. 2017; Kwiatkowski et al. 2019; Pang et al. 2022;
+>> L82: compared to base LLMs in fact-based question answering Yangetal.2018).Currentbenchmarkingeffortsfocusonre-
+   L83: tasks. Additionally, Izacard and Grave (2021) and Wang trievalaccuracy,responsequality,latency,andmaintenance
+   L84: et al. (2023a) found that the quality of retrieved passages costs,butoftenfailtoaccountforthepracticalchallengesof
+   L85: directlycorrelateswiththeaccuracyofgeneratedresponses, handling diverse document types and formats (Chen et al.
+   L86: with their Fusion-in-Decoder approach demonstrating sub- 2024a; Gao et al. 2023a). This limitation is particularly
+   L87: stantial improvements in response accuracy across various notable in evaluating tool-augmented approaches that uti-
+>> L88: domains. These findings underscore RAG’s significance in lize document processing tools, where standardized testing
+>> L89: enhancingLLMperformancethroughfactualgroundingand frameworks are largely absent (Yuan et al. 2024). Effec-
+>> L90: contextualrelevance. tivecomparisonrequiresmultipleevaluationcriteria,includ-
+   L91: Tool-augmented Large Language Models (LLMs) rep- ingretrievalprecision,responseaccuracy,andusersatisfac-
+   L92: resent an emerging alternative to traditional Retrieval- tion,especiallyinuser-facingapplicationswhereinteraction
+   L93: Augmented Generation (RAG) systems, offering dynamic quality and retrieval depth significantly impact system per-
+   L94: accesstoinformationthroughintegrationwithexternaltools formance.
+   L95: suchassearchengines,APIs,andspecializeddatabases(In-
+   L96: Operational considerations further highlight the distinct
+   L97: aba et al. 2023; Prince et al. 2024; Parisi, Zhao, and
+   L98: trade-offsbetweentheseapproaches.RAGsystemstypically
+   L99: Fiedel 2022). Unlike static knowledge bases, these sys-
+   L100: demand substantial resources for maintaining and updating
+
+Chunk 4: lines 131-283
+   L131: etal.2024).Thesesystemscandynamicallyselectanduti- depends on specific use case requirements, available re-
+   L132: lize appropriate tools based on the query context, offering sources,andthebalancebetweenmaintenanceoverheadand
+   L133: advantages in maintenance requirements compared to tra- systemreliability.
+   L134: ditionalretrieval-augmentedimplementations(Mialonetal.
+   L135: 2023). The reduced need for maintaining extensive vec-
+   L136: tor databases makes tool-augmented LLMs particularly at- Methodology
+   L137: tractive for resource-constrained applications, while their
+   L138: ability to execute real-time searches ensures accuracy in Inthisstudy,webuiltareferencebaselinevectordatabase
+   L139: time-sensitivecontexts.Furthermore,tool-augmentedLLMs RAGthatwasusedtocomparetheeffectivenessofouragen-
+   L140: demonstrateenhancedadaptabilitytonewscenariosanduse tickeyword-searchapproach.Ahigh-leveldiagramofboth
+>> L141: cases, as they can leverage existing tools and APIs with- approachescanbeseeninFigure1.EvaluationsusedLLM-
+>> L142: out requiring extensive retraining or knowledge base up- as-a-Judge metrics computed using the RAGAS python li-
+   L143: dates (Mialon et al. 2023). This flexibility, combined with brary(Esetal.2023)usingdatasetsfromvariousdomains.
+   L144: theirabilitytochainmultipletoolstogetherforcomplexrea- Associated code is available in our github repository (see
+   L145: soning tasks, positions tool-augmented LLMs as a promis- appendix).
+   L146: [PAGE 3]
+   L147: Figure1:ComparisonbetweenRAG(red)andagent-based(blue)pipelinesfordocumentQnA
+   L148: Algorithm1:AgenticdocumentbasedQuestionAnswering ogy(Touvronetal.2023).
+   L149: Input:Userquery • HistoryOfAlexnet:Coversthedevelopmentandimpact
+   L150: Parameter:Folderwithsourcefiles,Maxiterationst max oftheAlexNetconvolutionalneuralnetwork(Alometal.
+   L151: Output:Finalanswer 2018).
+   L152: 1: Letagentiterationt=0. • BlockchainSolana: Technical documentation and
+   L153: 2: Usepdfmetadata.shscripttoprintmetadataofall whitepapers related to the Solana blockchain plat-
+   L154: filesinthefolder form(Lietal.2021).
+   L155: 3: whilet<t max do • LLM: A comprehensive survey paper on Large Lan-
+   L156: 4: Observepreviousstate
+   L157: guageModels(Guoetal.2023).
+   L158: 5: Writergaorpdfgreporotherlinuxcommand
+>> L159: 6: executecommandinlinuxshell • FinanceBench: A benchmark covering multiple
+   L160: 7: ifadditionalcontextfoundinobservationthen publicly-traded company’s public filings released be-
+   L161: 8: Updateanswer tween 2015 and 2023, including 10Ks, 10Qs, 8Ks, and
+   L162: 9: elseifFinalanswerfoundthen EarningsReports(Islametal.2023).
+   L163: 10: Stopsearching
+   L164: 11: else Experiment1:BaselineRAGImplementation
+   L165: 12: Continuesearching For our baseline comparison, we implemented a standard
+   L166: 13: endif RAG pipeline using the fully-managed Amazon Bedrock
+   L167: 14: endwhile Generative AI platform. An Amazon Bedrock Knowledge
+   L168: 15: returnFinalanswer Base with Titan Text Embedding Model V2 with 1024 di-
+   L169: mensional floating-point embeddings was used along with
+   L170: fixed 300 token chunking strategy with 20% overlap. The
+   L171: Datasets
+   L172: sourcedocumentsfromallthedatasetswereingestedintoan
+   L173: Tocomprehensivelycomparetraditionalvector-basedRAG associated OpenSearch serverless index. The configuration
+   L174: approacheswithourproposedagenticsearchmethodology, used for retrieval include max number of chunk retrievals
+   L175: wecuratedadiversecorpusofdocumentsthatvaryintech- of5.Forresponsegeneration,theAnthropicClaude3Son-
+   L176: nical complexity, domain specificity, and linguistic struc- net model with 200K context window and temperature set
+   L177: ture. These datasets, sourced from llamahub (Llamahub), to 0.001 was used with a RAG specific prompt detailed in
+>> L178: were selected as they represent standard RAG benchmarks the appendix. Results for the baseline RAG approach were
+   L179: andensurereproducibilityofourexperiments.Thedatasets generatedforeachdatasetusingtheaboveretrievalandre-
+   L180: includethesourcepdf,alongwithquestionsandassociated sponsepipelinewiththecorrespondingdatasetquestionsto
+   L181: referencecontextandanswers.Theselecteddatasetsrepre- beevaluatedwithgroundtruthanswersandcontext.
+   L182: sentsomeofthedifferentchallengescommonlyencountered
+   L183: inreal-worldRAGapplications: Experiment2:AgenticSearchFramework
+   L184: • PaulGrahamEssay: The complete essays from Paul Our proposed agentic approach leverages LLMs from the
+   L185: Graham’s personal blog, selected for their complex ar- fully-managed Amazon Bedrock platform along with the
+   L186: gumentativestructureandinterdisciplinarynature(Kam- open-sourceLangchainframework.TheLLMthatwelever-
+   L187: radt2023). agedincludetheAnthropicClaude3SonnethostedonAma-
+   L188: • Llama2: The technical paper describing Meta’s Llama zon Bedrock with a 200K context window. We use use the
+   L189: 2 language model architecture and training methodol- standard ReAct reasoning model (Yao et al. 2022) and set
+   L190: [PAGE 4]
+   L191: the temperature to 0.001 for all experiments. The agent or- Results
+   L192: chestration involves initial understanding of the query to-
+   L193: gether and adopting a context-specific search strategy in- Thecomparativeanalysisbetweenthekeywordsearchagent
+   L194: volving the following steps. The agent must begin with an and baseline RAG approaches revealed interesting patterns
+>> L195: initialmetadataanalysisofavailabledocumentsinafolder. acrossthreekeymetrics:faithfulness,contextrecall,andan-
+   L196: Then, the agent can dynamically decide to do broad key- swer correctness as detailed in Table 1. The agent’s per-
+   L197: wordsearchesortargetedregexpatternsacrossoneormore formance relative to RAG was evaluated using attainment
+>> L198: documents.Usingsuccessivecontextexpansion,morekey- scores, which represent the percentage achievement of the
+   L199: wordsearches,anderrorhandling(fore.g.automaticretry) agent compared to the RAG baseline. In terms of faithful-
+>> L200: with modified search patterns the agent is able to perform ness,theagentdemonstratedstrongperformance,achieving
+>> L201: a deep search via a linux shell; this is implemented using an average attainment score of 94.52% across all datasets.
+   L202: theLangChainexperimentalshelltool.Fortheagenttoun- The agent performed particularly well on the LLM Sur-
+>> L203: derstandwhichdocumentsmayberelevanttothequestion, veypaperdataset,reaching99.26%ofRAG’sperformance,
+   L204: the agent is invoked with a custom prompt and directed to while showing slightly lower but still substantial attain-
+   L205: use several commands within the Linux shell based on the ment (88.45%) on the Llama2Paper dataset. Context re-
+>> L206: dynamic play between the initial query, search results, and call metrics showed more variability, with an average at-
+>> L207: alterationinapproachasneededbasedonerrorsencountered tainment score of 88.05%. The agent achieved near-parity
+   L208: ortheoutcomesofprevioussearchiterations.Thefollowing with RAG on the BlockchainSolana and LLM Survey pa-
+   L209: aresomeofthecommandstheagentcanexecute: perdatasets(99.62%and98.71%attainment,respectively),
+>> L210: thoughperformancewasnotablylowerfortheLlama2Paper
+   L211: • PDF Metadata Tool that outputs metadata about the di- dataset (70.56% attainment). For answer correctness, the
+>> L212: rectorycontainingthefiles,andtheindividualfiles. agentmaintainedstrongperformancewithanaverageattain-
+   L213: ment of 91.48%. Particularly noteworthy were the results
+   L214: • RipGrep-All (rga) for performing regex-based pattern
+   L215: on the BlockchainSolana and LLM Survey paper datasets,
+   L216: matching,andmulti-keywordsearch
+   L217: wheretheagentachievedvirtualparitywithRAG(99.97%
+   L218: • PDFGrep providing PDF-specific search capabilities, and 99.51% attainment, respectively). The lowest attain-
+   L219: page-rangetargetingandrecursivedirectorysearch. ment in this category was observed in the PaulGrahamEs-
+   L220: say dataset (79.91%). For a coverage comparison of both
+   L221: SeeAlgorithm1.formoredetailsontheagent’ssearchim-
+>> L222: approachesonallthreemetrics,seeFigure2.
+   L223: plementation.Inaddition,adetailedexampleagenticwork-
+   L224: flowcanbefoundinthesupplementalmaterial. Overall, these results suggest that while the keyword
+   L225: search agent generally performed slightly below the RAG
+   L226: Resultsaregeneratedforeachdatasetbypassingasubset
+>> L227: baseline,itmaintainedcompetitiveperformancelevels,con-
+   L228: of questions from the dataset to the keyword-search agent
+   L229: sistentlyachievingabove88%averageattainmentacrossall
+   L230: producingacandidateanswerwhichcanbecomparedwith
+>> L231: three metrics without the use of any semantic search via a
+   L232: the ground-truth answer. The text segments selected by the
+>> L233: vector database. We specifically highlight the performance
+   L234: agent from the source document were compared with the
+   L235: intheBlockchainSolanadatasetwherecontextrecallandan-
+   L236: ground-truthcontexts.
+   L237: swercorrectnessareover99%ofthebaseline.Thisindicates
+   L238: thattheagent-basedapproachcouldserveasaviablealter-
+>> L239: EvaluationMethodology
+   L240: nativetotraditionalRAGsystems,particularlyinscenarios
+   L241: To compare the baseline RAG approach with the keyword- where computational efficiency is desired or where vector-
+>> L242: search agent, the RAGAS evaluation framework Es et al. databaseusageisnotoptimal.Likeallretrievalapproaches,
+>> L243: (2023) was used. This provides a suite of traditional and we observe performance variance across datasets and con-
+>> L244: LLM-as-a-judge based metrics. The primary metrics eval- tenttypes.Forexample,thePaulGrahamEssaydatasetthatis
+   L245: uatedinclude: characterizedbyitsinterdisciplinarywritingstyle,hadlower
+>> L246: attainmentscoresandunderscorestheimportanceofcontin-
+   L247: • Faithfulness which measures factual consistency be- ued research into improving contextual comprehension be-
+   L248: tweenthegeneratedanswerandthecontextsusedbythe yondkeywordmatching.
+   L249: LLMtosupportitsanswer.
+   L250: ForthecomplexdocumentsintheFinanceBenchdataset,
+   L251: • Context Recall which measures the extent to which all the results show consistent improvement over the tradi-
+   L252: thechunksrelevanttoansweringaqueryareretrieved. tional RAG baseline, with an average improvement of ap-
+   L253: proximately6percentagepoints.Theagent-basedapproach
+   L254: • Answer Correctness which measures the factual accu-
+>> L255: achieved a mean correctness score of 30.40% (σ = 1.31),
+   L256: racyofthegeneratedanswertothegroundtruthanswer.
+   L257: comparedto24.24%forthetraditionalRAGsystemasde-
+>> L258: Toassessvarianceintheagenticapproach,metricswerecal- tailedinTable2.Thisimprovementsuggeststhatouragent’s
+   L259: culated over multiple runs. For the FinanceBench dataset ability to actively search and interact with complex docu-
+   L260: onlyanswercorrectnesswasevaluatedandcomparedforthe mentsthroughcommandsprovidesmoreeffectiveinforma-
+   L261: baselineRAGandagenticapproachesduetothecomplexity tionretrievalcomparedtostaticchunk-basedretrievalmeth-
+   L262: ofthetablesandothercomplexstructurespresentthatposes ods.Theconsistencyacrossmultiplerunsalsoindicatesthe
+>> L263: achallengeforcontext-chunkbasedevaluationmetrics. stabilityofourapproach.
+   L264: [PAGE 5]
+   L265: Faithfulness ContextRecall AnswerCorrectness
+   L266: DatasetName Agent RAG Attain.(%) Agent RAG Attain.(%) Agent RAG Attain.(%)
+   L267: PaulGrahamEssay 0.8662 0.9056 95.65 0.7527 0.8583 87.70 0.5808 0.7268 79.91
+   L268: Llama2Paper 0.7252 0.8199 88.45 0.6148 0.8713 70.56 0.5823 0.6661 87.42
+   L269: HistoryOfAlexnet 0.7280 0.7657 95.08 0.6968 0.8330 83.65 0.6406 0.7073 90.57
+   L270: BlockchainSolana 0.8122 0.8627 94.15 0.7422 0.7450 99.62 0.5870 0.5872 99.97
+   L271: LLMSurveypaper 0.8061 0.8121 99.26 0.6355 0.6438 98.71 0.5123 0.5148 99.51
+   L272: Average 94.52% 88.05% 91.48%
+>> L273: Table1:ComparisonofAgentvsRAGmetricsacrossdifferentdatasets,includingAttainmentScores(%).Averagesareshown
+   L274: inthefinalrow.
+   L275: SystemConfiguration AnswerCorrectness(%)
+   L276: TraditionalRAG 24.24
+   L277: Agent(3runAverage) 32.71
+   L278: Agent(Run4)∗ 39.64
+   L279: Table 2: Comparison of Agent vs RAG answer correctness
+   L280: (%) across a subset of the FinanceBench dataset. ∗Run 4
+   L281: removed Johnson & Johnson reports from the dataset as
+   L282: the reference files were made unavailable publicly mid-
+   L283: experimentation.
+
+Chunk 5: lines 289-338
+   L289: with this new capability that allows direct interaction with
+   L290: computer systems through shell commands and file opera-
+   L291: tions,alsoofferingawaytoanalyzedocumentsandretrieve
+   L292: information without relying on vector databases (Hu et al.
+   L293: 2024a; La´la et al. 2023). By using the Anthropic Claude
+   L294: Sonnet 3.5 v2 model, we created an agent that follows a
+   L295: structuredworkflowtoanswerquestionsbasedonaccessto
+   L296: therawPDFdatasets.
+   L297: Figure 2: Coverage comparison of Tool-Augmented Agent
+   L298: We observe that the agent typically first opens the PDF
+>> L299: vsRAGmetricsacrosstheBlockchainSolanaandLLMSur-
+   L300: in Firefox browser, uses keyboard shortcuts (ctrl+F) for
+   L301: veyPaperdatasets
+   L302: precise term location, and captures screenshots of the rel-
+   L303: evant content before answering. We tested the Computer
+   L304: Use agent on seven representative questions from the Fi-
+   L305: showedthattool-augmentedLLMagentsusingsimplekey-
+   L306: nanceBench dataset.(Islam et al. 2023) and manually eval-
+>> L307: word search tools can attain over 90% of the performance
+   L308: uatedresults.Theagentconsistentlyproducedaccurateand
+>> L309: metrics of vector-based RAG implementations without the
+   L310: comprehensive answers. However, the approach faces cer-
+   L311: needformaintainingstandingvectordatabases.Byleverag-
+   L312: tainoperationalchallenges,commonwithouroriginalagent,
+   L313: ing existing command-line tools and LLM reasoning capa-
+   L314: including occasional failures between API calls. Side-by-
+   L315: bilities, this method provides a robust alternative to tradi-
+   L316: sidecomparisonsofouragentandcomputeruseshowedef-
+   L317: tional RAG systems, particularly in scenarios where infor-
+   L318: fectivelysimilarresults(seeappendix),thoughwehighlight
+   L319: mation evolves rapidly or where resource constraints limit
+   L320: that our agent approach is far simpler to set up and repro-
+   L321: thefeasibilityofmaintainingextensivevectordatabases.
+   L322: duce.
+   L323: However, several limitations were identified, including
+>> L324: performance degradation with large documents, restricted
+   L325: Conclusion
+   L326: multimedia handling, and context window constraints. The
+   L327: Our study demonstrated that agentic keyword search ap- keyword search approach shows limitations in capturing
+>> L328: proachescanachievecomparableperformancetotraditional contextualnuances,althoughpartiallymitigatedthroughit-
+   L329: vector database RAG systems in document-based question erative refinement and the agent’s inherent semantic rea-
+   L330: answering tasks. Our experiments across diverse datasets soning capabilities. The current implementation also strug-
+   L331: [PAGE 6]
+   L332: gles with ambiguous queries and lacks long-term knowl- Gur,I.;Furuta,H.;Huang,A.;Safdari,M.;Matsuo,Y.;Eck,
+   L333: edgeretention.Furthermore,privacyprotectionsandethical D.; and Faust, A. 2023. A real-world webagent with plan-
+   L334: implications of automated retrieval systems require further ning, long context understanding, and program synthesis.
+   L335: investigation, including the implementation of appropriate arXivpreprintarXiv:2307.12856.
+   L336: guardrailssuchasdataaccesscontrolsandcontentfiltering.
+   L337: Guu, K.; Lee, K.; Tung, Z.; Pasupat, P.; and Chang, M.
+   L338: Future research will focus on developing more automated,
+
+Chunk 6: lines 356-376
+   L356: Shmitchell, S. 2021. On the dangers of stochastic par- arXiv:2402.18679.
+   L357: rots: Can language models be too big?. In Proceedings of Hu,S.;Ouyang,M.;Gao,D.;andShou,M.Z.2024a. The
+   L358: the 2021 ACM conference on fairness, accountability, and DawnofGUIAgent:APreliminaryCaseStudywithClaude
+   L359: transparency,610–623. 3.5ComputerUse. arXiv:2411.10323.
+   L360: Brown, T.; Mann, B.; Ryder, N.; Subbiah, M.; Kaplan, J.;
+   L361: Hu, X.; Ru, D.; Qiu, L.; Guo, Q.; Zhang, T.; Xu, Y.; Luo,
+   L362: et al. 2020. Language models are few-shot learners. Ad-
+   L363: Y.; Liu, P.; Zhang, Y.; and Zhang, Z. 2024b. RefChecker:
+   L364: vancesinNeuralInformationProcessingSystems,33.
+   L365: Reference-based Fine-grained Hallucination Checker and
+>> L366: Chen,J.;Lin,H.;Han,X.;andSun,L.2024a. Benchmark- Benchmark for Large Language Models. arXiv preprint
+   L367: ing large language models in retrieval-augmented genera- arXiv:2405.14486.
+   L368: tion. In Proceedings of the AAAI Conference on Artificial
+   L369: Inaba,T.;Kiyomaru,H.;Cheng,F.;andKurohashi,S.2023.
+   L370: Intelligence,volume38,17754–17762.
+   L371: MultiTool-CoT: GPT-3 Can Use Multiple External Tools
+   L372: Chen,Y.;Yoon,J.;Sachan,D.;Wang,Q.;Cohen-Addad,V.;
+   L373: with Chain of Thought Prompting. In Proceedings of the
+   L374: Bateni, M.; Lee, C.-Y.; and Pfister, T. 2024b. Re-Invoke:
+   L375: 61st Annual Meeting of the Association for Computational
+   L376: ToolInvocationRewritingforZero-ShotToolRetrieval. In
+
+Chunk 7: lines 380-431
+   L380: EMNLP2024,4705–4726.
+   L381: N.; and Vidgen, B. 2023. Financebench: A new bench-
+   L382: Dam,S.K.;Hong,C.S.;Qiao,Y.;andZhang,C.2024. A
+   L383: mark for financial question answering. arXiv preprint
+   L384: complete survey on llm-based ai chatbots. arXiv preprint
+   L385: arXiv:2311.11944.
+   L386: arXiv:2406.16937.
+   L387: Izacard, G.; and Grave, E´. 2021. Leveraging Passage Re-
+   L388: Es, S.; James, J.; Espinosa-Anke, L.; and Schockaert, S.
+   L389: trieval with Generative Models for Open Domain Ques-
+>> L390: 2023. Ragas:Automatedevaluationofretrievalaugmented
+   L391: tion Answering. In Proceedings of the 16th Conference of
+   L392: generation. arXivpreprintarXiv:2309.15217.
+   L393: theEuropeanChapteroftheAssociationforComputational
+   L394: Fan,W.;Ding,Y.;Ning,L.;Wang,S.;Li,H.;Yin,D.;Chua,
+   L395: Linguistics:MainVolume,874–880.
+   L396: T.-S.; and Li, Q. 2024. A survey on rag meeting llms: To-
+   L397: wards retrieval-augmented large language models. In Pro- Joshi,M.;Choi,E.;Weld,D.S.;andZettlemoyer,L.2017.
+   L398: ceedingsofthe30thACMSIGKDDConferenceonKnowl- TriviaQA: A Large Scale Distantly Supervised Challenge
+   L399: edgeDiscoveryandDataMining,6491–6501. DatasetforReadingComprehension. InProceedingsofthe
+   L400: 55th Annual Meeting of the Association for Computational
+   L401: Gao,T.;Yen,H.;Yu,J.;andChen,D.2023a.EnablingLarge
+   L402: Linguistics(Volume1:LongPapers),1601–1611.
+   L403: LanguageModelstoGenerateTextwithCitations. InPro-
+   L404: ceedings of the 2023 Conference on Empirical Methods in Kamradt, G. 2023. LLMTest-NeedleInAHaystack: Doing
+   L405: NaturalLanguageProcessing,6465–6488. Simple Retrieval from LLM Models. https://github.com/
+   L406: Gao, Y.; Xiong, Y.; Gao, X.; Jia, K.; Pan, J.; Bi, Y.; Dai, gkamradt/LLMTest-NeedleInAHaystack. [Online;accessed
+   L407: Y.; Sun, J.; Wang, M.; and Wang, H. 2023b. Retrieval- 20-March-2024].
+   L408: augmentedgenerationforlargelanguagemodels:Asurvey. Kumar,V.;Srivastava,P.;Dwivedi,A.;Budhiraja,I.;Ghosh,
+   L409: arXivpreprintarXiv:2312.10997. D.;Goyal,V.;andArora,R.2023. Large-Language-Models
+   L410: Guo,Z.;Jin,R.;Liu,C.;Huang,Y.;Shi,D.;Yu,L.;Liu,Y.; (LLM)-BasedAIChatbots:Architecture,In-DepthAnalysis
+>> L411: Li, J.; Xiong, B.; Xiong, D.; et al. 2023. Evaluating large and Their Performance Evaluation. In International Con-
+   L412: language models: A comprehensive survey. arXiv preprint ference on Recent Trends in Image Processing and Pattern
+   L413: arXiv:2310.19736. Recognition,237–249.Springer.
+   L414: [PAGE 7]
+   L415: Kwiatkowski, T.; Palomaki, J.; Redfield, O.; Collins, M.; Touvron,H.;Martin,L.;Stone,K.;Albert,P.;Almahairi,A.;
+   L416: Parikh, A.; Alberti, C.; Epstein, D.; Polosukhin, I.; Devlin, Babaei,Y.;Bashlykov,N.;Batra,S.;Bhargava,P.;Bhosale,
+>> L417: J.;Lee,K.;etal.2019. Naturalquestions:abenchmarkfor S.; et al. 2023. Llama 2: Open foundation and fine-tuned
+   L418: question answering research. Transactions of the Associa- chatmodels. arXivpreprintarXiv:2307.09288.
+   L419: tionforComputationalLinguistics,7:453–466.
+   L420: vanSchaik,T.A.;andPugh,B.2024. Afieldguidetoauto-
+>> L421: La´la, J.; O’Donoghue, O.; Shtedritski, A.; Cox, S.; Ro- matic evaluation of llm-generated summaries. In Proceed-
+   L422: driques,S.G.;andWhite,A.D.2023. Paperqa:Retrieval- ings of the 47th International ACM SIGIR Conference on
+   L423: augmented generative agent for scientific research. arXiv ResearchandDevelopmentinInformationRetrieval,2832–
+   L424: preprintarXiv:2312.07559. 2836.
+   L425: Lewis, P.; Perez, E.; Piktus, A.; Petroni, F.; Karpukhin, V.; Vaswani, A.; Shazeer, N.; Parmar, N.; Uszkoreit, J.; Jones,
+   L426: Goyal, N.; Ku¨ttler, H.; Lewis, M.; Yih, W.-t.; Rockta¨schel, L.;Gomez,A.N.;Kaiser,Ł.;andPolosukhin,I.2017. At-
+   L427: T.; et al. 2020. Retrieval-augmented generation for tentionisallyouneed. InAdvancesinNeuralInformation
+   L428: knowledge-intensive nlp tasks. Advances in Neural Infor- ProcessingSystems,volume30.
+   L429: mationProcessingSystems,33:9459–9474.
+   L430: Wang, C.; Liu, X.; Yue, Y.; Tang, X.; Zhang, T.; Jiayang,
+   L431: Li, X.; Wang, X.; Kong, T.; Zheng, J.; and Luo, M. C.; Yao, Y.; Gao, W.; Hu, X.; Qi, Z.; et al. 2023a. Survey
+
+Chunk 8: lines 447-467
+   L447: OpenAI.2025. IntroducingOperator. OpenAI. rativePlatformforTool-AugmentedLLMs. InProceedings
+   L448: of the 2023 Conference on Empirical Methods in Natural
+   L449: Pang, R. Y.; Parrish, A.; Joshi, N.; Nangia, N.; Phang, J.;
+   L450: LanguageProcessing:SystemDemonstrations,237–245.
+   L451: Chen, A.; Padmakumar, V.; Ma, J.; Thompson, J.; He, H.;
+   L452: etal.2022. QuALITY:QuestionAnsweringwithLongIn- Xu,P.;Patwary,M.;Shoeybi,M.;Puri,R.;Fung,P.;Anand-
+   L453: put Texts, Yes! In Proceedings of the 2022 Conference of kumar,A.;andCatanzaro,B.2022.Megatron-LM:Training
+   L454: theNorthAmericanChapteroftheAssociationforCompu- multi-billionparameterlanguagemodelsusingmodelparal-
+   L455: tationalLinguistics:HumanLanguageTechnologies. lelism. arXivpreprintarXiv:1909.08053.
+   L456: Parisi, A.; Zhao, Y.; and Fiedel, N. 2022. Talm: Tool aug- Xu, Y.; Cai, T.; Jiang, J.; and Song, X. 2024. Face4RAG:
+>> L457: mentedlanguagemodels. arXivpreprintarXiv:2205.12255. Factual Consistency Evaluation for Retrieval Augmented
+   L458: Generation in Chinese. In Proceedings of the 30th ACM
+   L459: Prince,M.H.;Chan,H.;Vriza,A.;Zhou,T.;Sastry,V.K.;
+   L460: SIGKDD Conference on Knowledge Discovery and Data
+   L461: Luo,Y.;Dearing,M.T.;Harder,R.J.;Vasudevan,R.K.;and
+   L462: Mining,6083–6094.
+   L463: Cherukara,M.J.2024. Opportunitiesforretrievalandtool
+   L464: augmentedlargelanguagemodelsinscientificfacilities. npj Yang,Z.;Qi,P.;Zhang,S.;Bengio,Y.;Cohen,W.;Salakhut-
+   L465: ComputationalMaterials,10(1):251. dinov,R.;andManning,C.D.2018. HotpotQA:ADataset
+   L466: forDiverse,ExplainableMulti-hopQuestionAnswering. In
+   L467: Qu,C.;Dai,S.;Wei,X.;Cai,H.;Wang,S.;Yin,D.;Xu,J.;
+
+Chunk 9: lines 490-510
+   L490: yourLLMsuseExternalDataMoreWisely. arXivpreprint keywords (-i is case insensitive, -n
+   L491: includes page numbers in output, -r
+   L492: arXiv:2409.14924.
+   L493: is recursive search in files folder,
+   L494: Zhao,W.X.;Liu,J.;Ren,R.;andWen,J.-R.2024b. Dense and -P is perl compatible regex).
+   L495: textretrievalbasedonpretrainedlanguagemodels:Asurvey. With pdfgrep you must include ’(’ ’)’
+   L496: ACMTransactionsonInformationSystems,42(4):1–60. brackets for the pattern
+   L497: 29 pdfgrep -inrP --page-range 1-4 ’(
+   L498: Zhao,Y.;Zhang,J.;Chern,I.;Gao,S.;Liu,P.;He,J.;etal.
+   L499: keyword1|keyword2)’ ./files/
+>> L500: 2024c. Felm: Benchmarking factuality evaluation of large
+   L501: 30
+   L502: languagemodels. AdvancesinNeuralInformationProcess-
+   L503: 31 - Search all .pdf files whose names
+   L504: ingSystems,36. begin with foo recursively in the
+   L505: current directory:
+   L506: 32 pdfgrep -r --include "foo*.pdf" pattern
+   L507: Appendix
+   L508: 33
+   L509: Agentterminaltoolinstructions 34 Other tips:
+   L510: 35 ***********
+
+Chunk 10: lines 586-606
+   L586: containinformationdirectlyrelevanttothe not exchange-listed. The company main-
+   L587: maincomponentsofHyperledgerFabric.I tains debt ratings from major agencies
+   L588: should search through the PDF files using (Moody’s, S&P, and Fitch) for its unse-
+   L589: the rga or pdfgrep tools to look for con- cured debt programs. Their debt securi-
+   L590: tent related to ”Hyperledger Fabric com- tiesareprimarilyissuedthroughprivate/in-
+   L591: ponents”, ”Fabric architecture”, or similar stitutional channels rather than listed ex-
+   L592: phrases. changes.
+   L593: Actioninput rga -i ’hyperledger fabric Question What are the geographies that American
+   L594: components|fabricarchitecture’./files/ Expressprimarilyoperatesinasof2022?
+   L595: Observation ./files/BlockchainSolana.pdf:Page 14: re- Output American Express operates globally with
+>> L596: flected in the increase in performance astrongpresenceintheUnitedStatesand
+   L597: and strength on confidentiality. The Hy- significant international operations. As of
+   L598: perledger Fabric architecture is shown in 2022,approximately78%oftheirtotalrev-
+   L599: Fig. 9. ./files/BlockchainSolana.pdf:Page enues net of interest expense were gen-
+   L600: 15: Fig. 9. Hyperledger Fabric Architec- erated from U.S. operations, while 22%
+   L601: ture came from international activities. Their
+   L602: ThesearchresultsindicatethatthePDFfile largest international presence outside the
+   L603: ”BlockchainSolana.pdf”containsinforma- United States includes the United King-
+   L604: tion about the Hyperledger Fabric archi- dom, Japan, the European Union, Aus-
+   L605: tecture and its main components. I should tralia,Canada,andMexico.
+   L606: skimthroughtherelevantpagestoidentify Context The company operates in approximately
+
+======================================================================
+TIME       : 2026-05-25T14:31:39
+FILE       : Real-Time Sign Language Classification and Translation Using Advanced AI Models.pdf
+PATTERNS   : hearing loss|hearing impairment|deafness|hearing difficulty
+TOTAL LINES: 787
+MATCHES    : 11 hit(s) at lines [13, 26, 29, 34, 40, 46, 74, 582, 588, 613, 615]
+CHUNKS     : 5 (after merging overlap)
+
+--- EXTRACTED CHUNKS (exactly what the LLM saw) ---
+
+Chunk 1: lines 9-19
+   L9: thu.hb226003@sis, phuong.ntm5992@sis}.hust.edu.vn
+   L10: *Corresponding author: haipv@soict.hust.edu.vn
+   L11: Abstract. Our research focuses on developing an advanced gestural
+   L12: communication tool that translates sign language into text or speech in
+   L13: real-time, specifically designed to overcome communication barriers for
+>> L14: individuals with hearing impairments. By utilizing the Random Forest
+   L15: Classifier alongside MediaPipe Hands for precise hand gesture detection
+   L16: and sign language interpretation, the system achieves a high level of
+   L17: accuracy, estimated between 90% and 95%. This study demonstrates
+   L18: the effectiveness of the RFC algorithm in improving the accuracy and
+   L19: reliability of sign language translation. Furthermore, the tool’s intuitive
+
+Chunk 2: lines 22-52
+   L22: solutions and opportunities for societal engagement.
+   L23: Keywords: Sign Language Recognition, Real-Time Translation, AI Models,
+   L24: Random Forest Classifier, MediaPipe Hands
+   L25: 1 Introduction
+   L26: According to the World Health Organization (WHO), over 5% of the global
+>> L27: population(approximately 466 million people), experience disabling hearing loss
+   L28: [1]. Many of these individuals lack proficiency in sign language, leading to several
+   L29: key challenges:
+>> L30: Communication Barriers: Individuals with hearing impairments who are not
+   L31: proficient in sign language often face significant communication challenges, lead-
+   L32: ing to feelings of isolation and frustration in both personal and professional
+   L33: environments. [?].
+   L34: Educational Disparities: In the absence of sign language support or appropri-
+>> L35: ate accommodations, students with hearing impairments encounter significant
+   L36: challenges in comprehending lectures, engaging in classroom discussions, and ac-
+   L37: cessinginstructionalmaterials.Theseobstaclescanadverselyaffecttheiracademic
+   L38: performance and limit future educational and career opportunities. [2].
+   L39: [PAGE 2]
+   L40: 2 Lam et al.
+>> L41: Employment Discrimination: Individuals with hearing impairments often face
+   L42: discrimination and employment barriers in the workplace, primarily due to
+   L43: communication difficulties and the requirement for specific accommodations.
+   L44: These challenges can significantly restrict their access to job opportunities and
+   L45: hinder career progression. [2].
+   L46: Addressing these challenges requires the promotion of accessibility, inclusion,
+>> L47: and equal opportunities for individuals with hearing impairments. Key strategies
+   L48: include implementing supportive policies, providing necessary accommodations
+   L49: in educational and workplace settings, raising public awareness, and fostering a
+   L50: culture of inclusivity that supports the needs of this population. [3].
+   L51: With the aim of researching and executing the problem of sign language
+   L52: detection and classification, our study have developed a real-time gestural com-
+
+Chunk 3: lines 70-80
+   L70: standard for precision in sign language translation. Our approach emphasizes
+   L71: intuitive design principles, prioritizing usability and accessibility to foster
+   L72: inclusivity and empowerment in communication.
+   L73: 3. Comprehensive experiments and detailed analyses of the system’s perfor-
+   L74: mance, validating the effectiveness of our approach in enhancing communica-
+>> L75: tion for individuals with hearing impairments [5].
+   L76: The remainder of this paper is organized as follows: Section 3 describes the
+   L77: design and implementation of our gestural communication tool. In Section 4,
+   L78: we present the results of our experiments and evaluate the performance of our
+   L79: system. Finally, Section 5 concludes the paper with a summary of our findings
+   L80: and future directions for research.
+
+Chunk 4: lines 578-594
+   L578: ticularly attractive for deployment on mobile and embedded devices, where
+   L579: computational resources are often limited.
+   L580: In summary, the findingsindicatethat our system not onlymeetsbut exceeds
+   L581: current benchmarks in sign language recognition, providing a practical, scalable
+   L582: solution that can be deployed in real-world settings to facilitate communication
+>> L583: for individuals with hearing impairments. Future work could focus on expanding
+   L584: the system’s capabilities to handle additional sign languages and more complex
+   L585: gestures, further enhancing its applicability and impact.
+   L586: 5 Conclusion
+   L587: In this paper, we introduced an advanced gestural communication tool that
+   L588: translates sign language into text or speech in real-time, aiming to bridge com-
+>> L589: munication gaps for individuals with hearing impairments. Utilizing advanced
+   L590: AI models such as the Random Forest Classifier and MediaPipe Hands, our
+   L591: tool achieves a high accuracy rate up to 97%, ensuring reliable and precise sign
+   L592: language translation.
+   L593: [PAGE 15]
+   L594: CompIE 15
+
+Chunk 5: lines 609-621
+   L609: accessible and easy to use. This combination of cutting-edge technology and
+   L610: intuitivedesignfostersinclusivityandempowersuserstocommunicateeffectively.
+   L611: Future work will focus on further to handle a wider range of sign language
+   L612: motions and variations in lighting, camera angles, and backgrounds. We invite
+   L613: collaboration from stakeholders to help make effective communication tools
+>> L614: accessible to all individuals with hearing impairments.
+   L615: References
+>> L616: 1. WHO. World health organization (who) - deafness and hearing loss. World Health
+   L617: Organization, 2020.
+   L618: 2. H Alsolai, L Alsolai, FN Al-Wesabi, M Othman, M Rizwanullah, and AA Abdel-
+   L619: mageed. Automated sign language detection and classification using reptile search
+   L620: algorithm with hybrid deep learning. Heliyon, 10(1):e23252, 2024.
+   L621: 3. Leo Breiman. Random forests. Machine Learning, 45(1):5–32, Oct 2001.
+
+======================================================================
+TIME       : 2026-05-25T14:32:18
+FILE       : Real-Time Sign Language Classification and Translation Using Advanced AI Models.pdf
+PATTERNS   : hearing loss|hearing impairment|deafness|hearing difficulty
+TOTAL LINES: 787
+MATCHES    : 11 hit(s) at lines [13, 26, 29, 34, 40, 46, 74, 582, 588, 613, 615]
+CHUNKS     : 5 (after merging overlap)
+
+--- EXTRACTED CHUNKS (exactly what the LLM saw) ---
+
+Chunk 1: lines 9-19
+   L9: thu.hb226003@sis, phuong.ntm5992@sis}.hust.edu.vn
+   L10: *Corresponding author: haipv@soict.hust.edu.vn
+   L11: Abstract. Our research focuses on developing an advanced gestural
+   L12: communication tool that translates sign language into text or speech in
+   L13: real-time, specifically designed to overcome communication barriers for
+>> L14: individuals with hearing impairments. By utilizing the Random Forest
+   L15: Classifier alongside MediaPipe Hands for precise hand gesture detection
+   L16: and sign language interpretation, the system achieves a high level of
+   L17: accuracy, estimated between 90% and 95%. This study demonstrates
+   L18: the effectiveness of the RFC algorithm in improving the accuracy and
+   L19: reliability of sign language translation. Furthermore, the tool’s intuitive
+
+Chunk 2: lines 22-52
+   L22: solutions and opportunities for societal engagement.
+   L23: Keywords: Sign Language Recognition, Real-Time Translation, AI Models,
+   L24: Random Forest Classifier, MediaPipe Hands
+   L25: 1 Introduction
+   L26: According to the World Health Organization (WHO), over 5% of the global
+>> L27: population(approximately 466 million people), experience disabling hearing loss
+   L28: [1]. Many of these individuals lack proficiency in sign language, leading to several
+   L29: key challenges:
+>> L30: Communication Barriers: Individuals with hearing impairments who are not
+   L31: proficient in sign language often face significant communication challenges, lead-
+   L32: ing to feelings of isolation and frustration in both personal and professional
+   L33: environments. [?].
+   L34: Educational Disparities: In the absence of sign language support or appropri-
+>> L35: ate accommodations, students with hearing impairments encounter significant
+   L36: challenges in comprehending lectures, engaging in classroom discussions, and ac-
+   L37: cessinginstructionalmaterials.Theseobstaclescanadverselyaffecttheiracademic
+   L38: performance and limit future educational and career opportunities. [2].
+   L39: [PAGE 2]
+   L40: 2 Lam et al.
+>> L41: Employment Discrimination: Individuals with hearing impairments often face
+   L42: discrimination and employment barriers in the workplace, primarily due to
+   L43: communication difficulties and the requirement for specific accommodations.
+   L44: These challenges can significantly restrict their access to job opportunities and
+   L45: hinder career progression. [2].
+   L46: Addressing these challenges requires the promotion of accessibility, inclusion,
+>> L47: and equal opportunities for individuals with hearing impairments. Key strategies
+   L48: include implementing supportive policies, providing necessary accommodations
+   L49: in educational and workplace settings, raising public awareness, and fostering a
+   L50: culture of inclusivity that supports the needs of this population. [3].
+   L51: With the aim of researching and executing the problem of sign language
+   L52: detection and classification, our study have developed a real-time gestural com-
+
+Chunk 3: lines 70-80
+   L70: standard for precision in sign language translation. Our approach emphasizes
+   L71: intuitive design principles, prioritizing usability and accessibility to foster
+   L72: inclusivity and empowerment in communication.
+   L73: 3. Comprehensive experiments and detailed analyses of the system’s perfor-
+   L74: mance, validating the effectiveness of our approach in enhancing communica-
+>> L75: tion for individuals with hearing impairments [5].
+   L76: The remainder of this paper is organized as follows: Section 3 describes the
+   L77: design and implementation of our gestural communication tool. In Section 4,
+   L78: we present the results of our experiments and evaluate the performance of our
+   L79: system. Finally, Section 5 concludes the paper with a summary of our findings
+   L80: and future directions for research.
+
+Chunk 4: lines 578-594
+   L578: ticularly attractive for deployment on mobile and embedded devices, where
+   L579: computational resources are often limited.
+   L580: In summary, the findingsindicatethat our system not onlymeetsbut exceeds
+   L581: current benchmarks in sign language recognition, providing a practical, scalable
+   L582: solution that can be deployed in real-world settings to facilitate communication
+>> L583: for individuals with hearing impairments. Future work could focus on expanding
+   L584: the system’s capabilities to handle additional sign languages and more complex
+   L585: gestures, further enhancing its applicability and impact.
+   L586: 5 Conclusion
+   L587: In this paper, we introduced an advanced gestural communication tool that
+   L588: translates sign language into text or speech in real-time, aiming to bridge com-
+>> L589: munication gaps for individuals with hearing impairments. Utilizing advanced
+   L590: AI models such as the Random Forest Classifier and MediaPipe Hands, our
+   L591: tool achieves a high accuracy rate up to 97%, ensuring reliable and precise sign
+   L592: language translation.
+   L593: [PAGE 15]
+   L594: CompIE 15
+
+Chunk 5: lines 609-621
+   L609: accessible and easy to use. This combination of cutting-edge technology and
+   L610: intuitivedesignfostersinclusivityandempowersuserstocommunicateeffectively.
+   L611: Future work will focus on further to handle a wider range of sign language
+   L612: motions and variations in lighting, camera angles, and backgrounds. We invite
+   L613: collaboration from stakeholders to help make effective communication tools
+>> L614: accessible to all individuals with hearing impairments.
+   L615: References
+>> L616: 1. WHO. World health organization (who) - deafness and hearing loss. World Health
+   L617: Organization, 2020.
+   L618: 2. H Alsolai, L Alsolai, FN Al-Wesabi, M Othman, M Rizwanullah, and AA Abdel-
+   L619: mageed. Automated sign language detection and classification using reptile search
+   L620: algorithm with hybrid deep learning. Heliyon, 10(1):e23252, 2024.
+   L621: 3. Leo Breiman. Random forests. Machine Learning, 45(1):5–32, Oct 2001.

@@ -583,9 +583,14 @@ def ask():
     from agent.agent import run_agent_stream
 
     def generate():
+        # 2 KB padding to flush Werkzeug's internal buffer immediately.
+        # Without this, dev server may hold small chunks until the request finishes.
+        yield ":" + (" " * 2048) + "\n\n"
         try:
             for event in run_agent_stream(query, token):
                 yield f"data: {json.dumps(event, ensure_ascii=False)}\n\n"
+                # SSE comment line ignored by EventSource but forces socket flush.
+                yield ": ping\n\n"
         except Exception as e:
             traceback.print_exc()
             yield f"data: {json.dumps({'event': 'error', 'message': f'{type(e).__name__}: {e}'})}\n\n"
@@ -599,7 +604,9 @@ def ask():
             "Cache-Control": "no-cache",
             "X-Accel-Buffering": "no",
             "Connection": "keep-alive",
+            "Content-Encoding": "identity",
         },
+        direct_passthrough=True,
     )
 
 
@@ -717,7 +724,7 @@ DASHBOARD_HTML = """
     .chat-header h3 { font-size: 15px; font-weight: 600; color: #111; }
     .chat-header .hint { font-size: 12px; color: #888; }
     .chat-messages { height: 380px; overflow-y: auto; padding: 16px 20px; background: #fafbfc; }
-    .chat-messages:empty::before { content: 'Hỏi bất kỳ điều gì về OneDrive của bạn. Ví dụ: "What is the metrics for RAG?"'; color: #999; font-size: 13px; font-style: italic; }
+    .chat-messages:empty::before { content: 'Ask anything about your OneDrive. e.g. "What is the metrics for RAG?"'; color: #999; font-size: 13px; font-style: italic; }
     .msg { margin-bottom: 14px; max-width: 88%; }
     .msg.user { margin-left: auto; text-align: right; }
     .msg.user .bubble { background: #0078d4; color: white; }
@@ -862,7 +869,7 @@ DASHBOARD_HTML = """
           '<div class="bubble">' +
             '<div class="agent-status">' +
               '<span class="typing"><span></span><span></span><span></span></span>' +
-              ' <span class="status-text">Đang suy nghĩ...</span>' +
+              ' <span class="status-text">Thinking...</span>' +
             '</div>' +
             '<div class="agent-steps"></div>' +
             '<div class="agent-answer"></div>' +
@@ -942,15 +949,15 @@ DASHBOARD_HTML = """
       function renderSummary(container, ev) {
         const wrap = document.createElement('div');
         wrap.className = 'summary-box';
-        let h = '<div class="sum-title">📋 Tổng kết</div>';
+        let h = '<div class="sum-title">📋 Summary</div>';
 
-        h += '<div class="sum-section"><b>🔎 Keywords LLM đã search (' + ev.queries.length + ' lần):</b><ul>';
+        h += '<div class="sum-section"><b>🔎 Keywords searched (' + ev.queries.length + ' query/queries):</b><ul>';
         ev.queries.forEach(function (q, i) {
           h += '<li><code>' + escapeHtml(q) + '</code></li>';
         });
         h += '</ul></div>';
 
-        h += '<div class="sum-section"><b>📁 File Graph trả về (' + ev.files_returned.length + '):</b>';
+        h += '<div class="sum-section"><b>📁 Files returned by Graph (' + ev.files_returned.length + '):</b>';
         if (ev.files_returned.length) {
           h += '<ul>';
           ev.files_returned.forEach(function (f) {
@@ -960,7 +967,7 @@ DASHBOARD_HTML = """
         }
         h += '</div>';
 
-        h += '<div class="sum-section"><b>📖 File LLM đã đọc nội dung (' + ev.files_fetched.length + '):</b>';
+        h += '<div class="sum-section"><b>📖 Files actually read (' + ev.files_fetched.length + '):</b>';
         if (ev.files_fetched.length) {
           h += '<ul>';
           ev.files_fetched.forEach(function (f) {
@@ -968,7 +975,7 @@ DASHBOARD_HTML = """
           });
           h += '</ul>';
         } else {
-          h += ' <em class="dim">không file nào (snippet đủ trả lời)</em>';
+          h += ' <em class="dim">none (snippets were enough)</em>';
         }
         h += '</div>';
 
@@ -989,15 +996,15 @@ DASHBOARD_HTML = """
       function handleEvent(container, ev) {
         switch (ev.event) {
           case 'user_query':
-            setStatus(container, 'Đang tìm kiếm trong OneDrive…', false);
+            setStatus(container, 'Searching OneDrive…', false);
             break;
           case 'tool_call':
-            setStatus(container, 'Bước ' + ev.step + ': gọi ' + ev.tool + '…', false);
+            setStatus(container, 'Step ' + ev.step + ': calling ' + ev.tool + '…', false);
             addStep(container, ev);
             break;
           case 'tool_result':
             fillStepResult(container, ev);
-            setStatus(container, 'Đã nhận kết quả bước ' + ev.step + ', tiếp tục…', false);
+            setStatus(container, 'Got step ' + ev.step + ' result, continuing…', false);
             break;
           case 'summary':
             renderSummary(container, ev);
@@ -1461,4 +1468,4 @@ ERROR_HTML = """
 """
 
 if __name__ == "__main__":
-    app.run(port=3000, debug=True)
+    app.run(port=3000, debug=True, threaded=True)
