@@ -3,17 +3,34 @@ import os
 import requests
 from langchain_core.tools import tool
 
-from .. import cache
+from .. import cache, drive_index
 from ..extractors import SUPPORTED, extract_text
 
 GRAPH = "https://graph.microsoft.com/v1.0"
 MAX_SIZE_BYTES = 25 * 1024 * 1024  # 25 MB
 
 
+def _base_endpoint(item_id: str) -> str:
+    """Resolve the correct drive endpoint for an item_id.
+
+    Items returned by /search/query may live in:
+      - the user's OneDrive          → /me/drive/items/{id}
+      - a shared drive               → /drives/{driveId}/items/{id}
+      - a SharePoint site            → /drives/{driveId}/items/{id}
+      - a Teams group drive          → /drives/{driveId}/items/{id}
+
+    graph_search saves driveId per item_id; we use it when available.
+    """
+    drive_id = drive_index.get(item_id)
+    if drive_id:
+        return f"{GRAPH}/drives/{drive_id}/items/{item_id}"
+    return f"{GRAPH}/me/drive/items/{item_id}"
+
+
 def make_file_fetch_tool(access_token: str):
     @tool
     def fetch_file_text(item_id: str) -> str:
-        """Download a OneDrive file by item_id, extract its text, and cache it in memory.
+        """Download a file by item_id (from graph_search), extract its text, and cache it.
 
         Supported types: PDF, DOCX, XLSX, PPTX, and plain text (txt/md/csv/json/...).
         Files larger than 25 MB are rejected.
@@ -34,14 +51,19 @@ def make_file_fetch_tool(access_token: str):
             )
 
         headers = {"Authorization": f"Bearer {access_token}"}
+        base = _base_endpoint(item_id)
 
         meta_resp = requests.get(
-            f"{GRAPH}/me/drive/items/{item_id}",
+            base,
             headers=headers,
             params={"$select": "name,size,file"},
         )
         if meta_resp.status_code != 200:
-            return f"ERROR: cannot read metadata for {item_id} (HTTP {meta_resp.status_code})."
+            return (
+                f"ERROR: cannot read metadata for {item_id} "
+                f"(HTTP {meta_resp.status_code}). URL was {base}. "
+                f"Body: {meta_resp.text[:200]}"
+            )
         meta = meta_resp.json()
         name = meta.get("name", "")
         size = meta.get("size", 0) or 0
@@ -56,11 +78,12 @@ def make_file_fetch_tool(access_token: str):
                 f"Supported: PDF, DOCX, XLSX, PPTX, and plain text."
             )
 
-        c_resp = requests.get(
-            f"{GRAPH}/me/drive/items/{item_id}/content", headers=headers
-        )
+        c_resp = requests.get(f"{base}/content", headers=headers)
         if c_resp.status_code != 200:
-            return f"ERROR: cannot download '{name}' (HTTP {c_resp.status_code})."
+            return (
+                f"ERROR: cannot download '{name}' "
+                f"(HTTP {c_resp.status_code}). URL was {base}/content"
+            )
 
         try:
             text = extract_text(name, c_resp.content)

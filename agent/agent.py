@@ -1,4 +1,5 @@
 import json
+import re
 import traceback
 from datetime import datetime
 from typing import Iterator
@@ -35,6 +36,19 @@ def _stringify(value) -> str:
     return str(value)
 
 
+_FILE_LINE_RE = re.compile(
+    r"-\s*item_id=(?P<id>[^|]+?)\s*\|\s*name=(?P<name>[^|]+?)\s*\|"
+)
+
+
+def _parse_search_result(observation: str) -> list[dict]:
+    """Extract (item_id, name) pairs from a graph_search observation string."""
+    files = []
+    for m in _FILE_LINE_RE.finditer(observation):
+        files.append({"item_id": m.group("id").strip(), "name": m.group("name").strip()})
+    return files
+
+
 def run_agent_stream(query: str, access_token: str) -> Iterator[dict]:
     """Yield event dicts as the agent runs. Used by the SSE endpoint.
 
@@ -43,6 +57,7 @@ def run_agent_stream(query: str, access_token: str) -> Iterator[dict]:
         {"event": "tool_call", "step": int, "tool": str, "input": str, "ts": str}
         {"event": "tool_result", "step": int, "tool": str, "observation": str, "ts": str}
         {"event": "final_answer", "answer": str, "ts": str}
+        {"event": "summary", "queries": list, "files_returned": list, "files_fetched": list, "ts": str}
         {"event": "error", "message": str}
     """
     print(f"\n{'=' * 70}\n[{_ts()}] USER QUERY: {query}\n{'=' * 70}")
@@ -54,6 +69,14 @@ def run_agent_stream(query: str, access_token: str) -> Iterator[dict]:
         traceback.print_exc()
         yield {"event": "error", "message": f"{type(e).__name__}: {e}"}
         return
+
+    # Track for summary
+    queries_sent: list[str] = []
+    files_returned: list[dict] = []  # [{query, name, item_id}, ...]
+    files_fetched: list[dict] = []   # [{item_id, name (if known)}, ...]
+    files_grepped: list[dict] = []   # [{item_id, patterns}, ...]
+    last_search_query: str | None = None
+    last_fetched_id: str | None = None
 
     step_no = 0
     try:
@@ -71,11 +94,54 @@ def run_agent_stream(query: str, access_token: str) -> Iterator[dict]:
                             for tc in msg.tool_calls:
                                 step_no += 1
                                 tool_name = tc.get("name", "?")
-                                tool_args = tc.get("args", {})
+                                tool_args = tc.get("args", {}) or {}
                                 args_str = _stringify(tool_args)
-                                print(
-                                    f"[{_ts()}] [STEP {step_no}] -> {tool_name}({args_str[:150]})"
-                                )
+
+                                # Track LLM's keyword decisions
+                                if tool_name == "graph_search":
+                                    q = tool_args.get("query", "")
+                                    queries_sent.append(q)
+                                    last_search_query = q
+                                    print(
+                                        f"\n[{_ts()}] [STEP {step_no}] >>> LLM CHỌN TÌM KIẾM"
+                                        f"\n          keywords: {q!r}"
+                                    )
+                                elif tool_name == "fetch_file_text":
+                                    fid = tool_args.get("item_id", "")
+                                    last_fetched_id = fid
+                                    name = next(
+                                        (
+                                            f["name"]
+                                            for f in files_returned
+                                            if f["item_id"] == fid
+                                        ),
+                                        "(unknown)",
+                                    )
+                                    files_fetched.append({"item_id": fid, "name": name})
+                                    print(
+                                        f"\n[{_ts()}] [STEP {step_no}] >>> LLM CHỌN ĐỌC FILE"
+                                        f"\n          file: {name} (id={fid[:20]}...)"
+                                    )
+                                elif tool_name == "grep_context":
+                                    fid = tool_args.get("item_id", "")
+                                    pat = tool_args.get("patterns", "")
+                                    name = next(
+                                        (
+                                            f["name"]
+                                            for f in files_fetched
+                                            if f["item_id"] == fid
+                                        ),
+                                        "(unknown)",
+                                    )
+                                    files_grepped.append(
+                                        {"item_id": fid, "name": name, "patterns": pat}
+                                    )
+                                    print(
+                                        f"\n[{_ts()}] [STEP {step_no}] >>> LLM CHỌN GREP"
+                                        f"\n          file: {name}"
+                                        f"\n          patterns: {pat!r}"
+                                    )
+
                                 yield {
                                     "event": "tool_call",
                                     "step": step_no,
@@ -89,7 +155,7 @@ def run_agent_stream(query: str, access_token: str) -> Iterator[dict]:
                                 if isinstance(msg.content, str)
                                 else _stringify(msg.content)
                             )
-                            print(f"[{_ts()}] [FINAL ANSWER]\n{text[:500]}")
+                            print(f"\n[{_ts()}] [FINAL ANSWER]\n{text[:500]}")
                             yield {
                                 "event": "final_answer",
                                 "answer": text,
@@ -102,10 +168,32 @@ def run_agent_stream(query: str, access_token: str) -> Iterator[dict]:
                             else _stringify(msg.content)
                         )
                         tool_name = getattr(msg, "name", "?")
-                        print(
-                            f"[{_ts()}] [STEP {step_no}] <- {tool_name} result "
-                            f"({len(obs)} chars): {obs[:200].replace(chr(10), ' ')}..."
-                        )
+
+                        # Parse graph_search results to track file list
+                        if tool_name == "graph_search" and last_search_query is not None:
+                            parsed = _parse_search_result(obs)
+                            for f in parsed:
+                                files_returned.append(
+                                    {
+                                        "query": last_search_query,
+                                        "name": f["name"],
+                                        "item_id": f["item_id"],
+                                    }
+                                )
+                            print(
+                                f"[{_ts()}] [STEP {step_no}] <<< Graph trả về {len(parsed)} file:"
+                            )
+                            for i, f in enumerate(parsed[:10], 1):
+                                print(f"          {i}. {f['name']}")
+                            if len(parsed) > 10:
+                                print(f"          ... và {len(parsed) - 10} file nữa")
+                            last_search_query = None
+                        else:
+                            print(
+                                f"[{_ts()}] [STEP {step_no}] <<< {tool_name} result "
+                                f"({len(obs)} chars)"
+                            )
+
                         yield {
                             "event": "tool_result",
                             "step": step_no,
@@ -116,6 +204,31 @@ def run_agent_stream(query: str, access_token: str) -> Iterator[dict]:
     except Exception as e:
         traceback.print_exc()
         yield {"event": "error", "message": f"{type(e).__name__}: {e}"}
+        return
+
+    # Summary event
+    print(f"\n{'-' * 70}")
+    print(f"[{_ts()}] [SUMMARY]")
+    print(f"  Số lần search: {len(queries_sent)}")
+    for i, q in enumerate(queries_sent, 1):
+        print(f"    {i}. {q!r}")
+    print(f"  Tổng file Graph trả về (gộp): {len(files_returned)}")
+    print(f"  File LLM đã đọc (fetch_file_text): {len(files_fetched)}")
+    for f in files_fetched:
+        print(f"    - {f['name']}")
+    print(f"  File LLM đã grep: {len(files_grepped)}")
+    for f in files_grepped:
+        print(f"    - {f['name']} ← {f['patterns']!r}")
+    print(f"{'-' * 70}\n")
+
+    yield {
+        "event": "summary",
+        "queries": queries_sent,
+        "files_returned": files_returned,
+        "files_fetched": files_fetched,
+        "files_grepped": files_grepped,
+        "ts": _ts(),
+    }
 
 
 def run_agent(query: str, access_token: str) -> dict:

@@ -1,13 +1,15 @@
 import requests
 from langchain_core.tools import tool
 
+from .. import drive_index
+
 GRAPH = "https://graph.microsoft.com/v1.0"
 
 
 def make_graph_search_tool(access_token: str):
     @tool
     def graph_search(query: str) -> str:
-        """Search the user's OneDrive via Microsoft Graph full-text search.
+        """Search the user's OneDrive / SharePoint / Teams files via Microsoft Graph full-text search.
 
         Returns up to 15 matching files. Each line has: item_id, name, snippet, webUrl.
         Use the item_id with fetch_file_text to read the file content.
@@ -32,6 +34,7 @@ def make_graph_search_tool(access_token: str):
                         "webUrl",
                         "lastModifiedDateTime",
                         "size",
+                        "parentReference",
                     ],
                 }
             ]
@@ -56,6 +59,12 @@ def make_graph_search_tool(access_token: str):
             name = res.get("name", "(unnamed)")
             summary = (h.get("summary") or "").replace("\n", " ").strip()[:240]
             web_url = res.get("webUrl", "")
+            parent = res.get("parentReference") or {}
+            drive_id = parent.get("driveId")
+
+            # Register drive_id so fetch_file_text knows where to download from
+            drive_index.put(item_id, drive_id)
+
             lines.append(
                 f"- item_id={item_id} | name={name} | snippet=\"{summary}\" | webUrl={web_url}"
             )

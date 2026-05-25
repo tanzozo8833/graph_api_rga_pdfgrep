@@ -738,6 +738,13 @@ DASHBOARD_HTML = """
     .live-step pre { white-space: pre-wrap; word-wrap: break-word; max-height: 220px; overflow-y: auto; background: white; padding: 6px; border-radius: 3px; margin: 0; font-size: 11px; }
     .agent-answer { font-size: 14px; line-height: 1.5; }
     .agent-answer:not(:empty) { margin-top: 8px; padding-top: 8px; border-top: 1px dashed #e5e7eb; }
+    .summary-box { margin-top: 10px; padding: 10px 12px; background: #fff8e1; border: 1px solid #ffe082; border-radius: 6px; font-size: 12px; }
+    .summary-box .sum-title { font-weight: 600; color: #5d4037; margin-bottom: 6px; font-size: 13px; }
+    .summary-box .sum-section { margin-top: 6px; color: #333; }
+    .summary-box ul { margin: 4px 0 4px 18px; padding: 0; }
+    .summary-box li { margin: 2px 0; line-height: 1.4; }
+    .summary-box code { background: #fff3cd; padding: 1px 5px; border-radius: 3px; font-size: 11px; color: #6a4f00; word-break: break-all; }
+    .summary-box .dim { color: #888; font-size: 11px; }
     .chat-input-row { display: flex; gap: 8px; padding: 12px 20px; border-top: 1px solid #e5e7eb; background: white; }
     .chat-input-row input { flex: 1; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; outline: none; }
     .chat-input-row input:focus { border-color: #0078d4; box-shadow: 0 0 0 2px rgba(0,120,212,0.15); }
@@ -901,7 +908,7 @@ DASHBOARD_HTML = """
 
       function setAnswer(container, text) {
         const box = container.querySelector('.agent-answer');
-        box.innerHTML = escapeHtml(text || '(no answer)').replace(/\n/g, '<br>');
+        box.innerHTML = escapeHtml(text || '(no answer)').replace(/\\n/g, '<br>');
       }
 
       function setError(container, msg) {
@@ -918,7 +925,7 @@ DASHBOARD_HTML = """
           const { value, done } = await reader.read();
           if (done) break;
           buffer += decoder.decode(value, { stream: true });
-          const parts = buffer.split('\n\n');
+          const parts = buffer.split('\\n\\n');
           buffer = parts.pop();
           for (const raw of parts) {
             const line = raw.trim();
@@ -930,6 +937,53 @@ DASHBOARD_HTML = """
             handleEvent(container, ev);
           }
         }
+      }
+
+      function renderSummary(container, ev) {
+        const wrap = document.createElement('div');
+        wrap.className = 'summary-box';
+        let h = '<div class="sum-title">📋 Tổng kết</div>';
+
+        h += '<div class="sum-section"><b>🔎 Keywords LLM đã search (' + ev.queries.length + ' lần):</b><ul>';
+        ev.queries.forEach(function (q, i) {
+          h += '<li><code>' + escapeHtml(q) + '</code></li>';
+        });
+        h += '</ul></div>';
+
+        h += '<div class="sum-section"><b>📁 File Graph trả về (' + ev.files_returned.length + '):</b>';
+        if (ev.files_returned.length) {
+          h += '<ul>';
+          ev.files_returned.forEach(function (f) {
+            h += '<li>' + escapeHtml(f.name) + ' <span class="dim">(query: ' + escapeHtml(f.query.slice(0, 60)) + ')</span></li>';
+          });
+          h += '</ul>';
+        }
+        h += '</div>';
+
+        h += '<div class="sum-section"><b>📖 File LLM đã đọc nội dung (' + ev.files_fetched.length + '):</b>';
+        if (ev.files_fetched.length) {
+          h += '<ul>';
+          ev.files_fetched.forEach(function (f) {
+            h += '<li><strong>' + escapeHtml(f.name) + '</strong></li>';
+          });
+          h += '</ul>';
+        } else {
+          h += ' <em class="dim">không file nào (snippet đủ trả lời)</em>';
+        }
+        h += '</div>';
+
+        if (ev.files_grepped && ev.files_grepped.length) {
+          h += '<div class="sum-section"><b>🔬 Grep pattern:</b><ul>';
+          ev.files_grepped.forEach(function (f) {
+            h += '<li>' + escapeHtml(f.name) + ' ← <code>' + escapeHtml(f.patterns) + '</code></li>';
+          });
+          h += '</ul></div>';
+        }
+
+        wrap.innerHTML = h;
+        const stepsBox = container.querySelector('.agent-steps');
+        stepsBox.parentNode.insertBefore(wrap, container.querySelector('.agent-answer'));
+        scroll();
       }
 
       function handleEvent(container, ev) {
@@ -944,6 +998,9 @@ DASHBOARD_HTML = """
           case 'tool_result':
             fillStepResult(container, ev);
             setStatus(container, 'Đã nhận kết quả bước ' + ev.step + ', tiếp tục…', false);
+            break;
+          case 'summary':
+            renderSummary(container, ev);
             break;
           case 'final_answer':
             setStatus(container, '', true);

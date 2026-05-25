@@ -1,4 +1,6 @@
+import os
 import re
+from datetime import datetime
 
 from langchain_core.tools import tool
 
@@ -6,6 +8,38 @@ from .. import cache
 
 MAX_CHUNKS_RETURNED = 10
 MAX_CHARS_PER_LINE = 400
+
+# Append-only debug log of every grep_context call.
+# Writes: timestamp, file, patterns, all matches + full extracted chunks.
+DEBUG_LOG = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "..", "..", "debug", "grep.log")
+)
+
+
+def _write_debug_log(filename, patterns, total_lines, match_indices, windows, lines, regex):
+    try:
+        os.makedirs(os.path.dirname(DEBUG_LOG), exist_ok=True)
+        with open(DEBUG_LOG, "a", encoding="utf-8") as f:
+            f.write("\n" + "=" * 70 + "\n")
+            f.write(f"TIME       : {datetime.now().isoformat(timespec='seconds')}\n")
+            f.write(f"FILE       : {filename}\n")
+            f.write(f"PATTERNS   : {patterns}\n")
+            f.write(f"TOTAL LINES: {total_lines}\n")
+            f.write(f"MATCHES    : {len(match_indices)} hit(s) at lines "
+                    f"{match_indices[:30]}{'...' if len(match_indices) > 30 else ''}\n")
+            f.write(f"CHUNKS     : {len(windows)} (after merging overlap)\n")
+            f.write("\n--- EXTRACTED CHUNKS (exactly what the LLM saw) ---\n")
+            for i, (s, e) in enumerate(windows, 1):
+                f.write(f"\nChunk {i}: lines {s + 1}-{e}\n")
+                for ln in range(s, e):
+                    marker = ">>" if regex.search(lines[ln]) else "  "
+                    line = lines[ln]
+                    if len(line) > MAX_CHARS_PER_LINE:
+                        line = line[:MAX_CHARS_PER_LINE] + "...[truncated]"
+                    f.write(f"{marker} L{ln + 1}: {line}\n")
+    except Exception as e:
+        # Never let logging break the agent
+        print(f"[grep.log write failed: {e}]")
 
 
 def make_grep_context_tool():
@@ -43,6 +77,7 @@ def make_grep_context_tool():
 
         match_indices = [i for i, line in enumerate(lines) if regex.search(line)]
         if not match_indices:
+            _write_debug_log(filename, patterns, len(lines), [], [], lines, regex)
             return f"No matches for pattern '{patterns}' in {filename}."
 
         windows: list[list[int]] = []
@@ -53,6 +88,8 @@ def make_grep_context_tool():
                 windows[-1][1] = max(windows[-1][1], end)
             else:
                 windows.append([start, end])
+
+        _write_debug_log(filename, patterns, len(lines), match_indices, windows, lines, regex)
 
         out = [
             f"Found {len(match_indices)} matches in {filename} "
