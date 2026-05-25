@@ -1,17 +1,14 @@
 ============================================================
 OneDrive Debug Probe
-Time: 2026-05-20T23:41:06.902658+00:00
+Time: 2026-05-22T00:51:15.682330+00:00
 ============================================================
 
 [1] JWT TOKEN CLAIMS
   aud:  00000003-0000-0000-c000-000000000000
-  scp:  Mail.Read openid profile User.Read email
+  scp:  Files.Read Mail.Read openid profile Team.ReadBasic.All User.Read email
   upn:  ManhLuc@FPTJapan225.onmicrosoft.com
   tid:  c9d7a627-62c3-4d01-a52c-a6d8271cf42e
-  exp:  1779324125
-
-  *** WARNING: Files.Read not found in token scopes! ***
-  The token may lack OneDrive permission. Re-login may be needed.
+  exp:  1779414189
 
 ────────────────────────────────────────────────────────────
 PROBE: /me — identity check
@@ -28,68 +25,553 @@ PROBE: /me — identity check
 ────────────────────────────────────────────────────────────
 PROBE: /me/drive — check drive exists
   URL:    https://graph.microsoft.com/v1.0/me/drive
-  Status: 404
+  Status: 200
   Body:   {
-    "error": {
-        "code": "itemNotFound",
-        "message": "Item not found",
-        "innerError": {
-            "date": "2026-05-20T23:41:07",
-            "request-id": "724fda7f-1ce5-4ba0-a9aa-45ba1c33ee91",
-            "client-request-id": "724fda7f-1ce5-4ba0-a9aa-45ba1c33ee91"
+    "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#drives/$entity",
+    "createdDateTime": "2026-05-16T12:10:48Z",
+    "description": "",
+    "id": "b!qT6Y1KA8fkW29egZSqvT2h8dgMtkT6pMkOL8Klcd3G_NCVDX_otXQ7rMDv0gIbZY",
+    "lastModifiedDateTime": "2026-05-20T23:42:50Z",
+    "name": "OneDrive",
+    "webUrl": "https://fptjapan225-my.sharepoint.com/personal/manhluc_fptjapan225_onmicrosoft_com/Documents",
+    "driveType": "business",
+    "createdBy": {
+        "user": {
+            "displayName": "System Account"
         }
+    },
+    "lastModifiedBy": {
+        "user": {
+            "email": "ManhLuc@FPTJapan225.onmicrosoft.com",
+            "id": "02e0d2d8-be99-471b-bb2c-50b9a8f5f450",
+            "displayName": "Manh Luc"
+        }
+    },
+    "owner": {
+        "user": {
+            "email": "ManhLuc@FPTJapan225.onmicrosoft.com",
+            "id": "02e0d2d8-be99-471b-bb2c-50b9a8f5f450",
+            "displayName": "Manh Luc"
+        }
+    },
+    "quota": {
+        "deleted": 0,
+        "remaining": 1099497026675,
+        "state": "normal",
+        "total": 1099511627776,
+        "used": 14601101
     }
 }
+
+  >>> Drive ID: b!qT6Y1KA8fkW29egZSqvT2h8dgMtkT6pMkOL8Klcd3G_NCVDX_otXQ7rMDv0gIbZY  Type: business
 
 ────────────────────────────────────────────────────────────
 PROBE: /me/drive/root — resolve root item
   URL:    https://graph.microsoft.com/v1.0/me/drive/root
-  Status: 404
+  Status: 200
   Body:   {
-    "error": {
-        "code": "itemNotFound",
-        "message": "Item not found"
-    }
+    "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#Collection(driveItem)/$entity",
+    "createdDateTime": "2026-05-16T12:10:48Z",
+    "id": "01JZN5UZV6Y2GOVW7725BZO354PWSELRRZ",
+    "lastModifiedDateTime": "2026-05-20T23:42:50Z",
+    "name": "root",
+    "parentReference": {
+        "driveType": "business",
+        "driveId": "b!qT6Y1KA8fkW29egZSqvT2h8dgMtkT6pMkOL8Klcd3G_NCVDX_otXQ7rMDv0gIbZY"
+    },
+    "webUrl": "https://fptjapan225-my.sharepoint.com/personal/manhluc_fptjapan225_onmicrosoft_com/Documents",
+    "fileSystemInfo": {
+        "createdDateTime": "2026-05-16T12:10:48Z",
+        "lastModifiedDateTime": "2026-05-20T23:42:50Z"
+    },
+    "folder": {
+        "childCount": 5
+    },
+    "isAuthoritative": false,
+    "root": {},
+    "size": 7136128
 }
 
 ────────────────────────────────────────────────────────────
 PROBE: /me/drive/root/children — full params
   URL:    https://graph.microsoft.com/v1.0/me/drive/root/children
   Params: {'$top': 10, '$select': 'name,size,lastModifiedDateTime,folder,file,webUrl', '$orderby': 'lastModifiedDateTime desc'}
-  Status: 404
+  Status: 200
   Body:   {
-    "error": {
-        "code": "itemNotFound",
-        "message": "Item not found"
-    }
+    "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#Collection(driveItem)",
+    "value": [
+        {
+            "@odata.etag": "\"{EF10375C-9443-44CA-BB13-ADD094CF58A8},1\"",
+            "lastModifiedDateTime": "2026-05-20T23:42:50Z",
+            "name": "Attachments",
+            "webUrl": "https://fptjapan225-my.sharepoint.com/personal/manhluc_fptjapan225_onmicrosoft_com/Documents/Attachments",
+            "folder": {
+                "childCount": 0
+            },
+            "size": 0
+        },
+        {
+            "@odata.etag": "\"{AF32183C-C61A-4DDC-AF80-A6CFBDB22F70},1\"",
+            "lastModifiedDateTime": "2026-05-20T06:43:28Z",
+            "name": "Ragas_\u57fa\u672c\u77e5\u8b58_\u5b66\u7fd2\u8cc7\u6599.pptx",
+            "webUrl": "https://fptjapan225-my.sharepoint.com/personal/manhluc_fptjapan225_onmicrosoft_com/_layouts/15/Doc.aspx?sourcedoc=%7BAF32183C-C61A-4DDC-AF80-A6CFBDB22F70%7D&file=Ragas_%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AD%98_%E5%AD%A6%E7%BF%92%E8%B3%87%E6%96%99.pptx&action=edit&mobileredirect=true",
+            "file": {
+                "fileExtension": ".pptx",
+                "hashes": {
+                    "quickXorHash": "YLJBM2apDMZ7JHB48JIHZ5gGf3g="
+                },
+                "mimeType": "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+            },
+            "size": 3407591
+        },
+        {
+            "@odata.etag": "\"{1699DD9A-903A-446A-BDF4-033EAA61F391},2\"",
+            "lastModifiedDateTime": "2026-05-20T06:43:15Z",
+            "name": "ChatGPT Image May 19, 2026, 11_57_18 AM.png",
+            "webUrl": "https://fptjapan225-my.sharepoint.com/personal/manhluc_fptjapan225_onmicrosoft_com/Documents/ChatGPT%20Image%20May%2019,%202026,%2011_57_18%20AM.png",
+            "file": {
+                "fileExtension": ".png",
+                "hashes": {
+                    "quickXorHash": "QpLvR9f1g0I4GwWG4U/AKdsdyI8="
+                },
+                "mimeType": "image/png"
+            },
+            "size": 1406417
+        },
+        {
+            "@odata.etag": "\"{C0ED5E3C-C067-4774-9C8B-3E91492EE1D8},1\"",
+            "lastModifiedDateTime": "2026-05-20T06:43:14Z",
+            "name": "current_process_workflow_as_is.pptx",
+            "webUrl": "https://fptjapan225-my.sharepoint.com/personal/manhluc_fptjapan225_onmicrosoft_com/_layouts/15/Doc.aspx?sourcedoc=%7BC0ED5E3C-C067-4774-9C8B-3E91492EE1D8%7D&file=current_process_workflow_as_is.pptx&action=edit&mobileredirect=true",
+            "file": {
+                "fileExtension": ".pptx",
+                "hashes": {
+                    "quickXorHash": "AA1mFnGAFQrkGZXoToR26Iemy/8="
+                },
+                "mimeType": "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+            },
+            "size": 1189473
+        },
+        {
+            "@odata.etag": "\"{8CFD6020-11A6-40FD-BED1-6CB5AC98B9B4},1\"",
+            "lastModifiedDateTime": "2026-05-20T06:43:13Z",
+            "name": "Ragas_\u57fa\u672c\u77e5\u8b58_\u5b66\u7fd2\u8cc7\u6599 (1).pdf",
+            "webUrl": "https://fptjapan225-my.sharepoint.com/personal/manhluc_fptjapan225_onmicrosoft_com/Documents/Ragas_%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AD%98_%E5%AD%A6%E7%BF%92%E8%B3%87%E6%96%99%20(1).pdf",
+            "file": {
+                "fileExtension": ".pdf",
+                "hashes": {
+                    "quickXorHash": "jL+z7q5VFguVyJRaF6TdL1kxk30="
+                },
+                "mimeType": "application/pdf"
+            },
+            "size": 1132647
+        }
+    ]
 }
 
 ────────────────────────────────────────────────────────────
 PROBE: /me/drive/items/root/children — alternate path
   URL:    https://graph.microsoft.com/v1.0/me/drive/items/root/children
   Params: {'$top': 10, '$select': 'name,size,lastModifiedDateTime,folder,file,webUrl', '$orderby': 'lastModifiedDateTime desc'}
-  Status: 404
+  Status: 200
   Body:   {
-    "error": {
-        "code": "itemNotFound",
-        "message": "Item not found"
-    }
+    "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#Collection(driveItem)",
+    "value": [
+        {
+            "@odata.etag": "\"{EF10375C-9443-44CA-BB13-ADD094CF58A8},1\"",
+            "lastModifiedDateTime": "2026-05-20T23:42:50Z",
+            "name": "Attachments",
+            "webUrl": "https://fptjapan225-my.sharepoint.com/personal/manhluc_fptjapan225_onmicrosoft_com/Documents/Attachments",
+            "folder": {
+                "childCount": 0
+            },
+            "size": 0
+        },
+        {
+            "@odata.etag": "\"{AF32183C-C61A-4DDC-AF80-A6CFBDB22F70},1\"",
+            "lastModifiedDateTime": "2026-05-20T06:43:28Z",
+            "name": "Ragas_\u57fa\u672c\u77e5\u8b58_\u5b66\u7fd2\u8cc7\u6599.pptx",
+            "webUrl": "https://fptjapan225-my.sharepoint.com/personal/manhluc_fptjapan225_onmicrosoft_com/_layouts/15/Doc.aspx?sourcedoc=%7BAF32183C-C61A-4DDC-AF80-A6CFBDB22F70%7D&file=Ragas_%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AD%98_%E5%AD%A6%E7%BF%92%E8%B3%87%E6%96%99.pptx&action=edit&mobileredirect=true",
+            "file": {
+                "fileExtension": ".pptx",
+                "hashes": {
+                    "quickXorHash": "YLJBM2apDMZ7JHB48JIHZ5gGf3g="
+                },
+                "mimeType": "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+            },
+            "size": 3407591
+        },
+        {
+            "@odata.etag": "\"{1699DD9A-903A-446A-BDF4-033EAA61F391},2\"",
+            "lastModifiedDateTime": "2026-05-20T06:43:15Z",
+            "name": "ChatGPT Image May 19, 2026, 11_57_18 AM.png",
+            "webUrl": "https://fptjapan225-my.sharepoint.com/personal/manhluc_fptjapan225_onmicrosoft_com/Documents/ChatGPT%20Image%20May%2019,%202026,%2011_57_18%20AM.png",
+            "file": {
+                "fileExtension": ".png",
+                "hashes": {
+                    "quickXorHash": "QpLvR9f1g0I4GwWG4U/AKdsdyI8="
+                },
+                "mimeType": "image/png"
+            },
+            "size": 1406417
+        },
+        {
+            "@odata.etag": "\"{C0ED5E3C-C067-4774-9C8B-3E91492EE1D8},1\"",
+            "lastModifiedDateTime": "2026-05-20T06:43:14Z",
+            "name": "current_process_workflow_as_is.pptx",
+            "webUrl": "https://fptjapan225-my.sharepoint.com/personal/manhluc_fptjapan225_onmicrosoft_com/_layouts/15/Doc.aspx?sourcedoc=%7BC0ED5E3C-C067-4774-9C8B-3E91492EE1D8%7D&file=current_process_workflow_as_is.pptx&action=edit&mobileredirect=true",
+            "file": {
+                "fileExtension": ".pptx",
+                "hashes": {
+                    "quickXorHash": "AA1mFnGAFQrkGZXoToR26Iemy/8="
+                },
+                "mimeType": "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+            },
+            "size": 1189473
+        },
+        {
+            "@odata.etag": "\"{8CFD6020-11A6-40FD-BED1-6CB5AC98B9B4},1\"",
+            "lastModifiedDateTime": "2026-05-20T06:43:13Z",
+            "name": "Ragas_\u57fa\u672c\u77e5\u8b58_\u5b66\u7fd2\u8cc7\u6599 (1).pdf",
+            "webUrl": "https://fptjapan225-my.sharepoint.com/personal/manhluc_fptjapan225_onmicrosoft_com/Documents/Ragas_%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AD%98_%E5%AD%A6%E7%BF%92%E8%B3%87%E6%96%99%20(1).pdf",
+            "file": {
+                "fileExtension": ".pdf",
+                "hashes": {
+                    "quickXorHash": "jL+z7q5VFguVyJRaF6TdL1kxk30="
+                },
+                "mimeType": "application/pdf"
+            },
+            "size": 1132647
+        }
+    ]
 }
 
-SKIPPED probe 7 — could not get drive ID from probe 3
+────────────────────────────────────────────────────────────
+PROBE: /drives/{driveId}/root/children — explicit ID
+  URL:    https://graph.microsoft.com/v1.0/drives/b!qT6Y1KA8fkW29egZSqvT2h8dgMtkT6pMkOL8Klcd3G_NCVDX_otXQ7rMDv0gIbZY/root/children
+  Params: {'$top': 10, '$select': 'name,size,lastModifiedDateTime,folder,file,webUrl', '$orderby': 'lastModifiedDateTime desc'}
+  Status: 200
+  Body:   {
+    "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#Collection(driveItem)",
+    "value": [
+        {
+            "@odata.etag": "\"{EF10375C-9443-44CA-BB13-ADD094CF58A8},1\"",
+            "lastModifiedDateTime": "2026-05-20T23:42:50Z",
+            "name": "Attachments",
+            "webUrl": "https://fptjapan225-my.sharepoint.com/personal/manhluc_fptjapan225_onmicrosoft_com/Documents/Attachments",
+            "folder": {
+                "childCount": 0
+            },
+            "size": 0
+        },
+        {
+            "@odata.etag": "\"{AF32183C-C61A-4DDC-AF80-A6CFBDB22F70},1\"",
+            "lastModifiedDateTime": "2026-05-20T06:43:28Z",
+            "name": "Ragas_\u57fa\u672c\u77e5\u8b58_\u5b66\u7fd2\u8cc7\u6599.pptx",
+            "webUrl": "https://fptjapan225-my.sharepoint.com/personal/manhluc_fptjapan225_onmicrosoft_com/_layouts/15/Doc.aspx?sourcedoc=%7BAF32183C-C61A-4DDC-AF80-A6CFBDB22F70%7D&file=Ragas_%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AD%98_%E5%AD%A6%E7%BF%92%E8%B3%87%E6%96%99.pptx&action=edit&mobileredirect=true",
+            "file": {
+                "fileExtension": ".pptx",
+                "hashes": {
+                    "quickXorHash": "YLJBM2apDMZ7JHB48JIHZ5gGf3g="
+                },
+                "mimeType": "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+            },
+            "size": 3407591
+        },
+        {
+            "@odata.etag": "\"{1699DD9A-903A-446A-BDF4-033EAA61F391},2\"",
+            "lastModifiedDateTime": "2026-05-20T06:43:15Z",
+            "name": "ChatGPT Image May 19, 2026, 11_57_18 AM.png",
+            "webUrl": "https://fptjapan225-my.sharepoint.com/personal/manhluc_fptjapan225_onmicrosoft_com/Documents/ChatGPT%20Image%20May%2019,%202026,%2011_57_18%20AM.png",
+            "file": {
+                "fileExtension": ".png",
+                "hashes": {
+                    "quickXorHash": "QpLvR9f1g0I4GwWG4U/AKdsdyI8="
+                },
+                "mimeType": "image/png"
+            },
+            "size": 1406417
+        },
+        {
+            "@odata.etag": "\"{C0ED5E3C-C067-4774-9C8B-3E91492EE1D8},1\"",
+            "lastModifiedDateTime": "2026-05-20T06:43:14Z",
+            "name": "current_process_workflow_as_is.pptx",
+            "webUrl": "https://fptjapan225-my.sharepoint.com/personal/manhluc_fptjapan225_onmicrosoft_com/_layouts/15/Doc.aspx?sourcedoc=%7BC0ED5E3C-C067-4774-9C8B-3E91492EE1D8%7D&file=current_process_workflow_as_is.pptx&action=edit&mobileredirect=true",
+            "file": {
+                "fileExtension": ".pptx",
+                "hashes": {
+                    "quickXorHash": "AA1mFnGAFQrkGZXoToR26Iemy/8="
+                },
+                "mimeType": "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+            },
+            "size": 1189473
+        },
+        {
+            "@odata.etag": "\"{8CFD6020-11A6-40FD-BED1-6CB5AC98B9B4},1\"",
+            "lastModifiedDateTime": "2026-05-20T06:43:13Z",
+            "name": "Ragas_\u57fa\u672c\u77e5\u8b58_\u5b66\u7fd2\u8cc7\u6599 (1).pdf",
+            "webUrl": "https://fptjapan225-my.sharepoint.com/personal/manhluc_fptjapan225_onmicrosoft_com/Documents/Ragas_%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AD%98_%E5%AD%A6%E7%BF%92%E8%B3%87%E6%96%99%20(1).pdf",
+            "file": {
+                "fileExtension": ".pdf",
+                "hashes": {
+                    "quickXorHash": "jL+z7q5VFguVyJRaF6TdL1kxk30="
+                },
+                "mimeType": "application/pdf"
+            },
+            "size": 1132647
+        }
+    ]
+}
 
 ────────────────────────────────────────────────────────────
 PROBE: /me/drive/root/children — stripped params (no orderby/select)
   URL:    https://graph.microsoft.com/v1.0/me/drive/root/children
   Params: {'$top': 10}
-  Status: 404
+  Status: 200
   Body:   {
-    "error": {
-        "code": "itemNotFound",
-        "message": "Item not found"
-    }
+    "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#Collection(driveItem)",
+    "value": [
+        {
+            "createdBy": {
+                "application": {
+                    "id": "9e4a5442-a5c9-4f6f-b03f-5b9fcaaf24b1",
+                    "displayName": "OfficeServicesManager"
+                },
+                "user": {
+                    "email": "ManhLuc@FPTJapan225.onmicrosoft.com",
+                    "id": "02e0d2d8-be99-471b-bb2c-50b9a8f5f450",
+                    "displayName": "Manh Luc"
+                }
+            },
+            "createdDateTime": "2026-05-20T23:42:50Z",
+            "eTag": "\"{EF10375C-9443-44CA-BB13-ADD094CF58A8},1\"",
+            "id": "01JZN5UZS4G4IO6Q4UZJCLWE5N2CKM6WFI",
+            "lastModifiedBy": {
+                "application": {
+                    "id": "9e4a5442-a5c9-4f6f-b03f-5b9fcaaf24b1",
+                    "displayName": "OfficeServicesManager"
+                },
+                "user": {
+                    "email": "ManhLuc@FPTJapan225.onmicrosoft.com",
+                    "id": "02e0d2d8-be99-471b-bb2c-50b9a8f5f450",
+                    "displayName": "Manh Luc"
+                }
+            },
+            "lastModifiedDateTime": "2026-05-20T23:42:50Z",
+            "name": "Attachments",
+            "parentReference": {
+                "driveType": "business",
+                "driveId": "b!qT6Y1KA8fkW29egZSqvT2h8dgMtkT6pMkOL8Klcd3G_NCVDX_otXQ7rMDv0gIbZY",
+                "id": "01JZN5UZV6Y2GOVW7725BZO354PWSELRRZ",
+                "name": "Documents",
+                "path": "/drive/root:",
+                "siteId": "d4983ea9-3ca0-457e-b6f5-e8194aabd3da"
+            },
+            "webUrl": "https://fptjapan225-my.sharepoint.com/personal/manhluc_fptjapan225_onmicrosoft_com/Documents/Attachments",
+            "cTag": "\"c:{EF10375C-9443-44CA-BB13-ADD094CF58A8},0\"",
+            "fileSystemInfo": {
+                "createdDateTime": "2026-05-20T23:42:50Z",
+                "lastModifiedDateTime": "2026-05-20T23:42:50Z"
+            },
+            "folder": {
+                "childCount": 0
+            },
+            "isAuthoritative": false,
+            "size": 0,
+            "specialFolder": {
+                "name": "attachments"
+            }
+        },
+        {
+            "@microsoft.graph.downloadUrl": "https://fptjapan225-my.sharepoint.com/personal/manhluc_fptjapan225_onmicrosoft_com/_layouts/15/download.aspx?UniqueId=1699dd9a-903a-446a-bdf4-033eaa61f391&Translate=false&tempauth=v1.eyJzaXRlaWQiOiJkNDk4M2VhOS0zY2EwLTQ1N2UtYjZmNS1lODE5NGFhYmQzZGEiLCJhcHBfZGlzcGxheW5hbWUiOiJLQUkiLCJhcHBpZCI6IjQyNTE5MmRiLWZlNTMtNDkxMC1iYmIxLTBhNTliZmVmZTNjZCIsImF1ZCI6IjAwMDAwMDAzLTAwMDAtMGZmMS1jZTAwLTAwMDAwMDAwMDAwMC9mcHRqYXBhbjIyNS1teS5zaGFyZXBvaW50LmNvbUBjOWQ3YTYyNy02MmMzLTRkMDEtYTUyYy1hNmQ4MjcxY2Y0MmUiLCJleHAiOiIxNzc5NDE0NjgwIn0.CkAKDGVudHJhX2NsYWltcxIwQ0lyS3Z0QUdFQUFhRmxSNU9GRnpNVFpwUmxWNVpVTkpkVlZ6WW5OQ1FVRXFBQT09CjIKCmFjdG9yYXBwaWQSJDAwMDAwMDAzLTAwMDAtMDAwMC1jMDAwLTAwMDAwMDAwMDAwMAoKCgRzbmlkEgI2NBILCJKMl9jI6Zs_EAUaDDQwLjEyNi4zNS44OSoscG9aeWtpcFI1UmVHenpkcXFqSjJWbndlUzRqQUFYUGJ1TkVIa1EwYnppdz0wqgE4AUIQohX1cr8AAHCFxWBXM0EL1UoQaGFzaGVkcHJvb2Z0b2tlbmokMDA0Zjg3N2EtYWEzOC1hNDk0LTExN2YtY2NiOTQxZDdlZWUycikwaC5mfG1lbWJlcnNoaXB8MTAwMzIwMDViYzU5NGVkNUBsaXZlLmNvbXoBMoIBEgknptfJw2IBTRGlLKbYJxz0LpIBA0x1Y5oBBE1hbmiiASNtYW5obHVjQGZwdGphcGFuMjI1Lm9ubWljcm9zb2Z0LmNvbaoBEDEwMDMyMDA1QkM1OTRFRDWyAR1teWZpbGVzLnJlYWQgYWxscHJvZmlsZXMucmVhZMgBAQ.2qUHt2kBdLAI7hMZsJAYpO59te_6MDJ9HYL9qpcrPG8&ApiVersion=2.0",
+            "createdBy": {
+                "user": {
+                    "email": "ManhLuc@FPTJapan225.onmicrosoft.com",
+                    "id": "02e0d2d8-be99-471b-bb2c-50b9a8f5f450",
+                    "displayName": "Manh Luc"
+                }
+            },
+            "createdDateTime": "2026-05-20T06:43:15Z",
+            "eTag": "\"{1699DD9A-903A-446A-BDF4-033EAA61F391},2\"",
+            "id": "01JZN5UZU23WMRMOUQNJCL35ADH2VGD44R",
+            "lastModifiedBy": {
+                "user": {
+                    "email": "ManhLuc@FPTJapan225.onmicrosoft.com",
+                    "id": "02e0d2d8-be99-471b-bb2c-50b9a8f5f450",
+                    "displayName": "Manh Luc"
+                }
+            },
+            "lastModifiedDateTime": "2026-05-20T06:43:15Z",
+            "name": "ChatGPT Image May 19, 2026, 11_57_18 AM.png",
+            "parentReference": {
+                "driveType": "business",
+                "driveId": "b!qT6Y1KA8fkW29egZSqvT2h8dgMtkT6pMkOL8Klcd3G_NCVDX_otXQ7rMDv0gIbZY",
+                "id": "01JZN5UZV6Y2GOVW7725BZO354PWSELRRZ",
+                "name": "Documents",
+                "path": "/drive/root:",
+                "siteId": "d4983ea9-3ca0-457e-b6f5-e8194aabd3da"
+            },
+            "webUrl": "https://fptjapan225-my.sharepoint.com/personal/manhluc_fptjapan225_onmicrosoft_com/Documents/ChatGPT%20Image%20May%2019,%202026,%2011_57_18%20AM.png",
+            "cTag": "\"c:{1699DD9A-903A-446A-BDF4-033EAA61F391},1\"",
+            "file": {
+                "fileExtension": ".png",
+                "hashes": {
+                    "quickXorHash": "QpLvR9f1g0I4GwWG4U/AKdsdyI8="
+                },
+                "mimeType": "image/png"
+            },
+            "fileSystemInfo": {
+                "createdDateTime": "2026-05-20T06:43:15Z",
+                "lastModifiedDateTime": "2026-05-20T06:43:15Z"
+            },
+            "image": {
+                "height": 941,
+                "width": 1672
+            },
+            "isAuthoritative": false,
+            "photo": {
+                "alternateTakenDateTime": "2026-05-20T06:43:15Z"
+            },
+            "size": 1406417
+        },
+        {
+            "@microsoft.graph.downloadUrl": "https://fptjapan225-my.sharepoint.com/personal/manhluc_fptjapan225_onmicrosoft_com/_layouts/15/download.aspx?UniqueId=c0ed5e3c-c067-4774-9c8b-3e91492ee1d8&Translate=false&tempauth=v1.eyJzaXRlaWQiOiJkNDk4M2VhOS0zY2EwLTQ1N2UtYjZmNS1lODE5NGFhYmQzZGEiLCJhcHBfZGlzcGxheW5hbWUiOiJLQUkiLCJhcHBpZCI6IjQyNTE5MmRiLWZlNTMtNDkxMC1iYmIxLTBhNTliZmVmZTNjZCIsImF1ZCI6IjAwMDAwMDAzLTAwMDAtMGZmMS1jZTAwLTAwMDAwMDAwMDAwMC9mcHRqYXBhbjIyNS1teS5zaGFyZXBvaW50LmNvbUBjOWQ3YTYyNy02MmMzLTRkMDEtYTUyYy1hNmQ4MjcxY2Y0MmUiLCJleHAiOiIxNzc5NDE0NjgwIn0.CkAKDGVudHJhX2NsYWltcxIwQ0lyS3Z0QUdFQUFhRmxSNU9GRnpNVFpwUmxWNVpVTkpkVlZ6WW5OQ1FVRXFBQT09CjIKCmFjdG9yYXBwaWQSJDAwMDAwMDAzLTAwMDAtMDAwMC1jMDAwLTAwMDAwMDAwMDAwMAoKCgRzbmlkEgI2NBILCMKom9jI6Zs_EAUaDDQwLjEyNi4zNS44OSosMVV1RGh4VmRkckRrRmc0L2JHNkNHdHFmZE14VFpJajFIZDFjRkxuejZOUT0wqgE4AUIQohX1cr8AAHCFxWBXM0EL1UoQaGFzaGVkcHJvb2Z0b2tlbmokMDA0Zjg3N2EtYWEzOC1hNDk0LTExN2YtY2NiOTQxZDdlZWUycikwaC5mfG1lbWJlcnNoaXB8MTAwMzIwMDViYzU5NGVkNUBsaXZlLmNvbXoBMoIBEgknptfJw2IBTRGlLKbYJxz0LpIBA0x1Y5oBBE1hbmiiASNtYW5obHVjQGZwdGphcGFuMjI1Lm9ubWljcm9zb2Z0LmNvbaoBEDEwMDMyMDA1QkM1OTRFRDWyAR1teWZpbGVzLnJlYWQgYWxscHJvZmlsZXMucmVhZMgBAQ.ure6nduzhoDrQQRELxtQMVQ2GS0K9Lu95ZXGfyL8WZU&ApiVersion=2.0",
+            "createdBy": {
+                "user": {
+                    "email": "ManhLuc@FPTJapan225.onmicrosoft.com",
+                    "id": "02e0d2d8-be99-471b-bb2c-50b9a8f5f450",
+                    "displayName": "Manh Luc"
+                }
+            },
+            "createdDateTime": "2026-05-20T06:43:14Z",
+            "eTag": "\"{C0ED5E3C-C067-4774-9C8B-3E91492EE1D8},1\"",
+            "id": "01JZN5UZR4L3W4AZ6AORDZZCZ6SFES5YOY",
+            "lastModifiedBy": {
+                "user": {
+                    "email": "ManhLuc@FPTJapan225.onmicrosoft.com",
+                    "id": "02e0d2d8-be99-471b-bb2c-50b9a8f5f450",
+                    "displayName": "Manh Luc"
+                }
+            },
+            "lastModifiedDateTime": "2026-05-20T06:43:14Z",
+            "name": "current_process_workflow_as_is.pptx",
+            "parentReference": {
+                "driveType": "business",
+                "driveId": "b!qT6Y1KA8fkW29egZSqvT2h8dgMtkT6pMkOL8Klcd3G_NCVDX_otXQ7rMDv0gIbZY",
+                "id": "01JZN5UZV6Y2GOVW7725BZO354PWSELRRZ",
+                "name": "Documents",
+                "path": "/drive/root:",
+                "siteId": "d4983ea9-3ca0-457e-b6f5-e8194aabd3da"
+            },
+            "webUrl": "https://fptjapan225-my.sharepoint.com/personal/manhluc_fptjapan225_onmicrosoft_com/_layouts/15/Doc.aspx?sourcedoc=%7BC0ED5E3C-C067-4774-9C8B-3E91492EE1D8%7D&file=current_process_workflow_as_is.pptx&action=edit&mobileredirect=true",
+            "cTag": "\"c:{C0ED5E3C-C067-4774-9C8B-3E91492EE1D8},1\"",
+            "file": {
+                "fileExtension": ".pptx",
+                "hashes": {
+                    "quickXorHash": "AA1mFnGAFQrkGZXoToR26Iemy/8="
+                },
+                "mimeType": "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+            },
+            "fileSystemInfo": {
+                "createdDateTime": "2026-05-20T06:43:14Z",
+                "lastModifiedDateTime": "2026-05-20T06:43:14Z"
+            },
+            "isAuthoritative": false,
+            "size": 1189473
+        },
+        {
+            "@microsoft.graph.downloadUrl": "https://fptjapan225-my.sharepoint.com/personal/manhluc_fptjapan225_onmicrosoft_com/_layouts/15/download.aspx?UniqueId=8cfd6020-11a6-40fd-bed1-6cb5ac98b9b4&Translate=false&tempauth=v1.eyJzaXRlaWQiOiJkNDk4M2VhOS0zY2EwLTQ1N2UtYjZmNS1lODE5NGFhYmQzZGEiLCJhcHBfZGlzcGxheW5hbWUiOiJLQUkiLCJhcHBpZCI6IjQyNTE5MmRiLWZlNTMtNDkxMC1iYmIxLTBhNTliZmVmZTNjZCIsImF1ZCI6IjAwMDAwMDAzLTAwMDAtMGZmMS1jZTAwLTAwMDAwMDAwMDAwMC9mcHRqYXBhbjIyNS1teS5zaGFyZXBvaW50LmNvbUBjOWQ3YTYyNy02MmMzLTRkMDEtYTUyYy1hNmQ4MjcxY2Y0MmUiLCJleHAiOiIxNzc5NDE0NjgwIn0.CkAKDGVudHJhX2NsYWltcxIwQ0lyS3Z0QUdFQUFhRmxSNU9GRnpNVFpwUmxWNVpVTkpkVlZ6WW5OQ1FVRXFBQT09CjIKCmFjdG9yYXBwaWQSJDAwMDAwMDAzLTAwMDAtMDAwMC1jMDAwLTAwMDAwMDAwMDAwMAoKCgRzbmlkEgI2NBILCLiYntjI6Zs_EAUaDDQwLjEyNi4zNS44OSosRnpNcEF1R2NVVkE2cE9RQS9wREUwMW1pcitCWERjV3V5cTdOUGhiSkhFbz0wqgE4AUIQohX1cr8AAHCFxWBXM0EL1UoQaGFzaGVkcHJvb2Z0b2tlbmokMDA0Zjg3N2EtYWEzOC1hNDk0LTExN2YtY2NiOTQxZDdlZWUycikwaC5mfG1lbWJlcnNoaXB8MTAwMzIwMDViYzU5NGVkNUBsaXZlLmNvbXoBMoIBEgknptfJw2IBTRGlLKbYJxz0LpIBA0x1Y5oBBE1hbmiiASNtYW5obHVjQGZwdGphcGFuMjI1Lm9ubWljcm9zb2Z0LmNvbaoBEDEwMDMyMDA1QkM1OTRFRDWyAR1teWZpbGVzLnJlYWQgYWxscHJvZmlsZXMucmVhZMgBAQ.revKIQY3eXN7D6RqAXsrFfgr0uQk6Cur0IA_ce9Msas&ApiVersion=2.0",
+            "createdBy": {
+                "user": {
+                    "email": "ManhLuc@FPTJapan225.onmicrosoft.com",
+                    "id": "02e0d2d8-be99-471b-bb2c-50b9a8f5f450",
+                    "displayName": "Manh Luc"
+                }
+            },
+            "createdDateTime": "2026-05-20T06:43:13Z",
+            "eTag": "\"{8CFD6020-11A6-40FD-BED1-6CB5AC98B9B4},1\"",
+            "id": "01JZN5UZRAMD6YZJQR7VAL5ULMWWWJRONU",
+            "lastModifiedBy": {
+                "user": {
+                    "email": "ManhLuc@FPTJapan225.onmicrosoft.com",
+                    "id": "02e0d2d8-be99-471b-bb2c-50b9a8f5f450",
+                    "displayName": "Manh Luc"
+                }
+            },
+            "lastModifiedDateTime": "2026-05-20T06:43:13Z",
+            "name": "Ragas_\u57fa\u672c\u77e5\u8b58_\u5b66\u7fd2\u8cc7\u6599 (1).pdf",
+            "parentReference": {
+                "driveType": "business",
+                "driveId": "b!qT6Y1KA8fkW29egZSqvT2h8dgMtkT6pMkOL8Klcd3G_NCVDX_otXQ7rMDv0gIbZY",
+                "id": "01JZN5UZV6Y2GOVW7725BZO354PWSELRRZ",
+                "name": "Documents",
+                "path": "/drive/root:",
+                "siteId": "d4983ea9-3ca0-457e-b6f5-e8194aabd3da"
+            },
+            "webUrl": "https://fptjapan225-my.sharepoint.com/personal/manhluc_fptjapan225_onmicrosoft_com/Documents/Ragas_%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AD%98_%E5%AD%A6%E7%BF%92%E8%B3%87%E6%96%99%20(1).pdf",
+            "cTag": "\"c:{8CFD6020-11A6-40FD-BED1-6CB5AC98B9B4},1\"",
+            "file": {
+                "fileExtension": ".pdf",
+                "hashes": {
+                    "quickXorHash": "jL+z7q5VFguVyJRaF6TdL1kxk30="
+                },
+                "mimeType": "application/pdf"
+            },
+            "fileSystemInfo": {
+                "createdDateTime": "2026-05-20T06:43:13Z",
+                "lastModifiedDateTime": "2026-05-20T06:43:13Z"
+            },
+            "isAuthoritative": false,
+            "size": 1132647
+        },
+        {
+            "@microsoft.graph.downloadUrl": "https://fptjapan225-my.sharepoint.com/personal/manhluc_fptjapan225_onmicrosoft_com/_layouts/15/download.aspx?UniqueId=af32183c-c61a-4ddc-af80-a6cfbdb22f70&Translate=false&tempauth=v1.eyJzaXRlaWQiOiJkNDk4M2VhOS0zY2EwLTQ1N2UtYjZmNS1lODE5NGFhYmQzZGEiLCJhcHBfZGlzcGxheW5hbWUiOiJLQUkiLCJhcHBpZCI6IjQyNTE5MmRiLWZlNTMtNDkxMC1iYmIxLTBhNTliZmVmZTNjZCIsImF1ZCI6IjAwMDAwMDAzLTAwMDAtMGZmMS1jZTAwLTAwMDAwMDAwMDAwMC9mcHRqYXBhbjIyNS1teS5zaGFyZXBvaW50LmNvbUBjOWQ3YTYyNy02MmMzLTRkMDEtYTUyYy1hNmQ4MjcxY2Y0MmUiLCJleHAiOiIxNzc5NDE0NjgwIn0.CkAKDGVudHJhX2NsYWltcxIwQ0lyS3Z0QUdFQUFhRmxSNU9GRnpNVFpwUmxWNVpVTkpkVlZ6WW5OQ1FVRXFBQT09CjIKCmFjdG9yYXBwaWQSJDAwMDAwMDAzLTAwMDAtMDAwMC1jMDAwLTAwMDAwMDAwMDAwMAoKCgRzbmlkEgI2NBILCJjSoNjI6Zs_EAUaDDQwLjEyNi4zNS44OSosQXhqMHFYdHBTM1RhTXNSL2dSak9ORHVQRmxMcjl1U0dFOWVSRkZGMUNBdz0wqgE4AUIQohX1cr8AAHCFxWBXM0EL1UoQaGFzaGVkcHJvb2Z0b2tlbmokMDA0Zjg3N2EtYWEzOC1hNDk0LTExN2YtY2NiOTQxZDdlZWUycikwaC5mfG1lbWJlcnNoaXB8MTAwMzIwMDViYzU5NGVkNUBsaXZlLmNvbXoBMoIBEgknptfJw2IBTRGlLKbYJxz0LpIBA0x1Y5oBBE1hbmiiASNtYW5obHVjQGZwdGphcGFuMjI1Lm9ubWljcm9zb2Z0LmNvbaoBEDEwMDMyMDA1QkM1OTRFRDWyAR1teWZpbGVzLnJlYWQgYWxscHJvZmlsZXMucmVhZMgBAQ.oIk1i3ElU9VZs3_P-Wsnz63Ih_MjoHUujfzma20UWd4&ApiVersion=2.0",
+            "createdBy": {
+                "user": {
+                    "email": "ManhLuc@FPTJapan225.onmicrosoft.com",
+                    "id": "02e0d2d8-be99-471b-bb2c-50b9a8f5f450",
+                    "displayName": "Manh Luc"
+                }
+            },
+            "createdDateTime": "2026-05-20T06:43:28Z",
+            "eTag": "\"{AF32183C-C61A-4DDC-AF80-A6CFBDB22F70},1\"",
+            "id": "01JZN5UZR4DAZK6GWG3RG27AFGZ663EL3Q",
+            "lastModifiedBy": {
+                "user": {
+                    "email": "ManhLuc@FPTJapan225.onmicrosoft.com",
+                    "id": "02e0d2d8-be99-471b-bb2c-50b9a8f5f450",
+                    "displayName": "Manh Luc"
+                }
+            },
+            "lastModifiedDateTime": "2026-05-20T06:43:28Z",
+            "name": "Ragas_\u57fa\u672c\u77e5\u8b58_\u5b66\u7fd2\u8cc7\u6599.pptx",
+            "parentReference": {
+                "driveType": "business",
+                "driveId": "b!qT6Y1KA8fkW29egZSqvT2h8dgMtkT6pMkOL8Klcd3G_NCVDX_otXQ7rMDv0gIbZY",
+                "id": "01JZN5UZV6Y2GOVW7725BZO354PWSELRRZ",
+                "name": "Documents",
+                "path": "/drive/root:",
+                "siteId": "d4983ea9-3ca0-457e-b6f5-e8194aabd3da"
+            },
+            "webUrl": "https://fptjapan225-my.sharepoint.com/personal/manhluc_fptjapan225_onmicrosoft_com/_layouts/15/Doc.aspx?sourcedoc=%7BAF32183C-C61A-4DDC-AF80-A6CFBDB22F70%7D&file=Ragas_%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AD%98_%E5%AD%A6%E7%BF%92%E8%B3%87%E6%96%99.pptx&action=edit&mobileredirect=true",
+            "cTag": "\"c:{AF32183C-C61A-4DDC-AF80-A6CFBDB22F70},1\"",
+            "file": {
+                "fileExtension": ".pptx",
+                "hashes": {
+                    "quickXorHash": "YLJBM2apDMZ7JHB48JIHZ5gGf3g="
+                },
+                "mimeType": "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+            },
+            "fileSystemInfo": {
+                "createdDateTime": "2026-05-20T06:43:28Z",
+                "lastModifiedDateTime": "2026-05-20T06:43:28Z"
+            },
+            "isAuthoritative": false,
+            "size": 3407591
+        }
+    ]
 }
 
 ============================================================
 Debug complete. Check each probe status above.
-Log saved to: C:\tmp\06_Research\14_Microsoft_GraphAPI\debug\files.log
+Log saved to: C:\Users\Tan\OneDrive - Hanoi University of Science and Technology\Documents\14_Microsoft_GraphAPI\14_Microsoft_GraphAPI\debug\files.log
