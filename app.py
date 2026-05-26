@@ -585,17 +585,18 @@ def ask():
     def generate():
         # 2 KB padding to flush Werkzeug's internal buffer immediately.
         # Without this, dev server may hold small chunks until the request finishes.
-        yield ":" + (" " * 2048) + "\n\n"
+        yield (":" + (" " * 2048) + "\n\n").encode("utf-8")
         try:
             for event in run_agent_stream(query, token):
-                yield f"data: {json.dumps(event, ensure_ascii=False)}\n\n"
+                yield f"data: {json.dumps(event, ensure_ascii=False)}\n\n".encode("utf-8")
                 # SSE comment line ignored by EventSource but forces socket flush.
-                yield ": ping\n\n"
+                yield b": ping\n\n"
         except Exception as e:
             traceback.print_exc()
-            yield f"data: {json.dumps({'event': 'error', 'message': f'{type(e).__name__}: {e}'})}\n\n"
+            err = {'event': 'error', 'message': f'{type(e).__name__}: {e}'}
+            yield f"data: {json.dumps(err)}\n\n".encode("utf-8")
         finally:
-            yield "data: {\"event\": \"done\"}\n\n"
+            yield b'data: {"event": "done"}\n\n'
 
     return Response(
         stream_with_context(generate()),

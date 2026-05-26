@@ -864,3 +864,192 @@ Chunk 5: lines 609-621
    L619: mageed. Automated sign language detection and classification using reptile search
    L620: algorithm with hybrid deep learning. Heliyon, 10(1):e23252, 2024.
    L621: 3. Leo Breiman. Random forests. Machine Learning, 45(1):5–32, Oct 2001.
+
+======================================================================
+TIME       : 2026-05-26T09:16:49
+FILE       : 123.pdf
+PATTERNS   : deaf|hearing loss|deafness|hearing impairment|hard of hearing
+TOTAL LINES: 787
+MATCHES    : 13 hit(s) at lines [13, 26, 29, 34, 40, 46, 74, 582, 588, 613, 615, 649, 766]
+CHUNKS     : 6 (after merging overlap)
+
+--- EXTRACTED CHUNKS (exactly what the LLM saw) ---
+
+Chunk 1: lines 4-57
+   L4: Van Hai Pham1∗, Dinh Duong Nguyen1, My Duyen Nguyen1, Viet Khanh Ha1,
+   L5: Bao Thu Ho1, Minh Phuong Nguyen Trong1
+   L6: SchoolofInformationandCommunicationTechnology,HanoiUniversityofScienceand
+   L7: Technology, Vietnam
+   L8: {haipv@soict, duong.nd225966@sis, duyen.nm225967@sis, khanh.hv225979@sis,
+   L9: thu.hb226003@sis, phuong.ntm5992@sis}.hust.edu.vn
+   L10: *Corresponding author: haipv@soict.hust.edu.vn
+   L11: Abstract. Our research focuses on developing an advanced gestural
+   L12: communication tool that translates sign language into text or speech in
+   L13: real-time, specifically designed to overcome communication barriers for
+>> L14: individuals with hearing impairments. By utilizing the Random Forest
+   L15: Classifier alongside MediaPipe Hands for precise hand gesture detection
+   L16: and sign language interpretation, the system achieves a high level of
+   L17: accuracy, estimated between 90% and 95%. This study demonstrates
+   L18: the effectiveness of the RFC algorithm in improving the accuracy and
+   L19: reliability of sign language translation. Furthermore, the tool’s intuitive
+   L20: designensuresitisuser-friendlyandaccessible,promotinginclusivityand
+   L21: empowering users by providing equal access to effective communication
+   L22: solutions and opportunities for societal engagement.
+   L23: Keywords: Sign Language Recognition, Real-Time Translation, AI Models,
+   L24: Random Forest Classifier, MediaPipe Hands
+   L25: 1 Introduction
+   L26: According to the World Health Organization (WHO), over 5% of the global
+>> L27: population(approximately 466 million people), experience disabling hearing loss
+   L28: [1]. Many of these individuals lack proficiency in sign language, leading to several
+   L29: key challenges:
+>> L30: Communication Barriers: Individuals with hearing impairments who are not
+   L31: proficient in sign language often face significant communication challenges, lead-
+   L32: ing to feelings of isolation and frustration in both personal and professional
+   L33: environments. [?].
+   L34: Educational Disparities: In the absence of sign language support or appropri-
+>> L35: ate accommodations, students with hearing impairments encounter significant
+   L36: challenges in comprehending lectures, engaging in classroom discussions, and ac-
+   L37: cessinginstructionalmaterials.Theseobstaclescanadverselyaffecttheiracademic
+   L38: performance and limit future educational and career opportunities. [2].
+   L39: [PAGE 2]
+   L40: 2 Lam et al.
+>> L41: Employment Discrimination: Individuals with hearing impairments often face
+   L42: discrimination and employment barriers in the workplace, primarily due to
+   L43: communication difficulties and the requirement for specific accommodations.
+   L44: These challenges can significantly restrict their access to job opportunities and
+   L45: hinder career progression. [2].
+   L46: Addressing these challenges requires the promotion of accessibility, inclusion,
+>> L47: and equal opportunities for individuals with hearing impairments. Key strategies
+   L48: include implementing supportive policies, providing necessary accommodations
+   L49: in educational and workplace settings, raising public awareness, and fostering a
+   L50: culture of inclusivity that supports the needs of this population. [3].
+   L51: With the aim of researching and executing the problem of sign language
+   L52: detection and classification, our study have developed a real-time gestural com-
+   L53: municationtoolthattranslatessignlanguageintotextorspeechwhichhasenable
+   L54: us to enhance the communication abilities of individuals with hearing impair-
+   L55: ments. Utilizing advanced AI models such as the Random Forest Classifier and
+   L56: MediaPipe Hands, our tool ensures precise hand gesture detection and accurate
+   L57: sign language interpretation [3].
+
+Chunk 2: lines 65-85
+   L65: 1. Development of an innovative gestural communication tool that translates
+   L66: sign language into text or speech in real-time, utilizing advanced AI models
+   L67: like the Random Forest Classifier [3] and MediaPipe Hands for precise hand
+   L68: gesture detection and interpretation.
+   L69: 2. Achievement of high anticipated accuracy rates of 90% to 95%, setting a new
+   L70: standard for precision in sign language translation. Our approach emphasizes
+   L71: intuitive design principles, prioritizing usability and accessibility to foster
+   L72: inclusivity and empowerment in communication.
+   L73: 3. Comprehensive experiments and detailed analyses of the system’s perfor-
+   L74: mance, validating the effectiveness of our approach in enhancing communica-
+>> L75: tion for individuals with hearing impairments [5].
+   L76: The remainder of this paper is organized as follows: Section 3 describes the
+   L77: design and implementation of our gestural communication tool. In Section 4,
+   L78: we present the results of our experiments and evaluate the performance of our
+   L79: system. Finally, Section 5 concludes the paper with a summary of our findings
+   L80: and future directions for research.
+   L81: 2 Related Works
+   L82: Researchers are advancing automatic sign language recognition using machine
+   L83: learning, computer vision, and natural language processing. This section delves
+   L84: [PAGE 3]
+   L85: CompIE 3
+
+Chunk 3: lines 573-599
+   L573: lightingandbackgrounds.Thisisparticularlyimportantforpracticaldeployment,
+   L574: where the system must perform reliably in uncontrolled environments.
+   L575: The comparison with state-of-the-art methods further underscores the ef-
+   L576: ficiency of our model, which achieves comparable or superior accuracy while
+   L577: maintaining lower computational complexity. This makes our approach par-
+   L578: ticularly attractive for deployment on mobile and embedded devices, where
+   L579: computational resources are often limited.
+   L580: In summary, the findingsindicatethat our system not onlymeetsbut exceeds
+   L581: current benchmarks in sign language recognition, providing a practical, scalable
+   L582: solution that can be deployed in real-world settings to facilitate communication
+>> L583: for individuals with hearing impairments. Future work could focus on expanding
+   L584: the system’s capabilities to handle additional sign languages and more complex
+   L585: gestures, further enhancing its applicability and impact.
+   L586: 5 Conclusion
+   L587: In this paper, we introduced an advanced gestural communication tool that
+   L588: translates sign language into text or speech in real-time, aiming to bridge com-
+>> L589: munication gaps for individuals with hearing impairments. Utilizing advanced
+   L590: AI models such as the Random Forest Classifier and MediaPipe Hands, our
+   L591: tool achieves a high accuracy rate up to 97%, ensuring reliable and precise sign
+   L592: language translation.
+   L593: [PAGE 15]
+   L594: CompIE 15
+   L595: Table 4: Comparison with State-of-art on ASL dataset
+   L596: Year References Technique used Accuracy
+   L597: 2018 Dasetal.[12] InceptionV3CNN >90%
+   L598: 2011 Pugeaultetal.[22] Kinectsensorandmulti-classrandomforest 82.55%
+   L599: 2023 Obietal.[18] CNN 91%
+
+Chunk 4: lines 604-626
+   L604: Networks(RNNs)
+   L605: 2024 Wangetal.[58] Transformer-baseddeeplearningmodel 94%
+   L606: 2024 Zhaoetal.[59] HybridCNN-LSTM 95%
+   L607: Proposedmethod Randomforestclassifier 97.3%
+   L608: Our approach emphasizes user-friendly design principles, making the tool
+   L609: accessible and easy to use. This combination of cutting-edge technology and
+   L610: intuitivedesignfostersinclusivityandempowersuserstocommunicateeffectively.
+   L611: Future work will focus on further to handle a wider range of sign language
+   L612: motions and variations in lighting, camera angles, and backgrounds. We invite
+   L613: collaboration from stakeholders to help make effective communication tools
+>> L614: accessible to all individuals with hearing impairments.
+   L615: References
+>> L616: 1. WHO. World health organization (who) - deafness and hearing loss. World Health
+   L617: Organization, 2020.
+   L618: 2. H Alsolai, L Alsolai, FN Al-Wesabi, M Othman, M Rizwanullah, and AA Abdel-
+   L619: mageed. Automated sign language detection and classification using reptile search
+   L620: algorithm with hybrid deep learning. Heliyon, 10(1):e23252, 2024.
+   L621: 3. Leo Breiman. Random forests. Machine Learning, 45(1):5–32, Oct 2001.
+   L622: 4. Sheng Jin, Lumin Xu, Jin Xu, Can Wang, Wentao Liu, Chen Qian, Wanli Ouyang,
+   L623: and Ping Luo. Whole-body human pose estimation in the wild. arXiv preprint
+   L624: arXiv:2007.11858v1, pages 196–214, Jul 2020.
+   L625: 5. M. P.R. Sign language recognition techniques - a survey. International Journal of
+   L626: Psychosocial Rehabilitation, 24(5):2747–2760, 2020.
+
+Chunk 5: lines 640-660
+   L640: 11. J. Shin, A.S.M. Miah, M.A.M. Hasan, K. Hirooka, K. Suzuki, H.-S. Lee, and S.-
+   L641: W. Jang. Korean sign language recognition using transformer-based deep neural
+   L642: network. Applied Sciences, 13(5):3029, 2023.
+   L643: [PAGE 16]
+   L644: 16 Lam et al.
+   L645: 12. A.Das,S.Gawde,K.Suratwala,andD.Kalbande. Signlanguagerecognitionusing
+   L646: deep learning on custom processed static gesture images. In 2018 International
+   L647: Conference on Smart City and Emerging Technology (ICSCET), pages 1–5. IEEE,
+   L648: 2018.
+   L649: 13. M.M. Islam, M.R. Uddin, M.N. AKhtar, and K.R. Alam. Recognizing multiclass
+>> L650: staticsignlanguagewordsfordeafanddumbpeopleofbangladeshbasedontransfer
+   L651: learning techniques. Informatics in Medicine Unlocked, 33:101077, 2022.
+   L652: 14. S.Tammina. Transferlearningusingvgg-16withdeepconvolutionalneuralnetwork
+   L653: forclassifyingimages. International Journal of Scientific Research and Publications
+   L654: (IJSRP), 9(10):143–150, 2019.
+   L655: 15. M.ShahaandM.Pawar. Transferlearningforimageclassification. In2018 Second
+   L656: International Conference on Electronics, Communication and Aerospace Technology
+   L657: (ICECA), pages 656–660. IEEE, 2018.
+   L658: 16. M.Z. Alom, T.M. Taha, C. Yakopcic, S. Westberg, P. Sidike, M.S. Nasrin, B.C.V.
+   L659: Esesn, A.A.S. Awwal, and V.K. Asari. The history began from alexnet: A com-
+   L660: prehensive survey on deep learning approaches. arXiv preprint arXiv:1803.01164,
+
+Chunk 6: lines 757-777
+   L757: 49. Yuan Li, Zhaopeng Cui, Zhen Zhang, and Jian Wang. Sign language recognition
+   L758: using deep learning and image processing. Journal of Electrical and Computer
+   L759: Engineering, 2020, 2020.
+   L760: 50. Yi Guo, Jie Tang, Qinghua Wu, and Yanjun Ma. Sign language recognition based
+   L761: on deep learning. Journal of Physics: Conference Series, 1544(1):012061, 2020.
+   L762: 51. Hadeel Alsolai, Leen Alsolai, Fahd N. Al-Wesabi, Mahmoud Othman, Mohammed
+   L763: Rizwanullah, and Amgad Atta Abdelmageed. Automated sign language detection
+   L764: andclassificationusingreptilesearchalgorithmwithhybriddeeplearning. Heliyon,
+   L765: 10(1):e23252, 2024.
+   L766: 52. B.S.Parton.Signlanguagerecognitionandtranslation:Amultidisciplinedapproach
+>> L767: from the field of artificial intelligence. Journal of Deaf Studies and Deaf Education,
+   L768: 11(1):94–101, October 2005.
+   L769: 53. Alan D. Moore. 2021.
+   L770: 54. AlexClarkandContributors. Pillow-thefriendlypilfork(pythonimaginglibrary),
+   L771: 2024. Accessed: 2024-08-10.
+   L772: 55. HaneenAlsolai,LailaAlsolai,FathiN.Al-Wesabi,MohammedOthman,Mohammed
+   L773: Rizwanullah, and Abdulaziz A. Abdelmageed. Automated sign language detection
+   L774: andclassificationusingreptilesearchalgorithmwithhybriddeeplearning. Heliyon,
+   L775: 10(1):e23252, 2024.
+   L776: 56. Gabriel de Castro, Rodrigo Guerra, and Felipe Guimarães. Automatic translation
+   L777: of sign language with multi-stream 3d cnn and generation of artificial depth maps.
