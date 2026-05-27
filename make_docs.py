@@ -133,112 +133,112 @@ def make_pptx(path):
             "Microsoft 365 Keyword-Search Agent",
             size=44, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
     textbox(s, Inches(1), Inches(3.7), Inches(11.5), Inches(0.8),
-            "Hỏi đáp tài liệu OneDrive — không cần vector database",
+            "Question answering over OneDrive documents - no vector database required",
             size=22, color=WHITE, align=PP_ALIGN.CENTER)
     textbox(s, Inches(1), Inches(5.0), Inches(11.5), Inches(0.5),
-            "Cảm hứng: paper 'Keyword search is all you need' (arxiv 2602.23368)",
+            "Inspired by the paper 'Keyword search is all you need' (arxiv 2602.23368)",
             size=14, color=LIGHT_BG, align=PP_ALIGN.CENTER)
     textbox(s, Inches(1), Inches(6.5), Inches(11.5), Inches(0.4),
-            "Microsoft Graph API  •  Azure OpenAI  •  LangChain Agent",
+            "Microsoft Graph API  -  Azure OpenAI  -  LangChain Agent",
             size=12, color=LIGHT_BG, align=PP_ALIGN.CENTER)
 
-    # ===== 2. Vấn đề =====
+    # ===== 2. Problem =====
     s = blank_slide(prs)
-    title_bar(s, "Vấn đề — RAG truyền thống quá phức tạp", SW)
+    title_bar(s, "Problem - traditional RAG is too complex", SW)
     items = [
-        ("🧩  Chunking", "Cắt nhỏ tài liệu, dễ mất ngữ cảnh giữa câu/bảng", BLUE),
-        ("💰  Embedding", "Tốn chi phí tính vector cho mọi chunk", PURPLE),
-        ("🗄  Vector DB", "Phải vận hành thêm một service riêng", TEAL),
-        ("🎯  Exact match", "Có thể miss mã sản phẩm / từ kỹ thuật hiếm", ORANGE),
+        ("Chunking", "Split documents into pieces; easy to lose context between sentences/tables", BLUE),
+        ("Embedding", "Costly to compute vectors for every chunk", PURPLE),
+        ("Vector DB", "Must operate an additional separate service", TEAL),
+        ("Exact match", "May miss product codes / rare technical terms", ORANGE),
     ]
     for i, (h, t, c) in enumerate(items):
         x = Inches(0.6 + (i % 2) * 6.3)
         y = Inches(1.4 + (i // 2) * 2.7)
         card(s, x, y, Inches(6.0), Inches(2.3), h, t, c)
 
-    # ===== 3. Giải pháp =====
+    # ===== 3. Solution =====
     s = blank_slide(prs)
-    title_bar(s, "Giải pháp — Agentic Keyword Search", SW)
+    title_bar(s, "Solution - Agentic Keyword Search", SW)
     textbox(s, Inches(0.7), Inches(1.2), Inches(12), Inches(0.6),
-            "Để LLM tự lái việc tìm kiếm — không pipeline cố định",
+            "Let the LLM drive the search itself - no fixed pipeline",
             size=20, bold=True, color=DARK_BLUE)
     feats = [
-        ("LLM tự sinh keyword", "Synonyms, viết tắt, regex, OR-joined", BLUE),
-        ("Microsoft Graph", "Index full-text có sẵn cho OneDrive", GREEN),
-        ("Tải file khi cần", "Extract text bằng pdfplumber / docx / xlsx / pptx", PURPLE),
-        ("Grep với context", "Regex multi-pattern, ±N dòng quanh hit", TEAL),
-        ("LLM tự retry", "Đổi chiến lược nếu chưa tìm thấy", ORANGE),
+        ("LLM generates keywords", "Synonyms, abbreviations, regex, OR-joined", BLUE),
+        ("Microsoft Graph", "Full-text index already available for OneDrive", GREEN),
+        ("Download file on demand", "Extract text with pdfplumber / docx / xlsx / pptx", PURPLE),
+        ("Grep with context", "Multi-pattern regex, +/-N lines around each hit", TEAL),
+        ("LLM retries itself", "Switches strategy if nothing is found", ORANGE),
     ]
     for i, (h, t, c) in enumerate(feats):
         x = Inches(0.6 + i * 2.5)
         y = Inches(2.5)
         card(s, x, y, Inches(2.4), Inches(2.7), h, t, c)
     textbox(s, Inches(0.7), Inches(5.7), Inches(12), Inches(0.6),
-            "Microsoft đã có sẵn keyword index — không cần build lại",
+            "Microsoft already provides a keyword index - no need to rebuild it",
             size=16, color=GRAY, align=PP_ALIGN.CENTER)
 
-    # ===== 4. Tác nhân =====
+    # ===== 4. Actors =====
     s = blank_slide(prs)
-    title_bar(s, "Các tác nhân tham gia", SW)
+    title_bar(s, "Participating actors", SW)
 
     # User
     card(s, Inches(0.5), Inches(1.3), Inches(2.4), Inches(1.1),
-         "👤 User", "Người hỏi", DARK_BLUE)
+         "User", "The person asking", DARK_BLUE)
     arrow_right(s, Inches(2.95), Inches(1.65), Inches(0.4), Inches(0.4))
     # Browser
     card(s, Inches(3.4), Inches(1.3), Inches(2.4), Inches(1.1),
-         "🌐 Browser", "Chat panel + SSE", BLUE)
+         "Browser", "Chat panel + SSE", BLUE)
     arrow_right(s, Inches(5.85), Inches(1.65), Inches(0.4), Inches(0.4))
     # Flask
     card(s, Inches(6.3), Inches(1.3), Inches(2.4), Inches(1.1),
-         "🔥 Flask", "Route /ask + MSAL", PURPLE)
+         "Flask", "Route /ask + MSAL", PURPLE)
     arrow_right(s, Inches(8.75), Inches(1.65), Inches(0.4), Inches(0.4))
     # Agent
     card(s, Inches(9.2), Inches(1.3), Inches(3.5), Inches(1.1),
-         "🤖 LangChain Agent", "Vòng lặp tool-use", ORANGE)
+         "LangChain Agent", "Tool-use loop", ORANGE)
 
     # Down arrow from agent
     arrow_down(s, Inches(10.7), Inches(2.5), Inches(0.4), Inches(0.5))
 
     # Three branches under agent
     card(s, Inches(2.0), Inches(3.3), Inches(3.3), Inches(1.1),
-         "🧠 Azure OpenAI", "gpt-4.1-mini quyết định", BLUE)
+         "Azure OpenAI", "gpt-4.1-mini decides", BLUE)
     card(s, Inches(5.5), Inches(3.3), Inches(3.3), Inches(1.1),
-         "☁ Microsoft Graph", "Search & Download", GREEN)
+         "Microsoft Graph", "Search & Download", GREEN)
     card(s, Inches(9.0), Inches(3.3), Inches(3.3), Inches(1.1),
-         "📦 Local Modules", "Extractors + Cache", TEAL)
+         "Local Modules", "Extractors + Cache", TEAL)
 
     # Down arrow
     arrow_down(s, Inches(6.5), Inches(4.5), Inches(0.4), Inches(0.5))
 
     # Tools row
     card(s, Inches(1.5), Inches(5.2), Inches(3.0), Inches(1.4),
-         "🔎 graph_search", "Tìm file theo keyword", BLUE)
+         "graph_search", "Find files by keyword", BLUE)
     card(s, Inches(5.0), Inches(5.2), Inches(3.0), Inches(1.4),
-         "📥 fetch_file_text", "Download + extract", GREEN)
+         "fetch_file_text", "Download + extract", GREEN)
     card(s, Inches(8.5), Inches(5.2), Inches(3.0), Inches(1.4),
-         "🔬 grep_context", "Regex + context window", PURPLE)
+         "grep_context", "Regex + context window", PURPLE)
 
     # ===== 5. 3 Tools =====
     s = blank_slide(prs)
-    title_bar(s, "Ba công cụ của Agent", SW)
+    title_bar(s, "The Agent's three tools", SW)
 
     cols = [
-        ("🔎  graph_search", BLUE,
-         ["Tham số: query (string)",
-          "Gọi POST /search/query",
-          "Trả về list file + snippet",
+        ("graph_search", BLUE,
+         ["Parameter: query (string)",
+          "Calls POST /search/query",
+          "Returns list of files + snippets",
           "OR-joined: 'k1 OR k2 OR k3'"]),
-        ("📥  fetch_file_text", GREEN,
-         ["Tham số: item_id",
-          "Download bytes từ Graph CDN",
+        ("fetch_file_text", GREEN,
+         ["Parameter: item_id",
+          "Downloads bytes from Graph CDN",
           "Extract: PDF / DOCX / XLSX / PPTX",
-          "Cache text vào RAM"]),
-        ("🔬  grep_context", PURPLE,
-         ["Tham số: item_id, patterns, ±N",
-          "Regex IGNORECASE trên cache",
-          "Merge overlapping windows",
-          "Trả về ±5 dòng quanh hit"]),
+          "Caches text in RAM"]),
+        ("grep_context", PURPLE,
+         ["Parameters: item_id, patterns, +/-N",
+          "Regex IGNORECASE over the cache",
+          "Merges overlapping windows",
+          "Returns +/-5 lines around each hit"]),
     ]
     for i, (h, c, bullets) in enumerate(cols):
         x = Inches(0.5 + i * 4.3)
@@ -258,22 +258,22 @@ def make_pptx(path):
         btf.margin_right = Inches(0.2)
         btf.margin_top = Inches(0.2)
         btf.word_wrap = True
-        set_text(btf, "• " + bullets[0], size=14, color=DARK)
+        set_text(btf, "- " + bullets[0], size=14, color=DARK)
         for b in bullets[1:]:
-            add_para(btf, "• " + b, size=14, color=DARK)
+            add_para(btf, "- " + b, size=14, color=DARK)
 
     # ===== 6. Workflow =====
     s = blank_slide(prs)
-    title_bar(s, "Quy trình từ đầu đến cuối", SW)
+    title_bar(s, "End-to-end workflow", SW)
 
     steps = [
-        ("1", "User hỏi", "Gõ câu hỏi vào chat panel", BLUE),
-        ("2", "Flask /ask", "Khởi tạo agent với token", PURPLE),
-        ("3", "LLM sinh keyword", "OR-joined synonyms", ORANGE),
-        ("4", "graph_search", "Microsoft Graph trả file + snippet", GREEN),
-        ("5", "Đủ?", "Snippet đã trả lời được?", TEAL),
-        ("6", "fetch + grep", "Đọc sâu nếu cần", DARK_BLUE),
-        ("7", "Final answer", "Tổng hợp + citation", BLUE),
+        ("1", "User asks", "Types a question into the chat panel", BLUE),
+        ("2", "Flask /ask", "Initializes the agent with the token", PURPLE),
+        ("3", "LLM produces keywords", "OR-joined synonyms", ORANGE),
+        ("4", "graph_search", "Microsoft Graph returns files + snippets", GREEN),
+        ("5", "Enough?", "Are the snippets sufficient to answer?", TEAL),
+        ("6", "fetch + grep", "Read deeper if needed", DARK_BLUE),
+        ("7", "Final answer", "Synthesis + citations", BLUE),
     ]
     for i, (n, h, t, c) in enumerate(steps):
         x = Inches(0.3 + i * 1.85)
@@ -300,15 +300,15 @@ def make_pptx(path):
             arrow_right(s, x + Inches(1.72), y + Inches(0.18), Inches(0.13), Inches(0.25), color=GRAY)
 
     textbox(s, Inches(0.5), Inches(5.0), Inches(12.5), Inches(0.6),
-            "LLM tự quyết định bước tiếp theo — không phải pipeline cố định",
+            "The LLM decides the next step itself - this is not a fixed pipeline",
             size=18, bold=True, color=DARK_BLUE, align=PP_ALIGN.CENTER)
     textbox(s, Inches(0.5), Inches(5.7), Inches(12.5), Inches(0.6),
-            "Mỗi bước được stream về browser qua Server-Sent Events (SSE)",
+            "Every step is streamed to the browser via Server-Sent Events (SSE)",
             size=14, color=GRAY, align=PP_ALIGN.CENTER)
 
-    # ===== 7. Bước Search =====
+    # ===== 7. Search step =====
     s = blank_slide(prs)
-    title_bar(s, "Bước Search — tìm file qua keyword", SW)
+    title_bar(s, "Search step - find files via keyword", SW)
 
     card(s, Inches(0.7), Inches(2.0), Inches(3.5), Inches(2.0),
          "User Query", '"What is the metrics\nfor RAG?"', BLUE)
@@ -317,28 +317,28 @@ def make_pptx(path):
          "LLM Output", '"metric OR evaluation\nOR BLEU OR ROUGE"', ORANGE)
     arrow_right(s, Inches(8.5), Inches(2.85), Inches(0.5), Inches(0.4))
     card(s, Inches(9.1), Inches(2.0), Inches(3.5), Inches(2.0),
-         "Microsoft Graph", "POST /search/query\n→ list file + snippet", GREEN)
+         "Microsoft Graph", "POST /search/query\n-> list of files + snippets", GREEN)
 
     textbox(s, Inches(0.5), Inches(4.7), Inches(12.5), Inches(0.5),
-            "Microsoft đã index full-text — không cần ta tự build",
+            "Microsoft has already indexed full text - no need to build it ourselves",
             size=16, bold=True, color=DARK_BLUE, align=PP_ALIGN.CENTER)
     textbox(s, Inches(0.5), Inches(5.5), Inches(12.5), Inches(0.5),
-            "Mỗi file kèm snippet ~240 ký tự quanh keyword khớp",
+            "Each file comes with a snippet of ~240 characters around the matching keyword",
             size=14, color=GRAY, align=PP_ALIGN.CENTER)
 
     # ===== 8. Fetch & Extract =====
     s = blank_slide(prs)
-    title_bar(s, "Bước Fetch — tải file và extract text", SW)
+    title_bar(s, "Fetch step - download files and extract text", SW)
 
     textbox(s, Inches(0.5), Inches(1.2), Inches(12.5), Inches(0.5),
-            "Chỉ khi LLM cho rằng snippet chưa đủ trả lời",
+            "Only when the LLM judges that snippets are not enough to answer",
             size=16, color=GRAY, align=PP_ALIGN.CENTER)
 
     # Input formats column
-    card(s, Inches(0.7), Inches(2.2), Inches(2.6), Inches(0.9), "📄 PDF", "pdfplumber", BLUE)
-    card(s, Inches(0.7), Inches(3.3), Inches(2.6), Inches(0.9), "📝 DOCX", "python-docx", PURPLE)
-    card(s, Inches(0.7), Inches(4.4), Inches(2.6), Inches(0.9), "📊 XLSX", "openpyxl", GREEN)
-    card(s, Inches(0.7), Inches(5.5), Inches(2.6), Inches(0.9), "🎯 PPTX", "python-pptx", ORANGE)
+    card(s, Inches(0.7), Inches(2.2), Inches(2.6), Inches(0.9), "PDF", "pdfplumber", BLUE)
+    card(s, Inches(0.7), Inches(3.3), Inches(2.6), Inches(0.9), "DOCX", "python-docx", PURPLE)
+    card(s, Inches(0.7), Inches(4.4), Inches(2.6), Inches(0.9), "XLSX", "openpyxl", GREEN)
+    card(s, Inches(0.7), Inches(5.5), Inches(2.6), Inches(0.9), "PPTX", "python-pptx", ORANGE)
 
     arrow_right(s, Inches(3.5), Inches(3.7), Inches(0.6), Inches(0.5))
 
@@ -354,25 +354,25 @@ def make_pptx(path):
     tf.margin_top = Inches(0.25)
     set_text(tf, "Extract Text", size=20, bold=True, color=DARK_BLUE, align=PP_ALIGN.CENTER)
     add_para(tf, "", size=10)
-    add_para(tf, "→ Bytes về RAM qua io.BytesIO", size=13, color=DARK, align=PP_ALIGN.CENTER)
-    add_para(tf, "→ Parse theo từng định dạng", size=13, color=DARK, align=PP_ALIGN.CENTER)
-    add_para(tf, "→ Markers [PAGE N] / [SHEET] / [SLIDE]", size=13, color=DARK, align=PP_ALIGN.CENTER)
-    add_para(tf, "→ Plain text dòng-by-dòng", size=13, color=DARK, align=PP_ALIGN.CENTER)
+    add_para(tf, "-> Bytes into RAM via io.BytesIO", size=13, color=DARK, align=PP_ALIGN.CENTER)
+    add_para(tf, "-> Parse according to each format", size=13, color=DARK, align=PP_ALIGN.CENTER)
+    add_para(tf, "-> Markers [PAGE N] / [SHEET] / [SLIDE]", size=13, color=DARK, align=PP_ALIGN.CENTER)
+    add_para(tf, "-> Plain text, line by line", size=13, color=DARK, align=PP_ALIGN.CENTER)
 
     arrow_right(s, Inches(9.0), Inches(3.7), Inches(0.6), Inches(0.5))
 
     # Cache
     card(s, Inches(9.8), Inches(2.5), Inches(3.0), Inches(3.0),
-         "💾 Cache RAM",
-         "item_id → text\n\nGrep lần sau\nkhông download lại",
+         "RAM Cache",
+         "item_id -> text\n\nSubsequent grep calls\nskip the download",
          TEAL)
 
     # ===== 9. Grep =====
     s = blank_slide(prs)
-    title_bar(s, "Bước Grep — trích xuất ngữ cảnh", SW)
+    title_bar(s, "Grep step - extract context", SW)
 
     textbox(s, Inches(0.5), Inches(1.1), Inches(12.5), Inches(0.5),
-            "Regex multi-pattern trên text đã cache",
+            "Multi-pattern regex over the cached text",
             size=16, bold=True, color=DARK_BLUE, align=PP_ALIGN.CENTER)
 
     # Input pattern
@@ -380,7 +380,7 @@ def make_pptx(path):
                               Inches(0.7), Inches(1.9), Inches(5.5), Inches(1.2))
     fill(box, ORANGE)
     no_line(box)
-    set_text(box.text_frame, "LLM sinh pattern", size=16, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
+    set_text(box.text_frame, "LLM produces a pattern", size=16, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
     add_para(box.text_frame, "(metric|BLEU|ROUGE|recall|F1)", size=12, color=WHITE, align=PP_ALIGN.CENTER)
 
     arrow_down(s, Inches(3.0), Inches(3.2), Inches(0.5), Inches(0.4))
@@ -394,7 +394,7 @@ def make_pptx(path):
     tf.margin_left = Inches(0.2)
     tf.margin_top = Inches(0.15)
     tf.word_wrap = True
-    set_text(tf, "Output — chunk ±5 dòng", size=14, bold=True, color=DARK_BLUE)
+    set_text(tf, "Output - chunk +/-5 lines", size=14, bold=True, color=DARK_BLUE)
     add_para(tf, "   L11: Section 4. Evaluation", size=11, color=GRAY)
     add_para(tf, "   L12: ", size=11, color=GRAY)
     add_para(tf, ">> L13: We use BLEU as primary metric", size=11, bold=True, color=BLUE)
@@ -404,29 +404,29 @@ def make_pptx(path):
     # Right side: features
     card(s, Inches(6.8), Inches(1.9), Inches(6.0), Inches(1.1),
          "Merge overlapping windows",
-         "2 hit gần nhau → 1 chunk duy nhất, tránh trùng lặp",
+         "Two nearby hits -> a single chunk, avoiding duplication",
          GREEN)
     card(s, Inches(6.8), Inches(3.1), Inches(6.0), Inches(1.1),
-         "Cap 10 chunks tối đa",
-         "Tránh nuốt hết context window của LLM",
+         "Cap at 10 chunks max",
+         "Avoid consuming the LLM's entire context window",
          PURPLE)
     card(s, Inches(6.8), Inches(4.3), Inches(6.0), Inches(1.1),
-         "Log vào debug/grep.log",
-         "Toàn bộ context được lưu để inspect",
+         "Log to debug/grep.log",
+         "All context is saved for inspection",
          TEAL)
     card(s, Inches(6.8), Inches(5.5), Inches(6.0), Inches(1.1),
          "Cite line number",
-         "LLM tham chiếu được dòng cụ thể trong câu trả lời",
+         "The LLM can reference the exact line in its answer",
          BLUE)
 
     # ===== 10. Final Answer =====
     s = blank_slide(prs)
-    title_bar(s, "Bước Final — tổng hợp và trích dẫn", SW)
+    title_bar(s, "Final step - synthesis and citations", SW)
 
     # Input observations
     card(s, Inches(0.7), Inches(1.6), Inches(3.8), Inches(4.5),
-         "Inputs vào LLM",
-         "• User query\n\n• Search snippets\n\n• Grep chunks\n\n• File metadata\n\n(Không có full text)",
+         "Inputs to the LLM",
+         "- User query\n\n- Search snippets\n\n- Grep chunks\n\n- File metadata\n\n(No full text)",
          PURPLE)
 
     arrow_right(s, Inches(4.7), Inches(3.6), Inches(0.5), Inches(0.5))
@@ -438,33 +438,33 @@ def make_pptx(path):
     no_line(box)
     tf = box.text_frame
     tf.word_wrap = True
-    set_text(tf, "🧠", size=48, color=WHITE, align=PP_ALIGN.CENTER)
-    add_para(tf, "LLM tổng hợp", size=16, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
+    set_text(tf, "LLM", size=48, color=WHITE, align=PP_ALIGN.CENTER)
+    add_para(tf, "LLM synthesizes", size=16, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
 
     arrow_right(s, Inches(8.3), Inches(3.6), Inches(0.5), Inches(0.5))
 
     # Answer
     card(s, Inches(8.9), Inches(1.6), Inches(3.9), Inches(4.5),
          "Final Answer",
-         "Câu trả lời ngắn gọn\n\n+ Citation:\n[file.pdf, L42]\n[doc.docx, PAGE 3]\n\nNgười dùng click\nmở file gốc trên OneDrive",
+         "Concise answer\n\n+ Citation:\n[file.pdf, L42]\n[doc.docx, PAGE 3]\n\nUser clicks\nto open the source file on OneDrive",
          GREEN)
 
     textbox(s, Inches(0.5), Inches(6.4), Inches(12.5), Inches(0.6),
-            "LLM phải cite — nếu không tìm thấy thì nói rõ, không bịa",
+            "The LLM must cite - if nothing is found it must say so, never fabricate",
             size=14, color=DARK_BLUE, align=PP_ALIGN.CENTER)
 
-    # ===== 11. So sánh =====
+    # ===== 11. Comparison =====
     s = blank_slide(prs)
-    title_bar(s, "So sánh — RAG truyền thống vs Agent này", SW)
+    title_bar(s, "Comparison - traditional RAG vs this Agent", SW)
 
-    headers = ["Tiêu chí", "RAG truyền thống", "Agentic Keyword"]
+    headers = ["Criterion", "Traditional RAG", "Agentic Keyword"]
     rows = [
-        ["Hạ tầng", "Vector DB riêng", "Không cần"],
-        ["Chunking", "Bắt buộc", "Không cần"],
-        ["Exact match", "Có thể miss", "Hoàn hảo"],
-        ["Cập nhật", "Re-index toàn bộ", "Tức thì (Microsoft index)"],
-        ["Snippet", "Chunk cố định", "Context động ±N dòng"],
-        ["Chi phí", "Embedding + storage", "Chỉ LLM calls"],
+        ["Infrastructure", "Separate Vector DB", "Not required"],
+        ["Chunking", "Mandatory", "Not required"],
+        ["Exact match", "May miss", "Perfect"],
+        ["Updates", "Re-index everything", "Instant (Microsoft index)"],
+        ["Snippet", "Fixed chunks", "Dynamic context +/-N lines"],
+        ["Cost", "Embedding + storage", "LLM calls only"],
     ]
     table = s.shapes.add_table(len(rows) + 1, 3,
                                 Inches(0.7), Inches(1.3),
@@ -490,16 +490,16 @@ def make_pptx(path):
             set_text(cell.text_frame, v, size=14,
                      bold=(j == 0), color=color, align=PP_ALIGN.LEFT)
 
-    # ===== 12. Kết luận =====
+    # ===== 12. Conclusion =====
     s = blank_slide(prs)
-    title_bar(s, "Kết luận", SW)
+    title_bar(s, "Conclusion", SW)
 
     points = [
-        ("✨", "Đơn giản hơn", "Không cần vector DB, không re-index"),
-        ("⚡", "Tức thời", "Microsoft index sẵn — query là có ngay"),
-        ("🎯", "Exact match", "Không bao giờ miss mã sản phẩm / từ kỹ thuật"),
-        ("🤖", "LLM tự lái", "Sinh keyword, retry chiến lược, cite source"),
-        ("👁", "Minh bạch", "Mỗi bước stream realtime + log đầy đủ"),
+        ("*", "Simpler", "No vector DB, no re-indexing"),
+        (">", "Instant", "Microsoft already indexes - queries are ready immediately"),
+        ("o", "Exact match", "Never miss product codes / technical terms"),
+        ("A", "LLM-driven", "Generates keywords, retries strategies, cites sources"),
+        ("=", "Transparent", "Every step streams in realtime with full logging"),
     ]
     for i, (ico, h, t) in enumerate(points):
         y = Inches(1.4 + i * 1.05)
@@ -564,165 +564,165 @@ def make_docx(path):
 
     sub = doc.add_paragraph()
     sub.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    r = sub.add_run("Báo cáo quy trình hoạt động")
+    r = sub.add_run("Workflow report")
     r.font.size = DocxPt(14)
     r.font.italic = True
     r.font.color.rgb = DocxRGB(0x60, 0x5E, 0x5C)
 
     doc.add_paragraph()
 
-    # ====== 1. Giới thiệu ======
-    add_heading(doc, "1. Giới thiệu", level=1, color=DocxRGB(0x00, 0x78, 0xD4))
+    # ====== 1. Introduction ======
+    add_heading(doc, "1. Introduction", level=1, color=DocxRGB(0x00, 0x78, 0xD4))
     add_body(doc,
-        "Ứng dụng web cho phép người dùng hỏi đáp tài liệu OneDrive bằng "
-        "ngôn ngữ tự nhiên. Lấy cảm hứng từ paper \"Keyword search is all "
-        "you need: Achieving RAG-Level Performance without vector databases "
-        "using agentic tool use\" (arxiv 2602.23368), hệ thống thay thế "
-        "kiến trúc Retrieval-Augmented Generation (RAG) truyền thống bằng "
-        "một LLM agent thông minh sử dụng keyword search có sẵn của "
-        "Microsoft Graph API.")
+        "A web application that lets users ask questions about OneDrive "
+        "documents in natural language. Inspired by the paper \"Keyword "
+        "search is all you need: Achieving RAG-Level Performance without "
+        "vector databases using agentic tool use\" (arxiv 2602.23368), the "
+        "system replaces the traditional Retrieval-Augmented Generation "
+        "(RAG) architecture with an intelligent LLM agent that uses the "
+        "keyword search already provided by the Microsoft Graph API.")
 
-    # ====== 2. Vấn đề ======
-    add_heading(doc, "2. Vấn đề với RAG truyền thống", level=1, color=DocxRGB(0x00, 0x78, 0xD4))
-    add_body(doc, "RAG truyền thống đòi hỏi một chuỗi xử lý phức tạp:")
+    # ====== 2. Problem ======
+    add_heading(doc, "2. The problem with traditional RAG", level=1, color=DocxRGB(0x00, 0x78, 0xD4))
+    add_body(doc, "Traditional RAG requires a complex processing pipeline:")
     for b in [
-        "Chunking — cắt tài liệu thành các đoạn nhỏ. Dễ mất ngữ cảnh khi cắt giữa câu hoặc bảng.",
-        "Embedding — tạo vector cho mỗi chunk. Tốn chi phí tính toán và lưu trữ.",
-        "Vector database — phải vận hành thêm một service riêng (FAISS, Pinecone, Weaviate...).",
-        "Re-indexing — khi tài liệu cập nhật phải tái tạo embedding tốn kém.",
-        "Exact match yếu — semantic similarity có thể bỏ qua mã sản phẩm, từ kỹ thuật hiếm.",
+        "Chunking - splitting documents into smaller pieces. Easy to lose context when cutting mid-sentence or through a table.",
+        "Embedding - creating a vector for each chunk. Costly in compute and storage.",
+        "Vector database - operating an additional service (FAISS, Pinecone, Weaviate, etc.).",
+        "Re-indexing - re-creating embeddings is expensive whenever documents change.",
+        "Weak exact match - semantic similarity can miss product codes and rare technical terms.",
     ]:
         add_bullet(doc, b)
 
-    # ====== 3. Giải pháp ======
-    add_heading(doc, "3. Giải pháp đề xuất", level=1, color=DocxRGB(0x00, 0x78, 0xD4))
+    # ====== 3. Solution ======
+    add_heading(doc, "3. Proposed solution", level=1, color=DocxRGB(0x00, 0x78, 0xD4))
     add_body(doc,
-        "Thay vì xây dựng pipeline RAG, hệ thống dùng một agent LLM tự "
-        "điều khiển việc tìm kiếm. Cốt lõi của ý tưởng là:")
+        "Instead of building a RAG pipeline, the system uses an LLM agent "
+        "that drives the search by itself. The core ideas are:")
     for b in [
-        "Microsoft đã có sẵn full-text index cho OneDrive/SharePoint — tận dụng qua Graph Search API.",
-        "LLM tự sinh nhiều biến thể keyword (synonyms, abbreviations, regex) — bù đắp việc index chỉ match literal.",
-        "Tải file về và extract text khi snippet không đủ — giữ nguyên ngữ cảnh gốc, không chunk trước.",
-        "Regex grep với context window ±N dòng — mô phỏng \"chunk động\" đặt trên hit thực tế.",
-        "LLM tự đánh giá kết quả và retry với chiến lược khác nếu chưa tìm thấy.",
+        "Microsoft already provides a full-text index for OneDrive/SharePoint - leverage it via the Graph Search API.",
+        "The LLM generates many keyword variants (synonyms, abbreviations, regex) - compensating for the index being literal-only.",
+        "Download files and extract text only when snippets are not enough - keep the original context, no pre-chunking.",
+        "Regex grep with a +/-N line context window - simulating a \"dynamic chunk\" placed on actual hits.",
+        "The LLM evaluates results itself and retries with a different strategy if nothing is found.",
     ]:
         add_bullet(doc, b)
 
-    # ====== 4. Tác nhân ======
-    add_heading(doc, "4. Các tác nhân tham gia", level=1, color=DocxRGB(0x00, 0x78, 0xD4))
+    # ====== 4. Actors ======
+    add_heading(doc, "4. Participating actors", level=1, color=DocxRGB(0x00, 0x78, 0xD4))
 
-    add_heading(doc, "4.1. User (Người dùng)", level=2)
-    add_body(doc, "Đăng nhập tài khoản Microsoft 365 và gõ câu hỏi tự nhiên vào chat panel trên dashboard web.")
+    add_heading(doc, "4.1. User", level=2)
+    add_body(doc, "Signs in with a Microsoft 365 account and types natural-language questions into the chat panel on the web dashboard.")
 
     add_heading(doc, "4.2. Web UI (Browser)", level=2)
     add_body(doc,
-        "Trang dashboard hiển thị thông tin OneDrive/Teams/SharePoint của user. "
-        "Chat panel JavaScript gửi request đến server và hiển thị từng bước "
-        "agent thực hiện theo thời gian thực qua Server-Sent Events (SSE).")
+        "The dashboard page displays OneDrive/Teams/SharePoint information for the user. "
+        "A JavaScript chat panel sends requests to the server and displays each agent step "
+        "in real time via Server-Sent Events (SSE).")
 
     add_heading(doc, "4.3. Flask Backend", level=2)
     add_body(doc,
-        "Server Python xử lý đăng nhập OAuth2 (Microsoft Entra ID), quản lý "
-        "session, cung cấp route /ask để khởi tạo agent. Truyền access_token "
-        "đến agent để gọi Microsoft Graph thay user.")
+        "A Python server that handles OAuth2 sign-in (Microsoft Entra ID), manages "
+        "sessions, and exposes the /ask route to start the agent. It passes the "
+        "access_token to the agent so it can call Microsoft Graph on behalf of the user.")
 
     add_heading(doc, "4.4. LangChain Agent (langgraph)", level=2)
     add_body(doc,
-        "Bộ điều phối vòng lặp tool-use. Đưa câu hỏi và system prompt cho LLM, "
-        "nhận quyết định gọi tool nào, chạy tool đó, đưa kết quả lại cho LLM. "
-        "Lặp tối đa 30 vòng đến khi LLM sinh câu trả lời cuối.")
+        "The tool-use loop coordinator. It gives the question and system prompt to the LLM, "
+        "receives a decision about which tool to call, runs that tool, and feeds the result "
+        "back to the LLM. It loops up to 30 times until the LLM produces a final answer.")
 
     add_heading(doc, "4.5. LLM (Azure OpenAI)", level=2)
     add_body(doc,
-        "Bộ não quyết định. Đọc câu hỏi và lịch sử tương tác để quyết định: "
-        "gọi tool nào, với tham số gì, hoặc đã đủ để trả lời. Sinh các "
-        "biến thể keyword OR-joined cho tìm kiếm và regex multi-pattern cho grep. "
-        "Mô hình mặc định: gpt-4.1-mini.")
+        "The decision-making brain. It reads the question and interaction history to decide: "
+        "which tool to call and with which arguments, or whether it already has enough to answer. "
+        "It generates OR-joined keyword variants for search and multi-pattern regex for grep. "
+        "Default model: gpt-4.1-mini.")
 
     add_heading(doc, "4.6. Microsoft Graph API", level=2)
     add_body(doc,
-        "Endpoint chính thức của Microsoft cho 365 data. Hai endpoint quan trọng:")
+        "Microsoft's official endpoint for 365 data. Two endpoints matter:")
     for b in [
-        "POST /search/query — full-text search trên OneDrive, SharePoint, Teams files. Trả về metadata + snippet quanh keyword.",
-        "GET /drives/{driveId}/items/{id}/content — tải nội dung binary của một file.",
+        "POST /search/query - full-text search over OneDrive, SharePoint, and Teams files. Returns metadata plus a snippet around the keyword.",
+        "GET /drives/{driveId}/items/{id}/content - downloads the binary content of a file.",
     ]:
         add_bullet(doc, b)
 
-    add_heading(doc, "4.7. Ba công cụ của Agent", level=2)
-    add_body(doc, "Mỗi công cụ là một hàm Python được đăng ký với LangChain:")
+    add_heading(doc, "4.7. The Agent's three tools", level=2)
+    add_body(doc, "Each tool is a Python function registered with LangChain:")
     for b in [
-        "graph_search(query) — gọi Microsoft Graph Search, trả danh sách file phù hợp với keyword.",
-        "fetch_file_text(item_id) — tải binary file, extract text, lưu cache trong RAM.",
-        "grep_context(item_id, patterns, context_lines) — regex tìm pattern trên text đã cache, trả các chunk ±N dòng quanh hit.",
+        "graph_search(query) - calls Microsoft Graph Search and returns a list of files matching the keyword.",
+        "fetch_file_text(item_id) - downloads the binary file, extracts text, and caches it in RAM.",
+        "grep_context(item_id, patterns, context_lines) - regex-searches the cached text and returns chunks of +/-N lines around each hit.",
     ]:
         add_bullet(doc, b)
 
     add_heading(doc, "4.8. File Extractors", level=2)
-    add_body(doc, "Bốn module chuyển binary sang plain text dòng-by-dòng:")
+    add_body(doc, "Four modules that turn binary content into plain text, line by line:")
     for b in [
-        "PDF — dùng pdfplumber, đánh dấu [PAGE N] mỗi trang.",
-        "DOCX — dùng python-docx, lấy paragraph + bảng.",
-        "XLSX — dùng openpyxl, đánh dấu [SHEET name] mỗi sheet, mỗi row join bằng dấu |.",
-        "PPTX — dùng python-pptx, đánh dấu [SLIDE N], gồm cả speaker notes.",
+        "PDF - uses pdfplumber, marks [PAGE N] for each page.",
+        "DOCX - uses python-docx, captures paragraphs and tables.",
+        "XLSX - uses openpyxl, marks [SHEET name] per sheet, joins each row with a pipe.",
+        "PPTX - uses python-pptx, marks [SLIDE N], including speaker notes.",
     ]:
         add_bullet(doc, b)
 
-    add_heading(doc, "4.9. Cache và Drive Index", level=2)
+    add_heading(doc, "4.9. Cache and Drive Index", level=2)
     add_body(doc,
-        "Hai dict in-memory giúp tối ưu hiệu năng:")
+        "Two in-memory dicts that optimize performance:")
     for b in [
-        "Cache text (cache.py) — sau khi extract một file, lưu text vào RAM. Lần grep sau không phải tải lại.",
-        "Drive index (drive_index.py) — lưu mapping item_id → driveId, giúp fetch dùng đúng endpoint cho file shared / SharePoint / Teams.",
+        "Text cache (cache.py) - once a file is extracted, the text is stored in RAM. Later grep calls do not need to re-download.",
+        "Drive index (drive_index.py) - stores the mapping item_id -> driveId, so fetch uses the right endpoint for shared / SharePoint / Teams files.",
     ]:
         add_bullet(doc, b)
 
-    # ====== 5. Quy trình end-to-end ======
-    add_heading(doc, "5. Quy trình từ đầu đến cuối", level=1, color=DocxRGB(0x00, 0x78, 0xD4))
+    # ====== 5. End-to-end workflow ======
+    add_heading(doc, "5. End-to-end workflow", level=1, color=DocxRGB(0x00, 0x78, 0xD4))
 
     steps = [
-        ("Bước 1 — User nhập câu hỏi",
-         "User gõ câu hỏi tự nhiên vào chat panel trên dashboard, ví dụ "
-         "\"What is the metrics for RAG?\" và bấm Send."),
-        ("Bước 2 — Browser gửi request",
-         "JavaScript chặn submit form, gọi fetch POST /ask với JSON "
-         "chứa câu hỏi. Chấp nhận response dạng text/event-stream."),
-        ("Bước 3 — Flask khởi tạo agent",
-         "Server lấy access_token từ session đã có sẵn (từ luồng OAuth2 "
-         "với MSAL). Khởi tạo LangChain agent với 3 tools đã \"bind\" "
-         "token qua closure. Mở stream SSE."),
-        ("Bước 4 — LLM tự sinh keyword tìm kiếm",
-         "LLM đọc câu hỏi và system prompt. Hệ thống prompt bắt buộc LLM "
-         "phải dùng multi-pattern OR (không bao giờ search một từ đơn). "
-         "LLM sinh tool call graph_search với query kiểu \"metric OR "
+        ("Step 1 - User enters a question",
+         "The user types a natural-language question into the dashboard chat panel, for example "
+         "\"What is the metrics for RAG?\" and hits Send."),
+        ("Step 2 - Browser sends the request",
+         "JavaScript intercepts the form submit and calls fetch POST /ask with JSON "
+         "containing the question. It accepts a text/event-stream response."),
+        ("Step 3 - Flask initializes the agent",
+         "The server takes the access_token from the existing session (from the OAuth2 "
+         "flow with MSAL). It initializes the LangChain agent with the three tools, "
+         "each bound to the token via a closure. It opens the SSE stream."),
+        ("Step 4 - LLM generates search keywords",
+         "The LLM reads the question and the system prompt. The system prompt requires the LLM "
+         "to use multi-pattern OR queries (never search for a single word). "
+         "The LLM emits a graph_search tool call with a query like \"metric OR "
          "evaluation OR BLEU OR ROUGE OR recall\"."),
-        ("Bước 5 — Microsoft Graph tìm file",
-         "Tool graph_search gọi POST /search/query với entityTypes "
-         "[driveItem]. Microsoft index trả về tối đa 15 file matching, "
-         "mỗi file kèm snippet ~240 ký tự quanh keyword khớp."),
-        ("Bước 6 — LLM đánh giá snippet",
-         "LLM nhận lại danh sách file + snippet. Hai khả năng: "
-         "(a) snippet đã đủ trả lời — chuyển sang Bước 9; "
-         "(b) cần đọc sâu — chuyển sang Bước 7."),
-        ("Bước 7 — Tải và extract file",
-         "LLM gọi fetch_file_text cho 1-3 file phù hợp nhất. Tool tra "
-         "drive_index để biết driveId, tải file qua endpoint Graph "
-         "(redirect tự động đến CDN của Microsoft), extract text bằng "
-         "extractor tương ứng, lưu cache. LLM nhận về preview ngắn để "
-         "không nuốt context window."),
-        ("Bước 8 — Grep context",
-         "LLM gọi grep_context với regex multi-pattern và context_lines=5. "
-         "Tool tìm match trên text đã cache, merge các window chồng lấp, "
-         "trả về tối đa 10 chunk. Mỗi chunk có các dòng đánh dấu \">>\" "
-         "(hit) và \"  \" (context). Đồng thời ghi toàn bộ vào debug/grep.log."),
-        ("Bước 9 — LLM tổng hợp câu trả lời",
-         "Sau khi đã có đủ ngữ cảnh, LLM sinh câu trả lời cuối kèm "
-         "trích dẫn dạng [filename, L42] hoặc [filename, PAGE 3]. "
-         "Nếu không tìm thấy, LLM phải nói rõ \"không tìm thấy\" — "
-         "không được bịa."),
-        ("Bước 10 — Stream về browser",
-         "Mỗi bước (tool call, tool result, final answer, summary) được "
-         "yield ra dưới dạng SSE event. Browser nhận và render từng event "
-         "theo thời gian thực trên chat panel."),
+        ("Step 5 - Microsoft Graph finds files",
+         "The graph_search tool calls POST /search/query with entityTypes "
+         "[driveItem]. The Microsoft index returns up to 15 matching files, "
+         "each with a snippet of about 240 characters around the matching keyword."),
+        ("Step 6 - LLM evaluates the snippets",
+         "The LLM receives the list of files plus snippets. Two possibilities: "
+         "(a) the snippets are enough to answer - jump to Step 9; "
+         "(b) deeper reading is required - move to Step 7."),
+        ("Step 7 - Download and extract files",
+         "The LLM calls fetch_file_text for the 1-3 most relevant files. The tool looks up "
+         "drive_index to find the driveId, downloads the file via the Graph endpoint "
+         "(which auto-redirects to Microsoft's CDN), extracts the text with the matching "
+         "extractor, and stores it in the cache. The LLM receives a short preview so the "
+         "context window is not exhausted."),
+        ("Step 8 - Grep context",
+         "The LLM calls grep_context with multi-pattern regex and context_lines=5. "
+         "The tool finds matches over the cached text, merges overlapping windows, "
+         "and returns up to 10 chunks. Each chunk uses \">>\" for hit lines and "
+         "\"  \" for context lines. It also logs everything to debug/grep.log."),
+        ("Step 9 - LLM synthesizes the answer",
+         "Once it has enough context, the LLM produces the final answer with "
+         "citations in the form [filename, L42] or [filename, PAGE 3]. "
+         "If nothing is found, the LLM must say so explicitly - "
+         "fabrication is not allowed."),
+        ("Step 10 - Stream back to the browser",
+         "Every step (tool call, tool result, final answer, summary) is "
+         "yielded as an SSE event. The browser receives and renders each event "
+         "in real time on the chat panel."),
     ]
     for h, t in steps:
         add_heading(doc, h, level=3)
@@ -731,35 +731,35 @@ def make_docx(path):
     # ====== 6. SSE ======
     add_heading(doc, "6. Server-Sent Events (SSE)", level=1, color=DocxRGB(0x00, 0x78, 0xD4))
     add_body(doc,
-        "SSE cho phép server đẩy event liên tục về browser trên một "
-        "kết nối HTTP duy nhất. Trong ứng dụng này, mỗi bước của agent "
-        "(LLM quyết định gọi tool, tool trả về kết quả, LLM sinh câu trả "
-        "lời cuối) được gửi ngay khi xảy ra. Browser hiển thị live giúp "
-        "người dùng thấy được \"agent đang suy nghĩ gì\" mà không phải "
-        "chờ toàn bộ quy trình kết thúc.")
+        "SSE lets the server continuously push events to the browser over a "
+        "single HTTP connection. In this application, every agent step "
+        "(LLM decides to call a tool, tool returns a result, LLM generates the "
+        "final answer) is sent as soon as it happens. The browser displays it "
+        "live so the user can see \"what the agent is thinking\" without having "
+        "to wait for the entire process to finish.")
 
     # ====== 7. Cache ======
-    add_heading(doc, "7. Vai trò của cache và drive index", level=1, color=DocxRGB(0x00, 0x78, 0xD4))
+    add_heading(doc, "7. The role of cache and drive index", level=1, color=DocxRGB(0x00, 0x78, 0xD4))
     add_body(doc,
-        "Mỗi file chỉ được tải về một lần. Sau khi extract, text được "
-        "lưu vào dict in-memory keyed bằng item_id của Graph. Các lần "
-        "grep_context tiếp theo đọc thẳng từ RAM, không gọi mạng. "
-        "Drive index lưu mapping từ item_id sang driveId vì file trong "
-        "OneDrive không phải lúc nào cũng thuộc /me/drive — có thể là "
-        "file được share, từ SharePoint site, hoặc Teams group drive.")
+        "Each file is downloaded only once. After extraction, the text is "
+        "stored in an in-memory dict keyed by the Graph item_id. Subsequent "
+        "grep_context calls read directly from RAM without any network call. "
+        "The drive index stores the mapping from item_id to driveId because "
+        "files in OneDrive are not always under /me/drive - they may be "
+        "shared files, from a SharePoint site, or from a Teams group drive.")
 
-    # ====== 8. So sánh ======
-    add_heading(doc, "8. So sánh với RAG truyền thống", level=1, color=DocxRGB(0x00, 0x78, 0xD4))
+    # ====== 8. Comparison ======
+    add_heading(doc, "8. Comparison with traditional RAG", level=1, color=DocxRGB(0x00, 0x78, 0xD4))
     table = doc.add_table(rows=7, cols=3)
     table.style = "Light Grid Accent 1"
-    headers = ["Tiêu chí", "RAG truyền thống", "Agentic Keyword (hệ thống này)"]
+    headers = ["Criterion", "Traditional RAG", "Agentic Keyword (this system)"]
     rows = [
-        ["Hạ tầng", "Vector DB riêng (FAISS, Pinecone...)", "Không cần — dùng index có sẵn của Microsoft"],
-        ["Chunking", "Bắt buộc, cố định trước", "Không cần — context window động theo hit"],
-        ["Exact match", "Có thể miss (semantic similarity)", "Hoàn hảo (regex literal)"],
-        ["Cập nhật tài liệu", "Re-index toàn bộ", "Tức thì (Microsoft tự index)"],
-        ["Chi phí", "Embedding + storage + LLM", "Chỉ LLM calls"],
-        ["Minh bạch", "Khó debug similarity score", "Mọi bước log đầy đủ, trace được"],
+        ["Infrastructure", "Separate Vector DB (FAISS, Pinecone, etc.)", "Not required - uses Microsoft's existing index"],
+        ["Chunking", "Mandatory, fixed in advance", "Not required - context window is dynamic per hit"],
+        ["Exact match", "May miss (semantic similarity)", "Perfect (literal regex)"],
+        ["Document updates", "Re-index everything", "Instant (Microsoft indexes automatically)"],
+        ["Cost", "Embedding + storage + LLM", "LLM calls only"],
+        ["Transparency", "Hard to debug similarity scores", "Every step is fully logged and traceable"],
     ]
     cells = table.rows[0].cells
     for i, h in enumerate(headers):
@@ -773,32 +773,32 @@ def make_docx(path):
             run = table.rows[i].cells[j].paragraphs[0].add_run(v)
             run.font.size = DocxPt(10)
 
-    # ====== 9. Giới hạn ======
-    add_heading(doc, "9. Giới hạn hiện tại", level=1, color=DocxRGB(0x00, 0x78, 0xD4))
+    # ====== 9. Limitations ======
+    add_heading(doc, "9. Current limitations", level=1, color=DocxRGB(0x00, 0x78, 0xD4))
     for b in [
-        "PDF scan (image-only) — pdfplumber không OCR được, sẽ trả về text rỗng. Cần Azure Document Intelligence hoặc Docling cho hướng OCR.",
-        "Giới hạn 25 MB mỗi file — file lớn hơn bị từ chối để tránh quá tải RAM và timeout.",
-        "Tốc độ phụ thuộc số lần gọi LLM — mỗi câu hỏi thường tốn 5-15 lần gọi qua vòng lặp ReAct.",
-        "Độ chính xác phụ thuộc chất lượng model — gpt-4.1-mini hoạt động tốt, model yếu hơn có thể không sinh đủ biến thể keyword.",
-        "Search index lag của Microsoft — file vừa upload có thể mất vài phút mới được index.",
+        "Scanned PDFs (image-only) - pdfplumber cannot OCR, so it returns empty text. Azure Document Intelligence or Docling would be needed for OCR.",
+        "25 MB per-file limit - larger files are rejected to avoid RAM pressure and timeouts.",
+        "Speed depends on the number of LLM calls - each question usually costs 5-15 calls through the ReAct loop.",
+        "Accuracy depends on model quality - gpt-4.1-mini works well; weaker models may not generate enough keyword variants.",
+        "Microsoft's search index lag - newly uploaded files may take several minutes to be indexed.",
     ]:
         add_bullet(doc, b)
 
-    # ====== 10. Kết luận ======
-    add_heading(doc, "10. Kết luận", level=1, color=DocxRGB(0x00, 0x78, 0xD4))
+    # ====== 10. Conclusion ======
+    add_heading(doc, "10. Conclusion", level=1, color=DocxRGB(0x00, 0x78, 0xD4))
     add_body(doc,
-        "Hệ thống chứng minh rằng với một LLM đủ thông minh và bộ công cụ "
-        "keyword search phù hợp, ta có thể đạt chất lượng tương đương RAG "
-        "mà không cần xây dựng và vận hành vector database. Bằng cách tận "
-        "dụng Microsoft Graph Search có sẵn và để LLM tự lái quá trình tìm "
-        "kiếm, kiến trúc trở nên đơn giản, ít tốn kém, dễ debug, và hỗ trợ "
-        "exact match hoàn hảo cho các tài liệu kỹ thuật.")
+        "The system demonstrates that with a sufficiently capable LLM and the "
+        "right keyword-search toolkit, we can achieve quality comparable to RAG "
+        "without building and operating a vector database. By leveraging the "
+        "Microsoft Graph Search that already exists and letting the LLM drive "
+        "the search process, the architecture becomes simpler, cheaper, easier "
+        "to debug, and supports perfect exact match for technical documents.")
 
     # Footer
     doc.add_paragraph()
     foot = doc.add_paragraph()
     foot.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    r = foot.add_run("— Microsoft 365 Keyword-Search Agent —")
+    r = foot.add_run("- Microsoft 365 Keyword-Search Agent -")
     r.font.size = DocxPt(10)
     r.font.italic = True
     r.font.color.rgb = DocxRGB(0x60, 0x5E, 0x5C)

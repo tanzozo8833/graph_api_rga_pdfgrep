@@ -103,7 +103,7 @@ def run_agent_stream(query: str, access_token: str) -> Iterator[dict]:
                                     queries_sent.append(q)
                                     last_search_query = q
                                     print(
-                                        f"\n[{_ts()}] [STEP {step_no}] >>> LLM CHỌN TÌM KIẾM"
+                                        f"\n[{_ts()}] [STEP {step_no}] >>> LLM CHOSE SEARCH"
                                         f"\n          keywords: {q!r}"
                                     )
                                 elif tool_name == "fetch_file_text":
@@ -119,7 +119,7 @@ def run_agent_stream(query: str, access_token: str) -> Iterator[dict]:
                                     )
                                     files_fetched.append({"item_id": fid, "name": name})
                                     print(
-                                        f"\n[{_ts()}] [STEP {step_no}] >>> LLM CHỌN ĐỌC FILE"
+                                        f"\n[{_ts()}] [STEP {step_no}] >>> LLM CHOSE FETCH FILE"
                                         f"\n          file: {name} (id={fid[:20]}...)"
                                     )
                                 elif tool_name == "grep_context":
@@ -137,7 +137,7 @@ def run_agent_stream(query: str, access_token: str) -> Iterator[dict]:
                                         {"item_id": fid, "name": name, "patterns": pat}
                                     )
                                     print(
-                                        f"\n[{_ts()}] [STEP {step_no}] >>> LLM CHỌN GREP"
+                                        f"\n[{_ts()}] [STEP {step_no}] >>> LLM CHOSE GREP"
                                         f"\n          file: {name}"
                                         f"\n          patterns: {pat!r}"
                                     )
@@ -181,12 +181,12 @@ def run_agent_stream(query: str, access_token: str) -> Iterator[dict]:
                                     }
                                 )
                             print(
-                                f"[{_ts()}] [STEP {step_no}] <<< Graph trả về {len(parsed)} file:"
+                                f"[{_ts()}] [STEP {step_no}] <<< Graph returned {len(parsed)} file(s):"
                             )
                             for i, f in enumerate(parsed[:10], 1):
                                 print(f"          {i}. {f['name']}")
                             if len(parsed) > 10:
-                                print(f"          ... và {len(parsed) - 10} file nữa")
+                                print(f"          ... and {len(parsed) - 10} more file(s)")
                             last_search_query = None
                         else:
                             print(
@@ -209,14 +209,14 @@ def run_agent_stream(query: str, access_token: str) -> Iterator[dict]:
     # Summary event
     print(f"\n{'-' * 70}")
     print(f"[{_ts()}] [SUMMARY]")
-    print(f"  Số lần search: {len(queries_sent)}")
+    print(f"  Search calls: {len(queries_sent)}")
     for i, q in enumerate(queries_sent, 1):
         print(f"    {i}. {q!r}")
-    print(f"  Tổng file Graph trả về (gộp): {len(files_returned)}")
-    print(f"  File LLM đã đọc (fetch_file_text): {len(files_fetched)}")
+    print(f"  Total files returned by Graph (merged): {len(files_returned)}")
+    print(f"  Files fetched by LLM (fetch_file_text): {len(files_fetched)}")
     for f in files_fetched:
         print(f"    - {f['name']}")
-    print(f"  File LLM đã grep: {len(files_grepped)}")
+    print(f"  Files grepped by LLM: {len(files_grepped)}")
     for f in files_grepped:
         print(f"    - {f['name']} ← {f['patterns']!r}")
     print(f"{'-' * 70}\n")
