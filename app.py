@@ -626,24 +626,141 @@ def logout():
 # ---------------------------------------------------------------------------
 
 _COMMON_CSS = """
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  :root {
+    --bg-0: #060912;
+    --bg-1: #0c1222;
+    --surface: rgba(18, 26, 48, 0.55);
+    --surface-solid: #0f1729;
+    --border: rgba(120, 160, 230, 0.14);
+    --border-strong: rgba(120, 160, 230, 0.28);
+    --text: #e6ecf7;
+    --text-dim: #8a93a8;
+    --text-muted: #5a6378;
+    --accent: #00d4ff;
+    --accent-2: #6c8cff;
+    --accent-purple: #b465ff;
+    --danger: #ff5572;
+    --warning: #ffb648;
+    --success: #4ade80;
+    --glow-accent: 0 0 24px rgba(0, 212, 255, 0.35);
+    --glow-soft: 0 8px 32px rgba(0, 0, 0, 0.35);
+  }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Segoe UI', sans-serif; background: #f3f4f6; min-height: 100vh; }
-  header { background: #0078d4; color: white; padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
-  header h1 { font-size: 18px; font-weight: 600; }
-  header a.home { color: white; text-decoration: none; font-size: 18px; font-weight: 600; }
-  .user-info { display: flex; align-items: center; gap: 12px; font-size: 14px; }
-  .logout { color: rgba(255,255,255,0.85); text-decoration: none; padding: 6px 12px; border: 1px solid rgba(255,255,255,0.4); border-radius: 4px; font-size: 13px; }
-  .logout:hover { background: rgba(255,255,255,0.1); }
-  main { max-width: 960px; margin: 32px auto; padding: 0 16px; }
-  .back { display: inline-flex; align-items: center; gap: 6px; color: #0078d4; text-decoration: none; font-size: 14px; margin-bottom: 20px; }
-  .back:hover { text-decoration: underline; }
+  *::selection { background: rgba(0, 212, 255, 0.3); color: var(--text); }
+
+  html, body { min-height: 100%; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    color: var(--text);
+    background:
+      radial-gradient(1100px 600px at 12% -10%, rgba(108, 140, 255, 0.18), transparent 60%),
+      radial-gradient(900px 500px at 95% 0%, rgba(180, 101, 255, 0.14), transparent 55%),
+      radial-gradient(700px 700px at 50% 110%, rgba(0, 212, 255, 0.12), transparent 60%),
+      linear-gradient(180deg, var(--bg-0), var(--bg-1));
+    background-attachment: fixed;
+    min-height: 100vh;
+    font-feature-settings: 'cv11', 'ss01';
+    letter-spacing: -0.005em;
+  }
+
+  /* Subtle animated grid overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(120, 160, 230, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(120, 160, 230, 0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  }
+
+  header {
+    position: sticky; top: 0; z-index: 50;
+    height: 64px;
+    padding: 0 28px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(8, 12, 24, 0.7);
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    border-bottom: 1px solid var(--border);
+  }
+  header a.home {
+    color: var(--text); text-decoration: none;
+    font-size: 16px; font-weight: 700;
+    display: inline-flex; align-items: center; gap: 10px;
+    letter-spacing: 0.01em;
+  }
+  header a.home .logo-mark {
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2) 60%, var(--accent-purple));
+    display: inline-flex; align-items: center; justify-content: center;
+    color: #060912; font-weight: 800; font-size: 14px;
+    box-shadow: var(--glow-accent);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  header a.home .brand-text { background: linear-gradient(90deg, #fff, #b8c6e0); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  header a.home .brand-text .accent { color: var(--accent); -webkit-text-fill-color: var(--accent); }
+
+  .user-info { display: flex; align-items: center; gap: 14px; font-size: 13px; color: var(--text-dim); }
+  .user-info .who { display: flex; align-items: center; gap: 8px; padding: 5px 12px 5px 5px; border: 1px solid var(--border); border-radius: 999px; background: rgba(255,255,255,0.02); }
+  .user-info .avatar { width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-2), var(--accent-purple)); display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #060912; }
+  .logout {
+    color: var(--text); text-decoration: none;
+    padding: 7px 14px;
+    border: 1px solid var(--border-strong);
+    border-radius: 8px; font-size: 12px; font-weight: 500;
+    background: transparent;
+    transition: all 0.18s ease;
+  }
+  .logout:hover { background: rgba(255, 85, 114, 0.08); border-color: rgba(255, 85, 114, 0.4); color: var(--danger); }
+
+  main { max-width: 1100px; margin: 36px auto 80px; padding: 0 24px; position: relative; z-index: 1; }
+
+  .back {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--text-dim); text-decoration: none;
+    font-size: 13px; font-weight: 500;
+    margin-bottom: 24px;
+    padding: 6px 10px 6px 6px; border-radius: 8px;
+    transition: all 0.15s ease;
+  }
+  .back:hover { color: var(--accent); background: rgba(0, 212, 255, 0.06); transform: translateX(-2px); }
+
+  /* Common card surface */
+  .surface {
+    background: var(--surface);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: var(--glow-soft);
+  }
+
+  /* Scrollbars */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(120, 160, 230, 0.15); border-radius: 10px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(120, 160, 230, 0.3); }
 """
 
 _HEADER = """
   <header>
-    <a href="/" class="home">&#128187; M365 Dashboard</a>
+    <a href="/" class="home">
+      <span class="logo-mark">M</span>
+      <span class="brand-text">M365 <span class="accent">/</span> Console</span>
+    </a>
     <div class="user-info">
-      <span>{{ me.get('displayName', me.get('userPrincipalName', '')) }}</span>
+      <div class="who">
+        <span class="avatar">{{ (me.get('displayName') or me.get('userPrincipalName') or 'U')[:1] | upper }}</span>
+        <span>{{ me.get('displayName', me.get('userPrincipalName', '')) }}</span>
+      </div>
       <a href="/logout" class="logout">Sign out</a>
     </div>
   </header>
@@ -659,24 +776,133 @@ LOGIN_HTML = """
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>M365 Dashboard</title>
+  <title>M365 Console — Sign in</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+    :root {
+      --bg-0: #060912; --bg-1: #0c1222;
+      --accent: #00d4ff; --accent-2: #6c8cff; --accent-purple: #b465ff;
+      --text: #e6ecf7; --text-dim: #8a93a8;
+      --border: rgba(120, 160, 230, 0.16);
+    }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Segoe UI', sans-serif; background: #f3f4f6; display: flex; align-items: center; justify-content: center; height: 100vh; }
-    .card { background: white; border-radius: 12px; padding: 48px; text-align: center; box-shadow: 0 4px 24px rgba(0,0,0,0.08); max-width: 420px; width: 100%; }
-    .logo { font-size: 52px; margin-bottom: 16px; }
-    h1 { font-size: 24px; color: #111; margin-bottom: 8px; }
-    p { color: #666; margin-bottom: 32px; line-height: 1.5; }
-    .btn { display: inline-flex; align-items: center; gap: 10px; background: #0078d4; color: white; padding: 12px 28px; border-radius: 6px; text-decoration: none; font-size: 15px; font-weight: 600; transition: background 0.2s; }
-    .btn:hover { background: #106ebe; }
-    .ms-icon { width: 20px; height: 20px; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background:
+        radial-gradient(900px 600px at 20% 20%, rgba(108, 140, 255, 0.22), transparent 60%),
+        radial-gradient(800px 500px at 80% 80%, rgba(180, 101, 255, 0.16), transparent 60%),
+        radial-gradient(600px 400px at 50% 100%, rgba(0, 212, 255, 0.18), transparent 60%),
+        linear-gradient(180deg, var(--bg-0), var(--bg-1));
+      color: var(--text);
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px;
+      overflow: hidden;
+      position: relative;
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(120, 160, 230, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(120, 160, 230, 0.05) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+    }
+    /* Floating orbs */
+    .orb { position: fixed; border-radius: 50%; filter: blur(60px); opacity: 0.55; pointer-events: none; }
+    .orb.a { width: 360px; height: 360px; background: #6c8cff; top: -100px; left: -120px; animation: float 18s ease-in-out infinite; }
+    .orb.b { width: 280px; height: 280px; background: #b465ff; bottom: -80px; right: -80px; animation: float 22s ease-in-out infinite reverse; }
+    .orb.c { width: 220px; height: 220px; background: #00d4ff; top: 50%; right: 20%; animation: float 26s ease-in-out infinite; opacity: 0.35; }
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(30px, -40px) scale(1.05); }
+      66% { transform: translate(-20px, 30px) scale(0.95); }
+    }
+
+    .card {
+      position: relative;
+      background: rgba(14, 20, 38, 0.6);
+      backdrop-filter: blur(20px) saturate(150%);
+      -webkit-backdrop-filter: blur(20px) saturate(150%);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 56px 48px;
+      text-align: center;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+      max-width: 460px; width: 100%;
+      z-index: 1;
+    }
+    .card::before {
+      content: ''; position: absolute; inset: -1px;
+      border-radius: 20px;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.5), transparent 40%, transparent 60%, rgba(180, 101, 255, 0.5));
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .logo-mark {
+      width: 64px; height: 64px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2) 60%, var(--accent-purple));
+      display: inline-flex; align-items: center; justify-content: center;
+      margin: 0 auto 24px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 800; font-size: 28px; color: #060912;
+      box-shadow: 0 0 40px rgba(0, 212, 255, 0.45), 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 12px;
+      background: rgba(0, 212, 255, 0.08);
+      border: 1px solid rgba(0, 212, 255, 0.25);
+      border-radius: 999px;
+      font-size: 11px; font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.05em; text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--accent); animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    h1 { font-size: 28px; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.02em; background: linear-gradient(180deg, #fff, #b8c6e0); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    p.sub { color: var(--text-dim); margin-bottom: 36px; line-height: 1.6; font-size: 14px; }
+    .btn {
+      position: relative;
+      display: inline-flex; align-items: center; gap: 12px;
+      background: linear-gradient(135deg, #00d4ff, #6c8cff);
+      color: #060912;
+      padding: 14px 32px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-size: 14px; font-weight: 700;
+      letter-spacing: 0.01em;
+      transition: all 0.2s ease;
+      box-shadow: 0 0 28px rgba(0, 212, 255, 0.35), 0 10px 24px rgba(0, 0, 0, 0.3);
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(0, 212, 255, 0.55), 0 14px 30px rgba(0, 0, 0, 0.4); }
+    .btn:active { transform: translateY(0); }
+    .ms-icon { width: 18px; height: 18px; }
+
+    .features {
+      display: flex; justify-content: center; gap: 20px;
+      margin-top: 36px; padding-top: 28px;
+      border-top: 1px solid var(--border);
+      font-size: 12px; color: var(--text-dim);
+    }
+    .features span { display: inline-flex; align-items: center; gap: 6px; }
+    .features svg { width: 14px; height: 14px; color: var(--accent); }
   </style>
 </head>
 <body>
+  <div class="orb a"></div>
+  <div class="orb b"></div>
+  <div class="orb c"></div>
   <div class="card">
-    <div class="logo">&#128187;</div>
-    <h1>M365 Dashboard</h1>
-    <p>Sign in with your Microsoft account to view emails, files, and Teams.</p>
+    <div class="logo-mark">M</div>
+    <div class="badge"><span class="dot"></span> Microsoft Graph · Live</div>
+    <h1>M365 Console</h1>
+    <p class="sub">Unified workspace for your Microsoft 365 — emails, OneDrive, Teams &amp; SharePoint, with an AI agent built in.</p>
     <a href="/login" class="btn">
       <svg class="ms-icon" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="1" y="1" width="10" height="10" fill="#f25022"/>
@@ -684,8 +910,13 @@ LOGIN_HTML = """
         <rect x="1" y="12" width="10" height="10" fill="#00a4ef"/>
         <rect x="12" y="12" width="10" height="10" fill="#ffb900"/>
       </svg>
-      Sign in with Microsoft
+      Continue with Microsoft
     </a>
+    <div class="features">
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> OAuth 2.0</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Encrypted</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Read-only</span>
+    </div>
   </div>
 </body>
 </html>
@@ -700,67 +931,127 @@ DASHBOARD_HTML = """
   <title>Dashboard — M365</title>
   <style>
     """ + _COMMON_CSS + """
-    .welcome { margin-bottom: 24px; }
-    .welcome h2 { font-size: 22px; color: #111; }
-    .welcome p { color: #666; margin-top: 4px; font-size: 14px; }
-    .debug-bar { margin-bottom: 20px; text-align: right; }
-    .debug-btn { display: inline-block; padding: 7px 16px; background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 5px; font-size: 13px; color: #555; text-decoration: none; }
-    .debug-btn:hover { background: #e5e7eb; }
-    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
-    .card { background: white; border-radius: 10px; padding: 28px 24px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); text-decoration: none; color: inherit; display: flex; align-items: center; gap: 20px; transition: box-shadow 0.15s, transform 0.15s; border-left: 4px solid transparent; }
-    .card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.11); transform: translateY(-2px); }
-    .card.email  { border-left-color: #0078d4; }
-    .card.files  { border-left-color: #107c41; }
-    .card.teams  { border-left-color: #6264a7; }
-    .card.sharepoint { border-left-color: #038387; }
-    .card-icon { font-size: 36px; flex-shrink: 0; }
-    .card-body {}
-    .card-count { font-size: 36px; font-weight: 700; line-height: 1; color: #111; }
-    .card-label { font-size: 14px; color: #666; margin-top: 4px; }
-    .card-count.na { font-size: 18px; color: #999; }
+    .welcome { margin-bottom: 28px; display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .welcome h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; background: linear-gradient(180deg, #fff, #b8c6e0); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .welcome p { color: var(--text-dim); margin-top: 4px; font-size: 13px; font-family: 'JetBrains Mono', monospace; }
+    .welcome .badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; background: rgba(74, 222, 128, 0.08); border: 1px solid rgba(74, 222, 128, 0.25); border-radius: 999px; font-size: 11px; font-weight: 600; color: var(--success); letter-spacing: 0.04em; text-transform: uppercase; }
+    .welcome .badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--success); box-shadow: 0 0 8px var(--success); animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+    .debug-bar { margin-bottom: 16px; text-align: right; }
+    .debug-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 8px; font-size: 12px; color: var(--text-dim); text-decoration: none; font-family: 'JetBrains Mono', monospace; transition: all 0.15s ease; }
+    .debug-btn:hover { background: rgba(0, 212, 255, 0.06); color: var(--accent); border-color: rgba(0, 212, 255, 0.3); }
+
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+    .card {
+      position: relative; overflow: hidden;
+      background: var(--surface);
+      backdrop-filter: blur(14px) saturate(140%);
+      -webkit-backdrop-filter: blur(14px) saturate(140%);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      text-decoration: none; color: inherit;
+      display: flex; flex-direction: column; gap: 14px;
+      transition: all 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .card::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(400px 200px at var(--mx, 50%) var(--my, 0%), var(--card-glow, rgba(0, 212, 255, 0.12)), transparent 60%);
+      opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+    }
+    .card:hover { transform: translateY(-4px); border-color: var(--card-border, rgba(0, 212, 255, 0.4)); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35), 0 0 30px var(--card-glow, rgba(0, 212, 255, 0.15)); }
+    .card:hover::before { opacity: 1; }
+    .card.email      { --card-glow: rgba(0, 212, 255, 0.18); --card-border: rgba(0, 212, 255, 0.4); }
+    .card.files      { --card-glow: rgba(74, 222, 128, 0.18); --card-border: rgba(74, 222, 128, 0.4); }
+    .card.teams      { --card-glow: rgba(180, 101, 255, 0.18); --card-border: rgba(180, 101, 255, 0.4); }
+    .card.sharepoint { --card-glow: rgba(255, 182, 72, 0.18); --card-border: rgba(255, 182, 72, 0.4); }
+    .card-head { display: flex; align-items: center; justify-content: space-between; }
+    .card-icon { width: 44px; height: 44px; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; font-size: 22px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); position: relative; }
+    .card.email      .card-icon { color: var(--accent); background: rgba(0, 212, 255, 0.1); border-color: rgba(0, 212, 255, 0.25); }
+    .card.files      .card-icon { color: var(--success); background: rgba(74, 222, 128, 0.1); border-color: rgba(74, 222, 128, 0.25); }
+    .card.teams      .card-icon { color: var(--accent-purple); background: rgba(180, 101, 255, 0.1); border-color: rgba(180, 101, 255, 0.25); }
+    .card.sharepoint .card-icon { color: var(--warning); background: rgba(255, 182, 72, 0.1); border-color: rgba(255, 182, 72, 0.25); }
+    .card-arrow { color: var(--text-muted); font-size: 16px; transition: transform 0.2s ease, color 0.2s ease; }
+    .card:hover .card-arrow { transform: translateX(4px); color: var(--text); }
+    .card-body { display: flex; flex-direction: column; gap: 4px; }
+    .card-count { font-size: 38px; font-weight: 800; line-height: 1; color: var(--text); letter-spacing: -0.03em; font-family: 'JetBrains Mono', monospace; }
+    .card-label { font-size: 13px; color: var(--text-dim); font-weight: 500; }
+    .card-count.na { font-size: 22px; color: var(--text-muted); }
 
     /* --- Chat panel --- */
-    .chat-section { margin-top: 32px; background: white; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); overflow: hidden; }
-    .chat-header { background: #faf9f8; border-bottom: 1px solid #e5e7eb; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; }
-    .chat-header h3 { font-size: 15px; font-weight: 600; color: #111; }
-    .chat-header .hint { font-size: 12px; color: #888; }
-    .chat-messages { height: 380px; overflow-y: auto; padding: 16px 20px; background: #fafbfc; }
-    .chat-messages:empty::before { content: 'Ask anything about your OneDrive. e.g. "What is the metrics for RAG?"'; color: #999; font-size: 13px; font-style: italic; }
-    .msg { margin-bottom: 14px; max-width: 88%; }
+    .chat-section {
+      margin-top: 36px;
+      background: var(--surface);
+      backdrop-filter: blur(14px) saturate(140%);
+      -webkit-backdrop-filter: blur(14px) saturate(140%);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--glow-soft);
+    }
+    .chat-header {
+      background: linear-gradient(180deg, rgba(0, 212, 255, 0.04), transparent);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 22px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .chat-header h3 { font-size: 14px; font-weight: 600; color: var(--text); display: inline-flex; align-items: center; gap: 10px; }
+    .chat-header h3 .ai-dot { width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent-purple)); box-shadow: 0 0 12px var(--accent); animation: pulse 2s ease-in-out infinite; }
+    .chat-header .hint { font-size: 11px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; padding: 4px 10px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 999px; }
+    .chat-messages { height: 420px; overflow-y: auto; padding: 20px 22px; background: rgba(6, 10, 22, 0.4); }
+    .chat-messages:empty::before { content: '> Ask anything about your OneDrive. e.g. "What is the metrics for RAG?"'; color: var(--text-muted); font-size: 13px; font-family: 'JetBrains Mono', monospace; }
+    .msg { margin-bottom: 16px; max-width: 88%; }
     .msg.user { margin-left: auto; text-align: right; }
-    .msg.user .bubble { background: #0078d4; color: white; }
-    .msg.agent .bubble { background: white; border: 1px solid #e5e7eb; }
-    .msg.agent.error .bubble { background: #fdecea; border-color: #f5c2c0; color: #842029; }
-    .bubble { display: inline-block; padding: 10px 14px; border-radius: 10px; font-size: 14px; line-height: 1.5; text-align: left; white-space: normal; word-wrap: break-word; max-width: 100%; }
+    .msg.user .bubble { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #060912; font-weight: 500; box-shadow: 0 4px 16px rgba(0, 212, 255, 0.25); }
+    .msg.agent .bubble { background: rgba(255,255,255,0.03); border: 1px solid var(--border); color: var(--text); }
+    .msg.agent.error .bubble { background: rgba(255, 85, 114, 0.08); border-color: rgba(255, 85, 114, 0.3); color: #ffb6c0; }
+    .bubble { display: inline-block; padding: 12px 16px; border-radius: 14px; font-size: 14px; line-height: 1.55; text-align: left; white-space: normal; word-wrap: break-word; max-width: 100%; }
     .msg.user .bubble { white-space: pre-wrap; }
-    .agent-status { font-size: 12px; color: #0078d4; margin-bottom: 6px; }
-    .agent-steps { display: flex; flex-direction: column; gap: 6px; margin: 6px 0; }
-    .live-step { background: #f3f4f6; border-left: 3px solid #0078d4; padding: 8px 10px; border-radius: 4px; font-family: 'Consolas', monospace; font-size: 11px; }
-    .live-step .step-head { color: #333; line-height: 1.6; }
-    .live-step .step-no { background: #0078d4; color: white; padding: 1px 6px; border-radius: 3px; font-weight: 600; font-size: 10px; }
-    .live-step .step-ts { color: #999; font-size: 10px; }
-    .live-step .tname { color: #107c41; font-weight: 600; margin-left: 6px; }
-    .live-step .tin { color: #6b6b6b; margin-left: 4px; word-break: break-all; }
-    .live-step .step-obs { margin-top: 4px; }
-    .live-step .step-obs .pending { color: #999; font-style: italic; }
-    .live-step pre { white-space: pre-wrap; word-wrap: break-word; max-height: 220px; overflow-y: auto; background: white; padding: 6px; border-radius: 3px; margin: 0; font-size: 11px; }
-    .agent-answer { font-size: 14px; line-height: 1.5; }
-    .agent-answer:not(:empty) { margin-top: 8px; padding-top: 8px; border-top: 1px dashed #e5e7eb; }
-    .summary-box { margin-top: 10px; padding: 10px 12px; background: #fff8e1; border: 1px solid #ffe082; border-radius: 6px; font-size: 12px; }
-    .summary-box .sum-title { font-weight: 600; color: #5d4037; margin-bottom: 6px; font-size: 13px; }
-    .summary-box .sum-section { margin-top: 6px; color: #333; }
-    .summary-box ul { margin: 4px 0 4px 18px; padding: 0; }
-    .summary-box li { margin: 2px 0; line-height: 1.4; }
-    .summary-box code { background: #fff3cd; padding: 1px 5px; border-radius: 3px; font-size: 11px; color: #6a4f00; word-break: break-all; }
-    .summary-box .dim { color: #888; font-size: 11px; }
-    .chat-input-row { display: flex; gap: 8px; padding: 12px 20px; border-top: 1px solid #e5e7eb; background: white; }
-    .chat-input-row input { flex: 1; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; outline: none; }
-    .chat-input-row input:focus { border-color: #0078d4; box-shadow: 0 0 0 2px rgba(0,120,212,0.15); }
-    .chat-input-row button { padding: 10px 20px; background: #0078d4; color: white; border: none; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; }
-    .chat-input-row button:hover:not(:disabled) { background: #106ebe; }
-    .chat-input-row button:disabled { background: #94c2e8; cursor: not-allowed; }
-    .typing { display: inline-block; }
-    .typing span { display: inline-block; width: 6px; height: 6px; background: #888; border-radius: 50%; margin: 0 1px; animation: blink 1.2s infinite; }
+    .agent-status { font-size: 11px; color: var(--accent); margin-bottom: 8px; display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; padding: 3px 10px; background: rgba(0, 212, 255, 0.08); border: 1px solid rgba(0, 212, 255, 0.2); border-radius: 999px; }
+    .agent-steps { display: flex; flex-direction: column; gap: 8px; margin: 10px 0; }
+    .live-step { background: rgba(6, 10, 22, 0.6); border: 1px solid var(--border); border-left: 3px solid var(--accent); padding: 10px 12px; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+    .live-step .step-head { color: var(--text-dim); line-height: 1.7; }
+    .live-step .step-no { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #060912; padding: 2px 8px; border-radius: 4px; font-weight: 700; font-size: 10px; }
+    .live-step .step-ts { color: var(--text-muted); font-size: 10px; }
+    .live-step .tname { color: var(--success); font-weight: 600; margin-left: 6px; }
+    .live-step .tin { color: var(--text-dim); margin-left: 4px; word-break: break-all; }
+    .live-step .step-obs { margin-top: 6px; }
+    .live-step .step-obs .pending { color: var(--text-muted); font-style: italic; }
+    .live-step pre { white-space: pre-wrap; word-wrap: break-word; max-height: 220px; overflow-y: auto; background: rgba(0,0,0,0.4); border: 1px solid var(--border); color: #b8c6e0; padding: 8px; border-radius: 6px; margin: 0; font-size: 11px; }
+    .agent-answer { font-size: 14px; line-height: 1.6; color: var(--text); }
+    .agent-answer:not(:empty) { margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border); }
+    .summary-box { margin-top: 12px; padding: 12px 14px; background: rgba(255, 182, 72, 0.06); border: 1px solid rgba(255, 182, 72, 0.25); border-radius: 10px; font-size: 12px; color: var(--text); }
+    .summary-box .sum-title { font-weight: 700; color: var(--warning); margin-bottom: 8px; font-size: 13px; letter-spacing: 0.02em; }
+    .summary-box .sum-section { margin-top: 8px; color: var(--text-dim); }
+    .summary-box .sum-section b { color: var(--text); font-weight: 600; }
+    .summary-box ul { margin: 6px 0 6px 20px; padding: 0; }
+    .summary-box li { margin: 3px 0; line-height: 1.5; }
+    .summary-box code { background: rgba(255, 182, 72, 0.1); padding: 1px 6px; border-radius: 4px; font-size: 11px; color: var(--warning); word-break: break-all; font-family: 'JetBrains Mono', monospace; }
+    .summary-box .dim { color: var(--text-muted); font-size: 11px; }
+    .chat-input-row { display: flex; gap: 10px; padding: 14px 22px; border-top: 1px solid var(--border); background: rgba(8, 12, 24, 0.5); }
+    .chat-input-row input {
+      flex: 1; padding: 12px 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 10px; font-size: 14px; outline: none;
+      color: var(--text); font-family: inherit;
+      transition: all 0.15s ease;
+    }
+    .chat-input-row input::placeholder { color: var(--text-muted); }
+    .chat-input-row input:focus { border-color: var(--accent); background: rgba(0, 212, 255, 0.04); box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.12); }
+    .chat-input-row button {
+      padding: 12px 24px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #060912; border: none; border-radius: 10px;
+      font-size: 14px; font-weight: 700; cursor: pointer;
+      transition: all 0.15s ease;
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.25);
+    }
+    .chat-input-row button:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 0 28px rgba(0, 212, 255, 0.4); }
+    .chat-input-row button:disabled { opacity: 0.4; cursor: not-allowed; }
+    .typing { display: inline-flex; align-items: center; gap: 3px; }
+    .typing span { display: inline-block; width: 5px; height: 5px; background: var(--accent); border-radius: 50%; animation: blink 1.2s infinite; }
     .typing span:nth-child(2) { animation-delay: 0.2s; }
     .typing span:nth-child(3) { animation-delay: 0.4s; }
     @keyframes blink { 0%, 60%, 100% { opacity: 0.2; } 30% { opacity: 1; } }
@@ -770,16 +1061,22 @@ DASHBOARD_HTML = """
   """ + _HEADER + """
   <main>
     <div class="welcome">
-      <h2>Welcome, {{ me.get('displayName', 'there') }}</h2>
-      <p>{{ me.get('mail') or me.get('userPrincipalName', '') }}</p>
+      <div>
+        <h2>Welcome back, {{ me.get('displayName', 'there') }}</h2>
+        <p>{{ me.get('mail') or me.get('userPrincipalName', '') }}</p>
+      </div>
+      <div class="badge"><span class="dot"></span> Graph API · Online</div>
     </div>
 
     <div class="debug-bar">
-      <a href="/debug-files" class="debug-btn">&#128027; Debug OneDrive Files</a>
+      <a href="/debug-files" class="debug-btn">&#9881; debug.onedrive</a>
     </div>
     <div class="cards">
       <a href="/emails" class="card email">
-        <div class="card-icon">&#128140;</div>
+        <div class="card-head">
+          <div class="card-icon">&#9993;</div>
+          <span class="card-arrow">&rarr;</span>
+        </div>
         <div class="card-body">
           {% if unread_count is not none %}
             <div class="card-count">{{ unread_count }}</div>
@@ -791,7 +1088,10 @@ DASHBOARD_HTML = """
       </a>
 
       <a href="/files" class="card files">
-        <div class="card-icon">&#128193;</div>
+        <div class="card-head">
+          <div class="card-icon">&#128193;</div>
+          <span class="card-arrow">&rarr;</span>
+        </div>
         <div class="card-body">
           {% if files_count is not none %}
             <div class="card-count">{{ files_count }}</div>
@@ -803,7 +1103,10 @@ DASHBOARD_HTML = """
       </a>
 
       <a href="/teams" class="card teams">
-        <div class="card-icon">&#128101;</div>
+        <div class="card-head">
+          <div class="card-icon">&#128101;</div>
+          <span class="card-arrow">&rarr;</span>
+        </div>
         <div class="card-body">
           {% if teams_count is not none %}
             <div class="card-count">{{ teams_count }}</div>
@@ -815,7 +1118,10 @@ DASHBOARD_HTML = """
       </a>
 
       <a href="/sharepoint" class="card sharepoint">
-        <div class="card-icon">&#127760;</div>
+        <div class="card-head">
+          <div class="card-icon">&#127760;</div>
+          <span class="card-arrow">&rarr;</span>
+        </div>
         <div class="card-body">
           {% if sharepoint_count is not none %}
             <div class="card-count">{{ sharepoint_count }}</div>
@@ -829,13 +1135,13 @@ DASHBOARD_HTML = """
 
     <section class="chat-section">
       <div class="chat-header">
-        <h3>&#129302; Ask your OneDrive</h3>
-        <span class="hint">Keyword-search agent (Microsoft Graph + Claude)</span>
+        <h3><span class="ai-dot"></span> AI Assistant · Ask your OneDrive</h3>
+        <span class="hint">graph + claude · keyword agent</span>
       </div>
       <div id="chat-messages" class="chat-messages"></div>
       <form id="chat-form" class="chat-input-row" autocomplete="off">
-        <input id="chat-input" type="text" placeholder="Ask about your files…" />
-        <button id="chat-send" type="submit">Send</button>
+        <input id="chat-input" type="text" placeholder="Ask anything about your files..." />
+        <button id="chat-send" type="submit">Send &rarr;</button>
       </form>
     </section>
   </main>
@@ -1071,33 +1377,45 @@ EMAILS_HTML = """
   <title>Unread Emails</title>
   <style>
     """ + _COMMON_CSS + """
-    .page-title { font-size: 20px; font-weight: 600; color: #111; margin-bottom: 16px; }
-    .filter-bar { display: flex; gap: 8px; margin-bottom: 16px; }
-    .filter-btn { padding: 7px 16px; border: 1px solid #d1d5db; border-radius: 5px; font-size: 13px; color: #555; text-decoration: none; background: white; }
-    .filter-btn:hover { background: #f3f4f6; }
-    .filter-btn.active { background: #0078d4; color: white; border-color: #0078d4; }
-    .email-list { display: flex; flex-direction: column; gap: 8px; }
-    .email-card { background: white; border-radius: 8px; padding: 16px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); border-left: 3px solid #0078d4; transition: box-shadow 0.15s; }
-    .email-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-    .email-card.high { border-left-color: #d13438; }
-    .email-card.read { border-left-color: #d1d5db; opacity: 0.85; }
-    .email-card.read .email-subject { font-weight: 400; }
-    .unread-dot { display: inline-block; width: 8px; height: 8px; background: #0078d4; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
-    .email-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 6px; }
-    .email-subject { font-weight: 600; color: #111; font-size: 15px; flex: 1; }
-    .email-date { color: #999; font-size: 12px; white-space: nowrap; }
-    .email-from { font-size: 13px; color: #0078d4; margin-bottom: 6px; }
-    .email-preview { font-size: 13px; color: #666; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-    .tag { display: inline-block; background: #fde7e9; color: #d13438; font-size: 11px; font-weight: 600; padding: 1px 6px; border-radius: 3px; margin-left: 8px; vertical-align: middle; }
-    .empty { text-align: center; padding: 64px 24px; color: #666; }
-    .empty .icon { font-size: 56px; margin-bottom: 16px; }
+    .page-title { font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 18px; letter-spacing: -0.02em; display: inline-flex; align-items: center; gap: 10px; }
+    .page-title .count { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--accent); padding: 3px 10px; background: rgba(0, 212, 255, 0.08); border: 1px solid rgba(0, 212, 255, 0.25); border-radius: 999px; }
+    .filter-bar { display: inline-flex; gap: 4px; margin-bottom: 20px; padding: 4px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 12px; }
+    .filter-btn { padding: 7px 18px; border: 1px solid transparent; border-radius: 8px; font-size: 13px; font-weight: 500; color: var(--text-dim); text-decoration: none; background: transparent; transition: all 0.15s ease; }
+    .filter-btn:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+    .filter-btn.active { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #060912; font-weight: 700; box-shadow: 0 0 16px rgba(0, 212, 255, 0.3); }
+    .email-list { display: flex; flex-direction: column; gap: 10px; }
+    .email-card {
+      background: var(--surface);
+      backdrop-filter: blur(14px) saturate(140%);
+      -webkit-backdrop-filter: blur(14px) saturate(140%);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 12px;
+      padding: 18px 22px;
+      transition: all 0.18s ease;
+    }
+    .email-card:hover { transform: translateX(2px); border-color: var(--border-strong); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); }
+    .email-card.high { border-left-color: var(--danger); background: linear-gradient(90deg, rgba(255, 85, 114, 0.05), transparent 40%); }
+    .email-card.read { border-left-color: var(--text-muted); opacity: 0.65; }
+    .email-card.read .email-subject { font-weight: 500; color: var(--text-dim); }
+    .unread-dot { display: inline-block; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; margin-right: 8px; vertical-align: middle; box-shadow: 0 0 8px var(--accent); }
+    .email-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 8px; }
+    .email-subject { font-weight: 600; color: var(--text); font-size: 15px; flex: 1; letter-spacing: -0.01em; }
+    .email-date { color: var(--text-muted); font-size: 11px; white-space: nowrap; font-family: 'JetBrains Mono', monospace; }
+    .email-from { font-size: 13px; color: var(--accent); margin-bottom: 8px; font-weight: 500; }
+    .email-from .sender-name { color: var(--text); }
+    .email-from .sender-email { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+    .email-preview { font-size: 13px; color: var(--text-dim); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .tag { display: inline-block; background: rgba(255, 85, 114, 0.12); color: var(--danger); border: 1px solid rgba(255, 85, 114, 0.3); font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-left: 8px; vertical-align: middle; letter-spacing: 0.05em; text-transform: uppercase; }
+    .empty { text-align: center; padding: 80px 24px; color: var(--text-dim); }
+    .empty .icon { font-size: 56px; margin-bottom: 16px; opacity: 0.5; }
   </style>
 </head>
 <body>
   """ + _HEADER + """
   <main>
-    <a href="/" class="back">&#8592; Dashboard</a>
-    <div class="page-title">&#128140; Emails ({{ emails|length }})</div>
+    <a href="/" class="back">&larr; Dashboard</a>
+    <div class="page-title">&#9993; Inbox <span class="count">{{ emails|length }} msg</span></div>
 
     <div class="filter-bar">
       <a href="/emails?filter=all"    class="filter-btn {{ 'active' if filter_mode == 'all'    else '' }}">All</a>
@@ -1115,13 +1433,13 @@ EMAILS_HTML = """
           <span class="email-subject">
             {% if not is_read %}<span class="unread-dot"></span>{% endif %}
             {{ email.get('subject') or '(No subject)' }}
-            {% if high %}<span class="tag">HIGH</span>{% endif %}
+            {% if high %}<span class="tag">High</span>{% endif %}
           </span>
           <span class="email-date">{{ email.get('receivedDateTime', '')[:10] }}</span>
         </div>
         <div class="email-from">
-          {{ email.get('from', {}).get('emailAddress', {}).get('name', '') }}
-          &lt;{{ email.get('from', {}).get('emailAddress', {}).get('address', '') }}&gt;
+          <span class="sender-name">{{ email.get('from', {}).get('emailAddress', {}).get('name', '') }}</span>
+          <span class="sender-email">&lt;{{ email.get('from', {}).get('emailAddress', {}).get('address', '') }}&gt;</span>
         </div>
         <div class="email-preview">{{ email.get('bodyPreview', '') }}</div>
       </div>
@@ -1147,50 +1465,71 @@ FILES_HTML = """
   <title>OneDrive Files</title>
   <style>
     """ + _COMMON_CSS + """
-    .page-title { font-size: 20px; font-weight: 600; color: #111; margin-bottom: 16px; }
+    .page-title { font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 18px; letter-spacing: -0.02em; display: inline-flex; align-items: center; gap: 10px; }
+    .page-title .count { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--success); padding: 3px 10px; background: rgba(74, 222, 128, 0.08); border: 1px solid rgba(74, 222, 128, 0.25); border-radius: 999px; font-weight: 500; }
 
-    .search-bar { display: flex; gap: 8px; margin-bottom: 20px; align-items: center; }
-    .debug-btn { padding: 9px 14px; background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; color: #555; text-decoration: none; white-space: nowrap; }
-    .debug-btn:hover { background: #e5e7eb; }
-    .search-bar input { flex: 1; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; outline: none; }
-    .search-bar input:focus { border-color: #0078d4; box-shadow: 0 0 0 2px rgba(0,120,212,0.15); }
-    .search-bar button { padding: 10px 20px; background: #0078d4; color: white; border: none; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; }
-    .search-bar button:hover { background: #106ebe; }
-    .clear-search { display: inline-block; margin-bottom: 12px; font-size: 13px; color: #0078d4; text-decoration: none; }
+    .search-bar {
+      display: flex; gap: 10px; margin-bottom: 22px; align-items: center;
+      padding: 6px;
+      background: var(--surface);
+      backdrop-filter: blur(14px) saturate(140%);
+      -webkit-backdrop-filter: blur(14px) saturate(140%);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+    }
+    .debug-btn { padding: 10px 14px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 10px; font-size: 12px; color: var(--text-dim); text-decoration: none; white-space: nowrap; font-family: 'JetBrains Mono', monospace; transition: all 0.15s ease; }
+    .debug-btn:hover { background: rgba(0, 212, 255, 0.06); color: var(--accent); border-color: rgba(0, 212, 255, 0.3); }
+    .search-bar input { flex: 1; padding: 11px 16px; background: transparent; border: none; border-radius: 10px; font-size: 14px; outline: none; color: var(--text); font-family: inherit; }
+    .search-bar input::placeholder { color: var(--text-muted); }
+    .search-bar input:focus { background: rgba(0, 212, 255, 0.04); }
+    .search-bar button { padding: 11px 22px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #060912; border: none; border-radius: 10px; font-size: 13px; font-weight: 700; cursor: pointer; box-shadow: 0 0 18px rgba(0, 212, 255, 0.25); transition: all 0.15s ease; }
+    .search-bar button:hover { transform: translateY(-1px); box-shadow: 0 0 26px rgba(0, 212, 255, 0.4); }
+    .clear-search { display: inline-block; margin-bottom: 14px; font-size: 12px; color: var(--accent); text-decoration: none; font-family: 'JetBrains Mono', monospace; }
     .clear-search:hover { text-decoration: underline; }
-    .search-mode-label { font-size: 13px; color: #666; margin-bottom: 12px; }
-    .search-mode-label strong { color: #111; }
+    .search-mode-label { font-size: 13px; color: var(--text-dim); margin-bottom: 14px; }
+    .search-mode-label strong { color: var(--text); }
 
-    .file-list { display: flex; flex-direction: column; gap: 6px; }
-    .file-row { background: white; border-radius: 8px; padding: 14px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); display: flex; align-items: flex-start; gap: 14px; text-decoration: none; color: inherit; transition: box-shadow 0.15s; }
-    .file-row:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-    .file-icon { font-size: 24px; flex-shrink: 0; padding-top: 2px; }
+    .file-list { display: flex; flex-direction: column; gap: 8px; }
+    .file-row {
+      background: var(--surface);
+      backdrop-filter: blur(14px) saturate(140%);
+      -webkit-backdrop-filter: blur(14px) saturate(140%);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 20px;
+      display: flex; align-items: center; gap: 14px;
+      text-decoration: none; color: inherit;
+      transition: all 0.15s ease;
+    }
+    .file-row:hover { transform: translateX(2px); border-color: var(--border-strong); background: rgba(0, 212, 255, 0.04); }
+    .file-icon { width: 36px; height: 36px; border-radius: 9px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); display: inline-flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; color: var(--text-dim); }
+    .file-row:hover .file-icon { color: var(--accent); border-color: rgba(0, 212, 255, 0.3); }
     .file-body { flex: 1; min-width: 0; }
-    .file-name { font-weight: 500; color: #111; font-size: 14px; }
-    .file-summary { font-size: 12px; color: #666; margin-top: 4px; line-height: 1.4; }
-    .file-summary em { font-style: normal; background: #fff3cd; padding: 0 2px; border-radius: 2px; }
-    .file-meta { font-size: 12px; color: #999; white-space: nowrap; text-align: right; flex-shrink: 0; }
-    .empty { text-align: center; padding: 64px 24px; color: #666; }
+    .file-name { font-weight: 500; color: var(--text); font-size: 14px; word-break: break-word; }
+    .file-summary { font-size: 12px; color: var(--text-dim); margin-top: 4px; line-height: 1.5; }
+    .file-summary em { font-style: normal; background: rgba(255, 182, 72, 0.15); color: var(--warning); padding: 0 4px; border-radius: 3px; }
+    .file-meta { font-size: 11px; color: var(--text-muted); white-space: nowrap; text-align: right; flex-shrink: 0; font-family: 'JetBrains Mono', monospace; }
+    .empty { text-align: center; padding: 80px 24px; color: var(--text-dim); }
   </style>
 </head>
 <body>
   """ + _HEADER + """
   <main>
-    <a href="/" class="back">&#8592; Dashboard</a>
+    <a href="/" class="back">&larr; Dashboard</a>
 
     <form class="search-bar" method="get" action="/files">
       <input type="text" name="q" value="{{ query }}" placeholder="Search file names and content..." autocomplete="off" />
       <button type="submit">&#128269; Search</button>
-      <a href="/debug-search" class="debug-btn">&#128027; Debug</a>
+      <a href="/debug-search" class="debug-btn">&#9881; debug</a>
     </form>
 
     {% if query %}
     <div>
-      <span class="search-mode-label">Results for <strong>&#34;{{ query }}&#34;</strong> — {{ files|length }} found</span>
-      &nbsp;<a href="/files" class="clear-search">&#10005; Clear search</a>
+      <span class="search-mode-label">Results for <strong>&ldquo;{{ query }}&rdquo;</strong> &mdash; {{ files|length }} found</span>
+      &nbsp;<a href="/files" class="clear-search">&times; clear search</a>
     </div>
     {% else %}
-    <div class="page-title">&#128193; OneDrive Files ({{ files|length }})</div>
+    <div class="page-title">&#128193; OneDrive <span class="count">{{ files|length }} items</span></div>
     {% endif %}
 
     {% if files %}
@@ -1211,7 +1550,7 @@ FILES_HTML = """
     {% else %}
     <div class="empty">
       {% if query %}
-      <p>No files found matching &#34;{{ query }}&#34;.</p>
+      <p>No files found matching &ldquo;{{ query }}&rdquo;.</p>
       {% else %}
       <p>No files found in OneDrive root.</p>
       {% endif %}
@@ -1231,31 +1570,48 @@ TEAMS_HTML = """
   <title>Teams Groups</title>
   <style>
     """ + _COMMON_CSS + """
-    .page-title { font-size: 20px; font-weight: 600; color: #111; margin-bottom: 16px; }
-    .team-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
-    .team-card { background: white; border-radius: 8px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); border-left: 4px solid #6264a7; text-decoration: none; color: inherit; display: block; transition: box-shadow 0.15s, transform 0.15s; }
-    .team-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.11); transform: translateY(-2px); }
-    .team-name { font-weight: 600; color: #111; font-size: 15px; margin-bottom: 6px; }
-    .team-desc { font-size: 13px; color: #666; line-height: 1.4; }
-    .team-visibility { display: inline-block; margin-top: 10px; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 3px; background: #f0f0f0; color: #555; text-transform: capitalize; }
-    .team-action { margin-top: 12px; font-size: 13px; color: #6264a7; font-weight: 500; }
-    .empty { text-align: center; padding: 64px 24px; color: #666; }
+    .page-title { font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 18px; letter-spacing: -0.02em; display: inline-flex; align-items: center; gap: 10px; }
+    .page-title .count { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--accent-purple); padding: 3px 10px; background: rgba(180, 101, 255, 0.08); border: 1px solid rgba(180, 101, 255, 0.25); border-radius: 999px; font-weight: 500; }
+    .team-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+    .team-card {
+      position: relative; overflow: hidden;
+      background: var(--surface);
+      backdrop-filter: blur(14px) saturate(140%);
+      -webkit-backdrop-filter: blur(14px) saturate(140%);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px;
+      text-decoration: none; color: inherit;
+      display: block;
+      transition: all 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .team-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, var(--accent-purple), var(--accent-2)); }
+    .team-card::after { content: ''; position: absolute; inset: 0; background: radial-gradient(400px 200px at 0% 0%, rgba(180, 101, 255, 0.12), transparent 60%); opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+    .team-card:hover { transform: translateY(-3px); border-color: rgba(180, 101, 255, 0.4); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35), 0 0 30px rgba(180, 101, 255, 0.15); }
+    .team-card:hover::after { opacity: 1; }
+    .team-name { font-weight: 600; color: var(--text); font-size: 15px; margin-bottom: 6px; letter-spacing: -0.01em; }
+    .team-desc { font-size: 13px; color: var(--text-dim); line-height: 1.5; min-height: 20px; }
+    .team-visibility { display: inline-block; margin-top: 12px; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.06em; font-family: 'JetBrains Mono', monospace; }
+    .team-action { margin-top: 14px; font-size: 12px; color: var(--accent-purple); font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
+    .team-action .arrow { transition: transform 0.2s ease; }
+    .team-card:hover .team-action .arrow { transform: translateX(4px); }
+    .empty { text-align: center; padding: 80px 24px; color: var(--text-dim); }
   </style>
 </head>
 <body>
   """ + _HEADER + """
   <main>
-    <a href="/" class="back">&#8592; Dashboard</a>
-    <div class="page-title">&#128101; Teams Groups ({{ teams|length }})</div>
+    <a href="/" class="back">&larr; Dashboard</a>
+    <div class="page-title">&#128101; Teams <span class="count">{{ teams|length }} groups</span></div>
 
     {% if teams %}
     <div class="team-list">
       {% for t in teams %}
       <a href="/teams/{{ t.get('id') }}" class="team-card">
         <div class="team-name">{{ t.get('displayName', '') }}</div>
-        <div class="team-desc">{{ t.get('description', '') or '—' }}</div>
+        <div class="team-desc">{{ t.get('description', '') or '&mdash;' }}</div>
         <span class="team-visibility">{{ t.get('visibility', 'unknown') }}</span>
-        <div class="team-action">&#128193; View shared files &rarr;</div>
+        <div class="team-action">&#128193; View shared files <span class="arrow">&rarr;</span></div>
       </a>
       {% endfor %}
     </div>
@@ -1276,34 +1632,45 @@ DRIVE_BROWSE_HTML = """
   <title>{{ title }} — Files</title>
   <style>
     """ + _COMMON_CSS + """
-    .page-title { font-size: 20px; font-weight: 600; color: #111; margin-bottom: 4px; }
-    .page-subtitle { color: #666; font-size: 13px; margin-bottom: 16px; }
-    .crumb { font-size: 13px; color: #666; margin-bottom: 12px; }
-    .crumb a { color: #0078d4; text-decoration: none; }
+    .page-title { font-size: 24px; font-weight: 700; color: var(--text); margin-bottom: 6px; letter-spacing: -0.02em; }
+    .page-subtitle { color: var(--text-dim); font-size: 13px; margin-bottom: 18px; }
+    .crumb { font-size: 12px; color: var(--text-muted); margin-bottom: 14px; font-family: 'JetBrains Mono', monospace; }
+    .crumb a { color: var(--accent); text-decoration: none; }
     .crumb a:hover { text-decoration: underline; }
-    .file-list { display: flex; flex-direction: column; gap: 6px; }
-    .file-row { background: white; border-radius: 8px; padding: 14px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); display: flex; align-items: center; gap: 14px; text-decoration: none; color: inherit; transition: box-shadow 0.15s; }
-    .file-row:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-    .file-icon { font-size: 22px; flex-shrink: 0; }
+    .file-list { display: flex; flex-direction: column; gap: 8px; }
+    .file-row {
+      background: var(--surface);
+      backdrop-filter: blur(14px) saturate(140%);
+      -webkit-backdrop-filter: blur(14px) saturate(140%);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 20px;
+      display: flex; align-items: center; gap: 14px;
+      text-decoration: none; color: inherit;
+      transition: all 0.15s ease;
+    }
+    .file-row:hover { transform: translateX(2px); border-color: var(--border-strong); background: rgba(0, 212, 255, 0.04); }
+    .file-icon { width: 36px; height: 36px; border-radius: 9px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); display: inline-flex; align-items: center; justify-content: center; font-size: 18px; color: var(--text-dim); flex-shrink: 0; }
     .file-body { flex: 1; min-width: 0; }
-    .file-name { font-weight: 500; color: #111; font-size: 14px; }
-    .file-meta { font-size: 12px; color: #999; white-space: nowrap; text-align: right; flex-shrink: 0; }
+    .file-name { font-weight: 500; color: var(--text); font-size: 14px; word-break: break-word; }
+    .file-meta { font-size: 11px; color: var(--text-muted); white-space: nowrap; text-align: right; flex-shrink: 0; font-family: 'JetBrains Mono', monospace; }
     .file-actions { display: flex; gap: 8px; align-items: center; }
-    .action-btn { padding: 5px 10px; background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 4px; font-size: 12px; color: #444; text-decoration: none; }
-    .action-btn:hover { background: #e5e7eb; }
-    .action-btn.primary { background: #0078d4; color: white; border-color: #0078d4; }
-    .empty { text-align: center; padding: 64px 24px; color: #666; }
+    .action-btn { padding: 6px 12px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px; font-size: 12px; font-weight: 500; color: var(--text-dim); text-decoration: none; transition: all 0.15s ease; }
+    .action-btn:hover { background: rgba(0, 212, 255, 0.06); color: var(--accent); border-color: rgba(0, 212, 255, 0.3); }
+    .action-btn.primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #060912; border-color: transparent; font-weight: 700; box-shadow: 0 0 12px rgba(0, 212, 255, 0.25); }
+    .action-btn.primary:hover { transform: translateY(-1px); color: #060912; box-shadow: 0 0 20px rgba(0, 212, 255, 0.4); }
+    .empty { text-align: center; padding: 80px 24px; color: var(--text-dim); }
   </style>
 </head>
 <body>
   """ + _HEADER + """
   <main>
-    <a href="{{ back_url }}" class="back">&#8592; {{ back_label }}</a>
+    <a href="{{ back_url }}" class="back">&larr; {{ back_label }}</a>
     <div class="page-title">&#128193; {{ title }}</div>
     <div class="page-subtitle">{{ subtitle }}</div>
 
     {% if current_folder %}
-    <div class="crumb"><a href="{{ folder_url_base }}">Root</a> / (folder)</div>
+    <div class="crumb"><a href="{{ folder_url_base }}">~/root</a> / (folder)</div>
     {% endif %}
 
     {% if files %}
@@ -1352,29 +1719,46 @@ SHAREPOINT_HTML = """
   <title>SharePoint Sites</title>
   <style>
     """ + _COMMON_CSS + """
-    .page-title { font-size: 20px; font-weight: 600; color: #111; margin-bottom: 16px; }
-    .site-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
-    .site-card { background: white; border-radius: 8px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); border-left: 4px solid #038387; text-decoration: none; color: inherit; display: block; transition: box-shadow 0.15s, transform 0.15s; }
-    .site-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.11); transform: translateY(-2px); }
-    .site-name { font-weight: 600; color: #111; font-size: 15px; margin-bottom: 6px; }
-    .site-desc { font-size: 13px; color: #666; line-height: 1.4; }
-    .site-action { margin-top: 12px; font-size: 13px; color: #038387; font-weight: 500; }
-    .empty { text-align: center; padding: 64px 24px; color: #666; }
+    .page-title { font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 18px; letter-spacing: -0.02em; display: inline-flex; align-items: center; gap: 10px; }
+    .page-title .count { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--warning); padding: 3px 10px; background: rgba(255, 182, 72, 0.08); border: 1px solid rgba(255, 182, 72, 0.25); border-radius: 999px; font-weight: 500; }
+    .site-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+    .site-card {
+      position: relative; overflow: hidden;
+      background: var(--surface);
+      backdrop-filter: blur(14px) saturate(140%);
+      -webkit-backdrop-filter: blur(14px) saturate(140%);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px;
+      text-decoration: none; color: inherit;
+      display: block;
+      transition: all 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .site-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, var(--warning), #ff8a3d); }
+    .site-card::after { content: ''; position: absolute; inset: 0; background: radial-gradient(400px 200px at 0% 0%, rgba(255, 182, 72, 0.10), transparent 60%); opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+    .site-card:hover { transform: translateY(-3px); border-color: rgba(255, 182, 72, 0.4); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35), 0 0 30px rgba(255, 182, 72, 0.12); }
+    .site-card:hover::after { opacity: 1; }
+    .site-name { font-weight: 600; color: var(--text); font-size: 15px; margin-bottom: 6px; letter-spacing: -0.01em; }
+    .site-desc { font-size: 13px; color: var(--text-dim); line-height: 1.5; min-height: 20px; }
+    .site-action { margin-top: 14px; font-size: 12px; color: var(--warning); font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
+    .site-action .arrow { transition: transform 0.2s ease; }
+    .site-card:hover .site-action .arrow { transform: translateX(4px); }
+    .empty { text-align: center; padding: 80px 24px; color: var(--text-dim); }
   </style>
 </head>
 <body>
   """ + _HEADER + """
   <main>
-    <a href="/" class="back">&#8592; Dashboard</a>
-    <div class="page-title">&#127760; SharePoint Sites ({{ sites|length }})</div>
+    <a href="/" class="back">&larr; Dashboard</a>
+    <div class="page-title">&#127760; SharePoint <span class="count">{{ sites|length }} sites</span></div>
 
     {% if sites %}
     <div class="site-list">
       {% for s in sites %}
       <a href="/sharepoint/{{ s.get('id') }}" class="site-card">
         <div class="site-name">{{ s.get('displayName') or s.get('name', '(unnamed)') }}</div>
-        <div class="site-desc">{{ s.get('description') or '—' }}</div>
-        <div class="site-action">&#128196; Browse documents &rarr;</div>
+        <div class="site-desc">{{ s.get('description') or '&mdash;' }}</div>
+        <div class="site-action">&#128196; Browse documents <span class="arrow">&rarr;</span></div>
       </a>
       {% endfor %}
     </div>
@@ -1395,22 +1779,23 @@ VIEW_CONTENT_HTML = """
   <title>{{ meta.get('name', 'File') }}</title>
   <style>
     """ + _COMMON_CSS + """
-    .file-header { background: white; border-radius: 8px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); margin-bottom: 16px; }
-    .file-title { font-size: 18px; font-weight: 600; color: #111; margin-bottom: 6px; word-break: break-all; }
-    .file-meta { font-size: 13px; color: #666; }
-    .file-meta a { color: #0078d4; text-decoration: none; margin-left: 8px; }
+    .file-header { background: var(--surface); backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%); border: 1px solid var(--border); border-radius: 14px; padding: 22px; margin-bottom: 18px; box-shadow: var(--glow-soft); }
+    .file-title { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 8px; word-break: break-all; letter-spacing: -0.01em; }
+    .file-meta { font-size: 13px; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; }
+    .file-meta a { color: var(--accent); text-decoration: none; margin-left: 8px; }
     .file-meta a:hover { text-decoration: underline; }
-    .content-box { background: #1e1e1e; color: #d4d4d4; border-radius: 8px; padding: 20px; font-family: 'Consolas', 'Courier New', monospace; font-size: 13px; line-height: 1.5; white-space: pre-wrap; word-wrap: break-word; overflow-x: auto; max-height: 70vh; overflow-y: auto; }
-    .notice { background: #fff3cd; border-left: 4px solid #f0ad4e; padding: 12px 16px; border-radius: 4px; margin-bottom: 16px; color: #6a4f00; font-size: 13px; }
-    .info { background: white; border-radius: 8px; padding: 32px; text-align: center; color: #555; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
-    .info .icon { font-size: 48px; margin-bottom: 12px; }
-    .info a.btn { display: inline-block; margin-top: 12px; padding: 10px 22px; background: #0078d4; color: white; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; }
+    .content-box { background: rgba(0, 0, 0, 0.5); color: #d4dbe8; border: 1px solid var(--border); border-radius: 12px; padding: 20px; font-family: 'JetBrains Mono', 'Consolas', monospace; font-size: 13px; line-height: 1.65; white-space: pre-wrap; word-wrap: break-word; overflow-x: auto; max-height: 70vh; overflow-y: auto; box-shadow: inset 0 1px 0 rgba(255,255,255,0.03); }
+    .notice { background: rgba(255, 182, 72, 0.06); border: 1px solid rgba(255, 182, 72, 0.3); border-left: 3px solid var(--warning); padding: 12px 16px; border-radius: 10px; margin-bottom: 16px; color: var(--warning); font-size: 13px; }
+    .info { background: var(--surface); backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%); border: 1px solid var(--border); border-radius: 14px; padding: 48px 32px; text-align: center; color: var(--text-dim); }
+    .info .icon { font-size: 56px; margin-bottom: 14px; opacity: 0.6; }
+    .info a.btn { display: inline-block; margin-top: 14px; padding: 11px 26px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #060912; border-radius: 10px; text-decoration: none; font-weight: 700; font-size: 14px; box-shadow: 0 0 20px rgba(0, 212, 255, 0.25); transition: all 0.15s ease; }
+    .info a.btn:hover { transform: translateY(-1px); box-shadow: 0 0 28px rgba(0, 212, 255, 0.4); }
   </style>
 </head>
 <body>
   """ + _HEADER + """
   <main>
-    <a href="{{ back_url }}" class="back">&#8592; Back</a>
+    <a href="{{ back_url }}" class="back">&larr; Back</a>
     <div class="file-header">
       <div class="file-title">&#128196; {{ meta.get('name', '') }}</div>
       <div class="file-meta">
@@ -1450,16 +1835,19 @@ ERROR_HTML = """
   <title>Error</title>
   <style>
     """ + _COMMON_CSS + """
-    .error-card { background: white; border-radius: 8px; padding: 32px; max-width: 600px; margin: 48px auto; box-shadow: 0 1px 4px rgba(0,0,0,0.08); border-left: 4px solid #d13438; }
-    .error-card h2 { color: #d13438; margin-bottom: 12px; }
-    .error-card p { color: #444; line-height: 1.6; }
+    .error-card { background: var(--surface); backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%); border: 1px solid rgba(255, 85, 114, 0.3); border-left: 3px solid var(--danger); border-radius: 14px; padding: 32px; max-width: 600px; margin: 48px auto; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35), 0 0 30px rgba(255, 85, 114, 0.1); }
+    .error-card .err-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: var(--danger); padding: 4px 10px; background: rgba(255, 85, 114, 0.08); border: 1px solid rgba(255, 85, 114, 0.3); border-radius: 999px; letter-spacing: 0.06em; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; margin-bottom: 14px; }
+    .error-card .err-tag .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--danger); box-shadow: 0 0 8px var(--danger); }
+    .error-card h2 { color: var(--text); margin-bottom: 12px; font-size: 20px; font-weight: 700; letter-spacing: -0.01em; }
+    .error-card p { color: var(--text-dim); line-height: 1.6; font-size: 14px; }
   </style>
 </head>
 <body>
   """ + _HEADER + """
   <main>
-    <a href="/" class="back">&#8592; Dashboard</a>
+    <a href="/" class="back">&larr; Dashboard</a>
     <div class="error-card">
+      <div class="err-tag"><span class="dot"></span> Error</div>
       <h2>Something went wrong</h2>
       <p>{{ message }}</p>
     </div>
